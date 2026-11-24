@@ -1,8 +1,8 @@
 # RouteLedger — Capacity-Aware Mesh Router, Double-Entry Settlement Ledger & NOC Workflow Engine
 
-> **Live AWS Endpoint (`us-west-2` Lambda Function URL):** _Pending deployment (`route_ledger.aws_lambda_handler.handler`)_  
-> **Health Check:** `GET /api/health`  
-> **Live API Call:** `POST /api/run -H 'Content-Type: application/json' -d '{"mode": "demo-all"}'`
+> **Live AWS Endpoint (`us-west-2` Lambda Function URL):** [https://prlngxiwuhv32dkej5xvzg7i2e0xqjfq.lambda-url.us-west-2.on.aws/](https://prlngxiwuhv32dkej5xvzg7i2e0xqjfq.lambda-url.us-west-2.on.aws/)  
+> **Health Check:** `https://prlngxiwuhv32dkej5xvzg7i2e0xqjfq.lambda-url.us-west-2.on.aws/api/health`  
+> **Live API Call:** `curl -s -X POST https://prlngxiwuhv32dkej5xvzg7i2e0xqjfq.lambda-url.us-west-2.on.aws/api/run -H 'Content-Type: application/json' -d '{}'`
 
 **RouteLedger** is a zero-dependency Python 3.10+ distributed systems and optimization service modeling three tightly coupled control planes across satellite/ISP networks and multi-echelon fulfillment infrastructure: a capacity- and SNR-aware multi-hop router (`CapacityAwareRouter`), a SQLite ACID double-entry usage and inventory settlement ledger (`IdempotentSettlementLedger`), and a bounded (`<= 3` checks) NOC and floor troubleshooting decision-tree runner (`OperationalWorkflowEngine`).
 
