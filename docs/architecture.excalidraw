@@ -1,0 +1,261 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://github.com/ritwikareddykancharla/route-ledger",
+  "elements": [
+    {
+      "type": "text",
+      "id": "title-1",
+      "x": 36,
+      "y": 24,
+      "text": "RouteLedger \u2014 Capacity-Aware Mesh Router, Settlement Ledger & NOC Engine"
+    },
+    {
+      "type": "rectangle",
+      "id": "router-demands",
+      "x": 55,
+      "y": 142,
+      "width": 300,
+      "height": 104,
+      "backgroundColor": "#ffc9c9",
+      "label": "POP Demands & Link State"
+    },
+    {
+      "type": "rectangle",
+      "id": "router-dijkstra",
+      "x": 55,
+      "y": 286,
+      "width": 300,
+      "height": 106,
+      "backgroundColor": "#a5d8ff",
+      "label": "Constrained Dijkstra Router"
+    },
+    {
+      "type": "rectangle",
+      "id": "router-split",
+      "x": 55,
+      "y": 432,
+      "width": 300,
+      "height": 106,
+      "backgroundColor": "#b2f2bb",
+      "label": "2-Way Residual Flow Split"
+    },
+    {
+      "type": "rectangle",
+      "id": "ledger-idem",
+      "x": 445,
+      "y": 142,
+      "width": 290,
+      "height": 104,
+      "backgroundColor": "#ffec99",
+      "label": "SHA-256 Idempotency Gate"
+    },
+    {
+      "type": "rectangle",
+      "id": "ledger-acid",
+      "x": 445,
+      "y": 286,
+      "width": 290,
+      "height": 106,
+      "backgroundColor": "#ffd8a8",
+      "label": "ACID SQLite Tax & Stock"
+    },
+    {
+      "type": "rectangle",
+      "id": "ledger-recon",
+      "x": 445,
+      "y": 432,
+      "width": 290,
+      "height": 106,
+      "backgroundColor": "#b2f2bb",
+      "label": "Double-Entry & Recon Audit"
+    },
+    {
+      "type": "rectangle",
+      "id": "noc-alarms",
+      "x": 825,
+      "y": 142,
+      "width": 300,
+      "height": 104,
+      "backgroundColor": "#ffc9c9",
+      "label": "NOC & Floor Alarm Snapshots"
+    },
+    {
+      "type": "rectangle",
+      "id": "noc-tree",
+      "x": 825,
+      "y": 286,
+      "width": 300,
+      "height": 106,
+      "backgroundColor": "#a5d8ff",
+      "label": "Bounded Decision-Tree Engine"
+    },
+    {
+      "type": "rectangle",
+      "id": "noc-lambda",
+      "x": 825,
+      "y": 432,
+      "width": 300,
+      "height": 106,
+      "backgroundColor": "#d0bfff",
+      "label": "Safe Runbook & AWS Lambda"
+    },
+    {
+      "type": "arrow",
+      "id": "arrow-live-snr",
+      "x": 205,
+      "y": 246,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          40
+        ]
+      ],
+      "label": "Live SNR"
+    },
+    {
+      "type": "arrow",
+      "id": "arrow-residual-cap",
+      "x": 205,
+      "y": 392,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          40
+        ]
+      ],
+      "label": "Residual Cap"
+    },
+    {
+      "type": "arrow",
+      "id": "arrow-usage-stream",
+      "x": 355,
+      "y": 485,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          90,
+          -291
+        ]
+      ],
+      "label": "Usage Stream"
+    },
+    {
+      "type": "arrow",
+      "id": "arrow-deduped",
+      "x": 590,
+      "y": 246,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          40
+        ]
+      ],
+      "label": "Deduped"
+    },
+    {
+      "type": "arrow",
+      "id": "arrow-acid-post",
+      "x": 590,
+      "y": 392,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          40
+        ]
+      ],
+      "label": "ACID Post"
+    },
+    {
+      "type": "arrow",
+      "id": "arrow-alarms",
+      "x": 735,
+      "y": 194,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          90,
+          0
+        ]
+      ],
+      "label": "Alarms"
+    },
+    {
+      "type": "arrow",
+      "id": "arrow-recon-diff",
+      "x": 735,
+      "y": 485,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          90,
+          0
+        ]
+      ],
+      "label": "Recon Diff"
+    },
+    {
+      "type": "arrow",
+      "id": "arrow-eval-tree",
+      "x": 975,
+      "y": 246,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          40
+        ]
+      ],
+      "label": "Eval Tree"
+    },
+    {
+      "type": "arrow",
+      "id": "arrow-emit-action",
+      "x": 975,
+      "y": 392,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          40
+        ]
+      ],
+      "label": "Emit Action"
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": 24
+  }
+}

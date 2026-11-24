@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "route-ledger"
+version = "0.1.0"
+description = "RouteLedger: Capacity-Aware LEO/Fulfillment Multi-Hop Router, Idempotent Double-Entry Settlement Ledger & Deterministic NOC Workflow Engine"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Ritwika Kancharla" }
+]
+keywords = [
+    "distributed-systems",
+    "network-routing",
+    "leo-satellite",
+    "supply-chain-optimization",
+    "double-entry-ledger",
+    "idempotency",
+    "noc-automation",
+    "aws-lambda"
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[project.scripts]
+route-ledger = "route_ledger.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["route_ledger*"]
