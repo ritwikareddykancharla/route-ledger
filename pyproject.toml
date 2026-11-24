@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "route-ledger"
 version = "0.1.0"
-description = "RouteLedger: Capacity-Aware LEO/Fulfillment Multi-Hop Router, Idempotent Double-Entry Settlement Ledger & Deterministic NOC Workflow Engine"
+description = "Capacity-aware network router, double-entry usage/inventory ledger, and 3-step NOC fault isolator"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
