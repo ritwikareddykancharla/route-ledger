@@ -164,13 +164,17 @@ def compute_regional_charge_cents(
 class IdempotentSettlementLedger:
     """Transactional SQLite double-entry billing & inventory reservation ledger."""
 
-    def __init__(self, db_path: str = ":memory:") -> None:
+    def __init__(self, db_path: str = ":memory:", init_schema: bool = True) -> None:
         self.db_path = db_path
-        self.conn = sqlite3.connect(db_path, isolation_level=None)
+        self.conn = sqlite3.connect(db_path, timeout=20.0, isolation_level=None, check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
+        if db_path != ":memory:":
+            self.conn.execute("PRAGMA busy_timeout = 20000")
+            self.conn.execute("PRAGMA foreign_keys = ON")
         self._ingested_seq = 0
         self._duplicate_hits = 0
-        self._init_schema()
+        if init_schema:
+            self._init_schema()
 
     def close(self) -> None:
         self.conn.close()
@@ -182,11 +186,15 @@ class IdempotentSettlementLedger:
         self.close()
 
     def _init_schema(self) -> None:
+        journal_pragma = (
+            "PRAGMA journal_mode = MEMORY;\n            PRAGMA synchronous = OFF;"
+            if self.db_path == ":memory:"
+            else "PRAGMA journal_mode = WAL;\n            PRAGMA synchronous = NORMAL;\n            PRAGMA busy_timeout = 20000;"
+        )
         self.conn.executescript(
-            """
+            f"""
             PRAGMA foreign_keys = ON;
-            PRAGMA journal_mode = MEMORY;
-            PRAGMA synchronous = OFF;
+            {journal_pragma}
 
             CREATE TABLE IF NOT EXISTS customer_accounts (
                 account_id TEXT PRIMARY KEY,

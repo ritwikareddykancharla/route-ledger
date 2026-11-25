@@ -555,6 +555,52 @@ class TestCLIAndLambdaHandler(unittest.TestCase):
         not_found = handler({"rawPath": "/unknown", "requestContext": {"http": {"method": "GET"}}})
         self.assertEqual(not_found["statusCode"], 404)
 
+    def test_60_way_concurrent_sqlite_wal_idempotency_storm(self) -> None:
+        from concurrent.futures import ThreadPoolExecutor
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_file = str(Path(tmpdir) / "concurrent_storm.sqlite")
+            with IdempotentSettlementLedger(db_file) as seed_ledger:
+                seed_ledger.seed_account("ACCT-CONC-WA", "US-WA", 9_500_000)
+                seed_ledger.seed_account("ACCT-CONC-DE", "DE", 9_500_000)
+
+            deliveries = []
+            for rep in range(5):
+                for idx in range(1, 13):
+                    acct = "ACCT-CONC-WA" if idx % 2 == 0 else "ACCT-CONC-DE"
+                    reg = "US-WA" if idx % 2 == 0 else "DE"
+                    deliveries.append(
+                        UsageOrderEvent(
+                            event_id=f"EVT-CONC-{idx:02d}-R{rep + 1}",
+                            idempotency_key=f"IDEM-CONC-{idx:02d}",
+                            account_id=acct,
+                            region=reg,
+                            event_type="METERED_BANDWIDTH_GB",
+                            quantity=f"{10 + idx}.250",
+                            unit_price_cents=1550,
+                            event_timestamp=1_764_100_000 + idx * 10,
+                        )
+                    )
+
+            def _worker(ev: UsageOrderEvent):
+                with IdempotentSettlementLedger(db_file, init_schema=False) as worker_ledger:
+                    return worker_ledger.process_event(ev)
+
+            with ThreadPoolExecutor(max_workers=60) as pool:
+                receipts = list(pool.map(_worker, deliveries))
+
+            self.assertEqual(len(receipts), 60)
+            self.assertEqual(sum(1 for r in receipts if not r.is_duplicate and r.status == "SETTLED"), 12)
+            self.assertEqual(sum(1 for r in receipts if r.is_duplicate), 48)
+
+            with IdempotentSettlementLedger(db_file, init_schema=False) as audit_ledger:
+                debits, credits, balanced = audit_ledger.verify_trial_balance()
+                self.assertTrue(balanced)
+                self.assertEqual(debits, credits)
+                self.assertGreater(debits, 0)
+
 
 if __name__ == "__main__":
     unittest.main()

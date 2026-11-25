@@ -12,7 +12,7 @@
 
   <rect x="40" y="38" width="205" height="22" fill="#12737a"/>
   <text x="142" y="53" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="600" fill="#ffffff" letter-spacing="1.2">ROUTELEDGER ARCHITECTURE</text>
-  <text x="40" y="86" font-size="21" font-weight="800" fill="#0e1a2b">AWS CloudFront + SCOT &amp; Leo Mesh Optimizer + ACID Double-Entry Ledger</text>
+  <text x="40" y="86" font-size="21" font-weight="800" fill="#0e1a2b">AWS CloudFront + Multi-Path Graph Solver + ACID Double-Entry Ledger</text>
   <text x="40" y="106" font-family="monospace" font-size="11.5" fill="#6b7a92">Private S3 OAC SigV4 · Lambda /api/* (us-west-2) · SQLite BEGIN IMMEDIATE · Amazon Bedrock (us.amazon.nova-lite-v1:0)</text>
 
   <!-- CloudFront -->
@@ -31,10 +31,10 @@
 
   <!-- Mode 1 & Mode 2 Router -->
   <rect x="295" y="148" width="245" height="114" fill="#0e1a2b" stroke="#0e1a2b" stroke-width="1.5"/>
-  <text x="417" y="172" text-anchor="middle" font-family="monospace" font-size="10" fill="#8fb0e6">SCOT &amp; LEO MESH SOLVER</text>
+  <text x="417" y="172" text-anchor="middle" font-family="monospace" font-size="10" fill="#8fb0e6">28-NODE / 120-LINK SOLVER</text>
   <text x="417" y="194" text-anchor="middle" font-size="15.5" font-weight="800" fill="#ffffff">Min-Cost &amp; SNR Router</text>
-  <text x="417" y="216" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#d6e0f5">SEA1-&gt;ORD5-&gt;CVG3-&gt;EWR7 (&lt;1ms)</text>
-  <text x="417" y="236" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#4fd19a">-95.3% SLA Breaches · 2-Way Split</text>
+  <text x="417" y="216" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#d6e0f5">526.5ms -&gt; 132.8ms p99 (-74.8%)</text>
+  <text x="417" y="236" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#4fd19a">0.465ms p99 · 35.67%-&gt;1.67% SLA</text>
 
   <!-- Double-Entry Ledger -->
   <rect x="295" y="284" width="245" height="114" fill="#ffffff" stroke="#35527e" stroke-width="2"/>
@@ -61,8 +61,8 @@
   <rect x="855" y="185" width="225" height="168" fill="#12737a" stroke="#0e1a2b" stroke-width="1.5"/>
   <text x="967" y="214" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ccfbf1">AMAZON BEDROCK (US-WEST-2)</text>
   <text x="967" y="240" text-anchor="middle" font-size="17" font-weight="800" fill="#ffffff">nova-lite-v1:0</text>
-  <text x="967" y="266" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ffffff">• Leo RF/ISL Link Triage</text>
-  <text x="967" y="288" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ffffff">• SCOT ATROPS Dispatch</text>
+  <text x="967" y="266" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ffffff">• SNR-Threshold Link Triage</text>
+  <text x="967" y="288" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ffffff">• Freight Corridor Dispatch</text>
   <text x="967" y="308" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ffffff">• Grounded Telemetry Brief</text>
 
   <!-- Arrows -->
