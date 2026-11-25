@@ -1556,7 +1556,7 @@
           <span class="section-kicker">02 · Architecture</span>
           <h2 class="section-title">Architecture</h2>
           <p class="section-desc">
-            Requests flow through CloudFront, S3, and Python 3.12 Lambda into the constrained multi-path graph solver, 3-check operational fault tree, Amazon Bedrock advisory client, and SQLite ACID double-entry ledger. Click any node below to inspect its module, invariants, and measured latency.
+            Requests flow through CloudFront, S3, and AWS Lambda into the constrained multi-path graph solver, 3-check operational fault tree, Amazon Bedrock advisory client, and SQLite ACID double-entry ledger. Click any node below to inspect its module, invariants, and measured latency.
           </p>
         </div>
       </div>
@@ -1630,7 +1630,7 @@
             <path d="M 646,100 Q 782,97 918,101 Q 921,127 917,152 Q 781,155 647,151 Q 643,126 646,100 Z" fill="#FFE8D6" />
             <path class="ex-stroke-main" d="M 646,100 Q 782,97 918,101 Q 921,127 917,152 Q 781,155 647,151 Q 643,126 646,100 Z" fill="none" stroke="#18181B" stroke-width="2" />
             <path d="M 649,103 Q 783,100 915,104 Q 917,127 914,149 Q 780,152 650,148 Z" fill="none" stroke="#18181B" stroke-width="1" opacity="0.6" />
-            <text x="782" y="123" text-anchor="middle" class="ex-hand" font-size="20" font-weight="700" fill="#18181B">AWS Lambda (Python 3.12)</text>
+            <text x="782" y="123" text-anchor="middle" class="ex-hand" font-size="20" font-weight="700" fill="#18181B">AWS Lambda</text>
             <text x="782" y="141" text-anchor="middle" class="ex-mono" font-size="9.3" fill="#9A3412">route_ledger/web_api.py · /api/*</text>
           </g>
 
@@ -1778,7 +1778,7 @@
           <span class="section-kicker">03 · Implementation</span>
           <h2 class="section-title">Implementation</h2>
           <p class="section-desc">
-            Five deterministic Python 3.12 engines in <code>route_ledger/</code> power multi-modal CPT Pareto optimization, multi-ASIN split-box cart sourcing, 5-subsystem LEO MCP diagnostics with JPL Power-of-10 static C++ verification, capacity-aware mesh routing, and SQLite <code>BEGIN IMMEDIATE</code> double-entry accounting.
+            Five deterministic backend engines in <code>route_ledger/</code> power multi-modal CPT Pareto optimization, multi-ASIN split-box cart sourcing, 5-subsystem LEO MCP diagnostics with JPL Power-of-10 static C++ verification, capacity-aware mesh routing, and SQLite <code>BEGIN IMMEDIATE</code> double-entry accounting.
           </p>
         </div>
       </div>
@@ -2679,7 +2679,7 @@
         <div class="card">
           <div class="code-header">
             <span>Reproduce Full Suite Locally (260.11 ms Wall Time)</span>
-            <span>Python 3.12+ Runtime</span>
+            <span>Serverless Runtime</span>
           </div>
           <pre class="code-box" style="max-height:220px;"># 1. Run all 38 unit, ATROPS Pareto, LEO MCP, C++ Gate &amp; SQLite WAL tests
 python3 -m unittest discover -s tests -v
@@ -4483,7 +4483,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
           plane: "Plane ① · AWS Edge Delivery",
           title: "Amazon CloudFront Global Edge Distribution (E35WFLOHTA485K)",
           module: "infra/deploy_cloudfront.sh · HTTPS TLS 1.3 + Origin Access Control",
-          summary: "Terminates HTTPS at the AWS edge, serves static UI assets from private S3 via SigV4 Origin Access Control, and routes /api/* live graph-solver & ACID ledger calls to Python 3.12 Lambda in us-west-2.",
+          summary: "Terminates HTTPS at the AWS edge, serves static UI assets from private S3 via SigV4 Origin Access Control, and routes /api/* live graph-solver & ACID ledger calls to AWS Lambda in us-west-2.",
           metric: "Distribution E35WFLOHTA485K · 100% HTTPS + OAC"
         },
         "rl-s3": {
@@ -4495,10 +4495,10 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
         },
         "rl-lambda": {
           plane: "Plane ① · AWS Edge Delivery",
-          title: "Python 3.12 Serverless Routing & Settlement API Origin",
+          title: "AWS Lambda Serverless Routing & Settlement API Origin",
           module: "route_ledger/web_api.py · aws_lambda_handler.py (/api/topology/optimize · /api/ledger/retry-storm · /tamper-test)",
           summary: "Executes live augmenting-path graph optimization, <=3-check operational fault trees, Amazon Bedrock Nova operator advisories, and SQLite BEGIN IMMEDIATE double-entry settlements.",
-          metric: "Python 3.12 Serverless · 0 EC2 / 0 RDS Instances"
+          metric: "AWS Lambda Serverless · 0 EC2 / 0 RDS Instances"
         },
         "rl-prune": {
           plane: "Plane ② · Capacity- & SNR-Threshold Multi-Path Graph Solver",
