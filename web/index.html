@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RouteLedger — Capacity-Constrained Multi-Path Graph Solver, Bounded NOC Triage &amp; ACID Double-Entry Ledger</title>
-  <meta name="description" content="Interactive Capacity- &amp; SNR-Threshold Multi-Path Graph Solver (28 Nodes / 120 Links &amp; SEA1 to EWR7 Hub Corridors), <=3-Check Deterministic Fault Trees + AWS Bedrock Nova, and SHA-256 SQLite ACID Double-Entry Ledger." />
+  <title>RouteLedger — Rerouting Traffic Around Bottlenecks With a Zero-Duplicate Billing Ledger</title>
+  <meta name="description" content="RouteLedger reroutes shipments and network flows around congested or degraded links in 0.465 ms p99, isolates faults in at most 3 checks, and settles billing events in an ACID double-entry SQLite ledger with zero duplicate charges." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Kalam:wght@400;700&amp;family=Martian+Mono:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&amp;family=Schibsted+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
@@ -95,8 +95,8 @@
       padding-bottom: 4.5rem;
     }
 
-    /* Human-Readability & Deep-Dive Layout Components */
-    .plain-english-callout {
+    /* Editorial & Specification Layout Components */
+    .lead-callout {
       background: var(--bg-card);
       border: 2px solid var(--border);
       border-left: 8px solid var(--accent-main);
@@ -104,7 +104,7 @@
       padding: 1.45rem 1.6rem;
       margin-bottom: 1.5rem;
     }
-    .plain-english-callout h3 {
+    .lead-callout h3 {
       font-size: 1.12rem;
       font-weight: 800;
       margin-bottom: 0.55rem;
@@ -113,38 +113,38 @@
       gap: 0.55rem;
       flex-wrap: wrap;
     }
-    .plain-english-callout p {
+    .lead-callout p {
       font-family: 'Newsreader', Georgia, serif;
       font-size: 1.13rem;
       line-height: 1.72;
       color: var(--ink);
       margin-bottom: 0.65rem;
     }
-    .plain-english-callout p:last-child { margin-bottom: 0; }
+    .lead-callout p:last-child { margin-bottom: 0; }
 
-    .worked-example-card {
+    .trace-card {
       background: var(--bg-card);
       border: 2px solid var(--border);
       box-shadow: var(--shadow);
       padding: 1.5rem 1.6rem;
       margin-top: 1.45rem;
     }
-    .worked-stages {
+    .trace-stages {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin-top: 1rem;
     }
-    @media (max-width: 1024px) { .worked-stages { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 640px) { .worked-stages { grid-template-columns: 1fr; } }
-    .worked-stage {
+    @media (max-width: 1024px) { .trace-stages { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .trace-stages { grid-template-columns: 1fr; } }
+    .trace-stage {
       background: var(--bg-paper);
       border: 2px solid var(--border);
       padding: 1.05rem 1.1rem;
       line-height: 1.65;
       font-size: 0.88rem;
     }
-    .worked-stage strong.stage-head {
+    .trace-stage strong.stage-head {
       display: block;
       font-family: 'Martian Mono', monospace;
       font-size: 0.72rem;
@@ -160,43 +160,31 @@
       margin-bottom: 1.45rem;
     }
     @media (max-width: 960px) { .dual-layer-grid { grid-template-columns: 1fr; } }
-    .intuition-card, .hood-card {
+    .overview-card, .spec-card {
       background: var(--bg-card);
       border: 2px solid var(--border);
       box-shadow: var(--shadow);
       padding: 1.35rem 1.45rem;
       line-height: 1.68;
     }
-    .intuition-card { border-top: 6px solid var(--pass); }
-    .hood-card { border-top: 6px solid var(--blue); }
-    .intuition-card h3, .hood-card h3 {
+    .overview-card { border-top: 6px solid var(--pass); }
+    .spec-card { border-top: 6px solid var(--blue); }
+    .overview-card h3, .spec-card h3 {
       font-size: 1.05rem;
       font-weight: 800;
       margin: 0.35rem 0 0.55rem;
     }
-    .intuition-card p, .hood-card p {
+    .overview-card p, .spec-card p {
       font-size: 0.91rem;
       color: var(--ink-muted);
       line-height: 1.68;
     }
 
-    .sandbox-guide-banner {
-      background: var(--bg-subtle);
-      border: 2px solid var(--border);
-      border-left: 6px solid var(--accent-main);
-      box-shadow: var(--shadow-sm);
-      padding: 1.05rem 1.25rem;
-      margin-bottom: 1.25rem;
-      line-height: 1.68;
-      font-size: 0.9rem;
-    }
-    .sandbox-guide-banner strong.guide-title {
-      display: block;
-      font-family: 'Martian Mono', monospace;
-      font-size: 0.73rem;
-      text-transform: uppercase;
-      color: var(--accent-deep);
-      margin-bottom: 0.35rem;
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-bottom: 1.35rem;
     }
 
     .serif { font-family: 'Newsreader', Georgia, serif; }
@@ -662,7 +650,7 @@
       border: 1.5px solid var(--border);
     }
 
-    .excalidraw-toolbar {
+    .arch-toolbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -674,7 +662,7 @@
       border-bottom: none;
     }
 
-    .excalidraw-viewport {
+    .arch-viewport {
       background-color: #FFFFFF;
       background-image: radial-gradient(rgba(24, 24, 27, 0.14) 1px, transparent 1px);
       background-size: 18px 18px;
@@ -684,7 +672,7 @@
       padding: 0.9rem;
     }
 
-    .excalidraw-svg {
+    .arch-svg {
       display: block;
       width: 100%;
       min-width: 980px;
@@ -692,7 +680,7 @@
       transition: width 0.22s ease, min-width 0.22s ease;
     }
 
-    .excalidraw-svg.zoom-125 {
+    .arch-svg.zoom-125 {
       width: 125%;
       min-width: 1225px;
     }
@@ -1380,7 +1368,7 @@
       <nav class="nav-links" aria-label="Primary Navigation">
         <a class="nav-pill" href="#problem-statement" data-nav-sec="problem-statement">Problem</a>
         <a class="nav-pill" href="#architecture" data-nav-sec="architecture">Architecture</a>
-        <a class="nav-pill" href="#sandboxes" data-nav-sec="sandboxes">Interactive Studio</a>
+        <a class="nav-pill" href="#sandboxes" data-nav-sec="sandboxes">Live Demo</a>
         <a class="nav-pill" href="#benchmarks-section" onclick="openBenchmarkSection(event)" data-nav-sec="benchmarks-section">Benchmarks</a>
         <a class="nav-pill" href="https://d1g4bbd5r2rls1.cloudfront.net" target="_blank" rel="noopener">AdPulse ↗</a>
         <a class="nav-pill" href="https://d33vgp4hlabu23.cloudfront.net" target="_blank" rel="noopener">ForgeRuntime ↗</a>
@@ -1397,12 +1385,12 @@
   <nav class="sticky-toc" id="stickyToc" aria-label="Section Table of Contents">
     <div class="container sticky-toc-inner">
       <span class="toc-label">Jump To:</span>
-      <a href="#problem-statement" class="toc-chip active" data-toc-link="problem-statement">§01 · Problem Statement</a>
-      <a href="#architecture" class="toc-chip" data-toc-link="architecture">§02 · System Architecture</a>
-      <a href="#implementation" class="toc-chip" data-toc-link="implementation">§03 · Implementation</a>
-      <a href="#tradeoffs" class="toc-chip" data-toc-link="tradeoffs">§04 · Design Trade-Offs</a>
-      <a href="#sandboxes" class="toc-chip" data-toc-link="sandboxes">§05 · Interactive Studio</a>
-      <a href="#benchmarks-section" class="toc-chip" data-toc-link="benchmarks-section">§06 · Benchmarks</a>
+      <a href="#problem-statement" class="toc-chip active" data-toc-link="problem-statement">01 · Problem</a>
+      <a href="#architecture" class="toc-chip" data-toc-link="architecture">02 · Architecture</a>
+      <a href="#implementation" class="toc-chip" data-toc-link="implementation">03 · Implementation</a>
+      <a href="#tradeoffs" class="toc-chip" data-toc-link="tradeoffs">04 · Trade-Offs</a>
+      <a href="#sandboxes" class="toc-chip" data-toc-link="sandboxes">05 · Live Demo</a>
+      <a href="#benchmarks-section" class="toc-chip" data-toc-link="benchmarks-section">06 · Benchmarks</a>
     </div>
   </nav>
 
@@ -1410,91 +1398,87 @@
   <section id="top" class="hero">
     <div class="container">
       <div class="hero-top-row">
-        <div class="eyebrow">⚡ Capacity-Aware Multi-Path Graph Solver · &le;3-Check NOC Triage · SQLite ACID Ledger</div>
+        <div class="eyebrow">Shipment Routing &amp; Billing · Built for Amazon SCOT &amp; Networking</div>
         <div class="runtime-pill" id="runtimeModeBadge">
           <span class="pulse-dot"></span>
-          <span id="runtimeModeText">AWS CloudFront + S3 (OAC) + Python 3.12 + Bedrock (us.amazon.nova-lite-v1:0) Live</span>
+          <span id="runtimeModeText">Live on AWS · Powered by Amazon Bedrock</span>
         </div>
       </div>
 
-      <h1>RouteLedger — Capacity-Constrained Multi-Path Graph Solver, Bounded NOC Triage &amp; ACID Double-Entry Ledger</h1>
+      <h1>RouteLedger — Rerouting Traffic Around Bottlenecks With a Zero-Duplicate Billing Ledger</h1>
       <p class="hero-sub">
-        End-to-end logistics routing, operational fault isolation, and transactional settlement engine uniting a
-        <strong>Sub-Millisecond Python Min-Cost &amp; Constrained Multi-Path Graph Solver (28 Nodes / 120 Directed Links)</strong>,
-        <strong><code>&le;3</code>-Check Deterministic NOC/Floor Decision Trees + AWS Bedrock Nova Advisory</strong>, and a
-        <strong>Tamper-Evident <code>SHA-256</code> SQLite (<code>BEGIN IMMEDIATE</code> / WAL) Double-Entry Settlement Ledger</strong>.
+        When a fulfillment hub closes or a network link degrades, static shortest-path routing sends traffic straight into the bottleneck while message retries double-bill customers. RouteLedger reroutes flows around bad links in under half a millisecond and settles every invoice in a double-entry ledger with zero duplicate charges.
       </p>
 
-      <div class="headline-pills">
-        <div class="headline-pill"><span>0.121 ms / 0.465 ms</span> p50 / p99 Graph Solver Compute</div>
-        <div class="headline-pill"><span>-74.8%</span> p99 Path Latency (526.47 ms → 132.80 ms)</div>
-        <div class="headline-pill"><span>-95.33%</span> SLA Violations (35.67% → 1.67% across 300 Demands)</div>
-        <div class="headline-pill"><span>32,704.9 ev/s</span> SQLite ACID Ledger ($0.00 Drift · 0 Double Charges)</div>
+      <div class="hero-actions">
+        <a class="btn btn-accent" href="#sandboxes">▶ Try the Live Demo ↓</a>
+        <a class="btn btn-secondary" href="#architecture">See How It Works ↓</a>
+        <a class="btn btn-secondary" href="#benchmarks-section">View Test Results ↓</a>
       </div>
 
       <div class="kpi-strip">
         <div class="card kpi-card">
           <div class="kpi-val">526.47 → 132.80 ms</div>
-          <div class="kpi-label">p99 Multi-Path Latency (-74.8%)</div>
-          <div class="kpi-sub">0.121 ms p50 / 0.465 ms p99 solver · 28 nodes · 120 directed links</div>
+          <div class="kpi-label">Worst-Case Path Delay (-74.8% p99)</div>
+          <div class="kpi-sub">0.121 ms p50 / 0.465 ms p99 solver across 28 nodes &amp; 120 links</div>
         </div>
         <div class="card kpi-card">
           <div class="kpi-val">35.67% → 1.67%</div>
-          <div class="kpi-label">Network SLA Violations (-95.33%)</div>
-          <div class="kpi-sub">107/300 → 5/300 demands · -91.29% packet/unit drop (18.55% → 1.62%)</div>
+          <div class="kpi-label">Missed Delivery SLAs (-95.33%)</div>
+          <div class="kpi-sub">107/300 → 5/300 demands · Dropped volume cut by 91.29% (18.55% → 1.62%)</div>
         </div>
         <div class="card kpi-card">
           <div class="kpi-val">32,704.9 ev/s</div>
-          <div class="kpi-label">SQLite ACID Settlement Throughput</div>
-          <div class="kpi-sub">2,000-event suite + 60-way concurrent storm · 0 duplicate charges</div>
+          <div class="kpi-label">SQLite Ledger Settlement Speed</div>
+          <div class="kpi-sub">2,000 billing events + 60-thread retry storm · 0 duplicate charges</div>
         </div>
         <div class="card kpi-card">
           <div class="kpi-val">$0.00 (0¢)</div>
-          <div class="kpi-label">Double-Entry Trial-Balance Drift</div>
-          <div class="kpi-sub">19,376,379¢ Debits == Credits · 100.0% &le;3-check triage (150/150)</div>
+          <div class="kpi-label">Double-Entry Balance Drift</div>
+          <div class="kpi-sub">19,376,379¢ debits match credits · 100.0% fault accuracy (150/150)</div>
         </div>
       </div>
 
       <div class="pipeline-bar" role="region" aria-label="RouteLedger execution pipeline">
-        <div class="pipe-step"><span class="pipe-num">01</span> Hub &amp; Link-Quality Graph State</div>
+        <div class="pipe-step"><span class="pipe-num">01</span> Drop Broken &amp; Weak Links</div>
         <span class="pipe-arrow">→</span>
-        <div class="pipe-step"><span class="pipe-num">02</span> Min-Cost &amp; SNR-Threshold Solver (0.465ms p99)</div>
+        <div class="pipe-step"><span class="pipe-num">02</span> Split Traffic Across Healthy Paths</div>
         <span class="pipe-arrow">→</span>
-        <div class="pipe-step"><span class="pipe-num">03</span> &le;3-Check Fault Tree + Bedrock Nova Dispatch</div>
+        <div class="pipe-step"><span class="pipe-num">03</span> Isolate Root Cause in 3 Checks</div>
         <span class="pipe-arrow">→</span>
-        <div class="pipe-step"><span class="pipe-num">04</span> SHA-256 Idempotent ACID Double-Entry Ledger</div>
+        <div class="pipe-step"><span class="pipe-num">04</span> Settle Invoices Once in Exact Cents</div>
       </div>
     </div>
   </section>
 
   <!-- =================================================================== -->
-  <!-- §01 · PROBLEM STATEMENT                                             -->
+  <!-- 01 · PROBLEM                                                        -->
   <!-- =================================================================== -->
   <section id="problem-statement" class="section" data-spy-section="problem-statement">
     <div class="container">
       <div class="section-header">
         <div>
-          <span class="section-kicker">§01 · Problem Statement</span>
-          <h2 class="section-title">Why Static Routing Blackholes Traffic &amp; At-Least-Once Retries Corrupt Billing</h2>
+          <span class="section-kicker">01 · Problem</span>
+          <h2 class="section-title">Problem</h2>
           <p class="section-desc">
-            Physical fulfillment and backbone networks fail in the exact same instant that message-queue retry storms hammer their financial settlement pipelines.
+            Fulfillment corridors and backbone networks experience link outages at the same time that message-queue retry storms replay billing events against their settlement databases.
           </p>
         </div>
       </div>
 
-      <div class="plain-english-callout">
-        <h3><span>💡 In Plain English</span> <span class="tag tag-accent">Zero Jargon Summary</span></h3>
+      <div class="lead-callout">
+        <h3><span>Congested Corridors and Replayed Invoices</span> <span class="tag tag-accent">300 Demands · 2,000 Billing Events</span></h3>
         <p>
-          Think of a cross-country freight network (`SEA1 → ORD5 → EWR7`) or a `28`-node / `120`-link multi-hop backbone carrying `300` live traffic demands. Standard shortest-path routing picks the shortest corridor on paper and sticks to it—even when Chicago (`ORD5`) shuts down in a blizzard or a wireless feeder link drops below `8.0 dB` signal quality. Traffic piles into the broken hop, spiking p99 tail latency to <strong>526.47 ms</strong> and breaching SLAs on <strong>35.67% (`107/300`)</strong> of demands.
+          Consider a cross-country freight corridor (<code>SEA1 → ORD5 → EWR7</code>) or a <code>28</code>-node, <code>120</code>-link network carrying <code>300</code> active demands. Static shortest-path routing selects the shortest path on paper and keeps sending traffic into it even when Chicago (<code>ORD5</code>) closes in a blizzard or a wireless feeder link drops below <code>8.0 dB</code> signal quality. Queues build up on the degraded hop, raising p99 path latency to <strong>526.47 ms</strong> and missing SLAs on <strong>35.67% (107/300)</strong> of demands.
         </p>
         <p>
-          Worse, every rerouted truckload or metered bandwidth batch emits billing events over at-least-once queues like Amazon SQS. When networks hiccup, SQS replays the same message `5x`. A naive floating-point billing script charges the customer twice (`245` duplicate charges = **`$17,792.88` overbilled** in our `2,000`-event benchmark) and accumulates **`60¢` of IEEE-754 rounding drift**. <strong>RouteLedger</strong> solves the graph problem, the incident-triage problem, and the accounting problem in one deterministic stack: a Python capacity-aware multi-path solver (`0.121 ms` p50 / `0.465 ms` p99), a `<= 3`-check fault tree (`100.0%` accuracy) paired with Bedrock Nova, and a `SHA-256` SQLite `BEGIN IMMEDIATE` double-entry ledger with **`0` duplicate charges** and **`$0.00` balance drift**.
+          Every rerouted shipment or metered bandwidth batch also emits billing events over at-least-once queues such as Amazon SQS. During network timeouts, SQS redelivers the same message up to <code>5x</code>. A naive floating-point billing processor charges customers multiple times (<code>245</code> duplicate charges totaling <strong>$17,792.88</strong> overbilled in our 2,000-event benchmark) and accumulates <strong>60¢</strong> of IEEE-754 rounding drift. RouteLedger combines a capacity-aware Python graph solver (<code>0.121 ms</code> p50 / <code>0.465 ms</code> p99), a 3-check decision tree (<code>100.0%</code> accuracy on 150 incidents), and an idempotent SQLite double-entry ledger with <strong>0 duplicate charges</strong> and <strong>$0.00 balance drift</strong>.
         </p>
       </div>
 
       <div class="role-alignment-banner">
         <div style="font-size:0.9rem;">
-          <strong>🎯 Honest Scope &amp; Executed Benchmark Grounding:</strong> All routing benchmarks execute our pure-Python directed graph solver (`route_ledger/network_router.py`: M/M/1 queuing delay + `snr_db &ge; 8.0` edge pruning + 2-way residual flow splitting across `28` nodes / `120` links / `300` demands) and real SQLite `BEGIN IMMEDIATE` / WAL 60-thread concurrency (`route_ledger/double_entry_ledger.py`)—zero external solvers or unmeasured physics claims.
+          <strong>Scope &amp; Benchmark Setup:</strong> All benchmarks run our pure-Python directed graph solver (<code>route_ledger/network_router.py</code>: M/M/1 queuing delay, <code>snr_db &ge; 8.0</code> edge pruning, and 2-way residual flow splitting across <code>28</code> nodes, <code>120</code> links, and <code>300</code> demands) and SQLite <code>BEGIN IMMEDIATE</code> / WAL 60-thread concurrency (<code>route_ledger/double_entry_ledger.py</code>).
         </div>
         <span class="tag tag-pass">29/29 Unit &amp; Concurrency Tests Passing</span>
       </div>
@@ -1502,60 +1486,60 @@
       <div class="problem-grid">
         <div class="problem-card">
           <div>
-            <span class="step-badge">PROBLEM 01 · CONGESTION-BLIND STATIC ROUTING</span>
-            <h3>Static Shortest-Path Ignores Capacity Saturation &amp; Link Degradation</h3>
+            <span class="step-badge">01 · CONGESTION-BLIND ROUTING</span>
+            <h3>Static Shortest-Path Ignores Link Saturation and Signal Drops</h3>
             <p>
-              OSPF-style base-latency Dijkstra keeps pouring elephant demands into links whose effective capacity has collapsed or whose signal-to-noise threshold dropped below `8.0 dB`—triggering convex M/M/1 queuing blowups (`526.47 ms` p99) and `4,273.71 Mbps` (`18.55%`) tail-drop loss.
+              Base-latency Dijkstra keeps sending large flows onto links whose capacity has dropped or whose signal-to-noise ratio fell below <code>8.0 dB</code>. Queuing delay rises to <code>526.47 ms</code> p99 with <code>4,273.71 Mbps</code> (<code>18.55%</code>) dropped traffic.
             </p>
           </div>
-          <div class="problem-stat">🛑 Static Baseline: 107/300 (35.67%) SLA Violations · 526.47 ms p99 · 18.55% Drop</div>
+          <div class="problem-stat">Baseline: 107/300 (35.67%) SLA Violations · 526.47 ms p99 · 18.55% Drop</div>
         </div>
 
         <div class="problem-card">
           <div>
-            <span class="step-badge">PROBLEM 02 · AT-LEAST-ONCE RETRIES &amp; FLOAT DRIFT</span>
-            <h3>SQS Replay Storms Double-Bill Customers &amp; Break Trial Balance</h3>
+            <span class="step-badge">02 · DUPLICATE RETRIES &amp; FLOAT DRIFT</span>
+            <h3>Queue Replays Double-Charge Accounts and Drift Floating-Point Totals</h3>
             <p>
-              Distributed queues guarantee at-least-once delivery (`15%` duplicate retries + `72` out-of-order timestamps in our `2,000`-event workload, plus `60`-way concurrent replay bursts). Without `BEGIN IMMEDIATE` serialization, `SHA-256` payload seals, and `Decimal` cents math, retries double-bill and floats drift.
+              At-least-once queues introduce <code>15%</code> duplicate retries and <code>72</code> out-of-order timestamps in our 2,000-event workload, plus 60-way concurrent bursts. Without <code>BEGIN IMMEDIATE</code> write locks, <code>SHA-256</code> payload hashes, and integer-cent math, retries double-bill and balances drift.
             </p>
           </div>
-          <div class="problem-stat">💸 Float Baseline: 245 Duplicate Charges (+$17,792.88 Overbilled) · 60¢ Float Drift</div>
+          <div class="problem-stat">Baseline: 245 Duplicate Charges (+$17,792.88 Overbilled) · 60¢ Float Drift</div>
         </div>
 
         <div class="problem-card">
           <div>
-            <span class="step-badge">PROBLEM 03 · NOISY CASCADING ALARM LOGS</span>
-            <h3>Regex Log Scanners Confuse Weather Attenuation with Hardware Faults</h3>
+            <span class="step-badge">03 · NOISY ALARM LOGS</span>
+            <h3>Regex Log Scanners Confuse Weather Fade With Hardware Faults</h3>
             <p>
-              A single gateway SNR drop or conveyor buffer jam emits `60` interleaved log lines across downstream hops. Scanning raw logs with regex rules takes `36.95` lines per incident and misdiagnoses root cause `36.0%` of the time (`96/150` correct)—dispatching the wrong field action.
+              A gateway SNR drop or conveyor jam produces <code>60</code> interleaved log lines across downstream hops. Regex log scanning inspects <code>36.95</code> lines per incident on average and misclassifies the root cause on <code>36.0%</code> of incidents (<code>96/150</code> correct).
             </p>
           </div>
-          <div class="problem-stat">⚠️ Regex Baseline: 64.0% Accuracy (96/150) · 36.95 Log Lines Scanned / Incident</div>
+          <div class="problem-stat">Baseline: 64.0% Accuracy (96/150) · 36.95 Log Lines Scanned / Incident</div>
         </div>
       </div>
 
-      <div class="worked-example-card">
-        <span class="step-badge">CONCRETE END-TO-END WORKED EXAMPLE · ONE OUTAGE REROUTE + 60-DELIVERY SETTLEMENT STORM</span>
-        <h3 style="font-size:1.14rem; font-weight:800; margin-bottom:0.45rem;">Tracing an <code>ORD5</code> Blizzard Closure (<code>3,200 units/hr</code>) Through Routing, Triage &amp; ACID Settlement</h3>
+      <div class="trace-card">
+        <span class="step-badge">EXAMPLE · REROUTING AN ORD5 HUB CLOSURE &amp; 60-MESSAGE RETRY STORM</span>
+        <h3 style="font-size:1.14rem; font-weight:800; margin-bottom:0.45rem;">Tracing <code>SEA1 → EWR7</code> (<code>3,200 units/hr</code>) During an <code>ORD5</code> Blizzard Closure</h3>
         <p style="font-size:0.92rem; color:var(--ink-muted); line-height:1.68;">
-          Follow what happens inside <code>route_ledger/</code> when `SEA1` inducts `3,200 units/hr` bound for `EWR7` (`<= 24.0h` CPT SLA) right as `ORD5` closes in a blizzard and SQS replays settlement messages `5x`:
+          When <code>SEA1</code> inducts <code>3,200 units/hr</code> bound for <code>EWR7</code> (<code>&le; 24.0h</code> CPT target) while <code>ORD5</code> closes in a snowstorm and SQS replays settlement messages <code>5x</code>, the request moves through four steps in <code>route_ledger/</code>:
         </p>
-        <div class="worked-stages">
-          <div class="worked-stage">
-            <strong class="stage-head">Stage 1 · Graph Pruning &amp; Split (0.12 ms)</strong>
-            Static routing (`SEA1 → SLC2 → DEN4 → ORD5 → CVG3 → EWR7`) stalls all `3,200` units (`0%` CPT). RouteLedger's successive shortest augmenting-path solver prunes zero-capacity `ORD5` edges and routes `3,200 u/hr` via `SEA1 → SLC2 → CVG3 → EWR7` (`12.6h` transit, `$1.24/u`, `100.0%` CPT met).
+        <div class="trace-stages">
+          <div class="trace-stage">
+            <strong class="stage-head">Step 1 · Edge Pruning &amp; Split (0.12 ms)</strong>
+            Static routing through <code>ORD5</code> stalls all <code>3,200</code> units. RouteLedger prunes zero-capacity <code>ORD5</code> edges and routes <code>3,200 u/hr</code> via <code>SEA1 → SLC2 → CVG3 → EWR7</code> at <code>12.6h</code> transit and <code>$1.24/unit</code> (<code>100.0%</code> CPT met).
           </div>
-          <div class="worked-stage">
-            <strong class="stage-head">Stage 2 · &le;3-Check Fault Tree (0.014 ms)</strong>
-            `OperationalWorkflowEngine` evaluates `Check #1: vfd_motor_temp_c > 85.0` (`62.0°C`, pass) and `Check #2: downstream_chute_fill_pct > 92.0 && secondary_lane_available` (`98.4%`, match)—isolating `DOWNSTREAM_CHUTE_GRIDLOCK_DIVERT` in `2` deterministic checks.
+          <div class="trace-stage">
+            <strong class="stage-head">Step 2 · 3-Check Fault Tree (0.014 ms)</strong>
+            <code>OperationalWorkflowEngine</code> checks <code>vfd_motor_temp_c &gt; 85.0</code> (<code>62.0°C</code>) and <code>downstream_chute_fill_pct &gt; 92.0 &amp;&amp; secondary_lane_available</code> (<code>98.4%</code>), isolating <code>DOWNSTREAM_CHUTE_GRIDLOCK_DIVERT</code> in <code>2</code> checks.
           </div>
-          <div class="worked-stage">
-            <strong class="stage-head">Stage 3 · Live Bedrock Nova Advisory</strong>
-            Structured solver + fault-tree JSON is passed to `us.amazon.nova-lite-v1:0` via Bedrock Converse API, which synthesizes a grounded operator dispatch memo without ever guessing link capacities or root-cause codes from raw logs.
+          <div class="trace-stage">
+            <strong class="stage-head">Step 3 · Grounded Bedrock Memo</strong>
+            Verified solver and fault-tree JSON is sent to Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>), which formats an operator dispatch note directly from measured corridor state rather than raw log text.
           </div>
-          <div class="worked-stage">
-            <strong class="stage-head">Stage 4 · SHA-256 SQLite ACID Settlement</strong>
-            `IdempotentSettlementLedger` computes `US-WA` (`10.25%`) tax via `Decimal(ROUND_HALF_UP)` and posts balanced `DEBIT Receivable` / `CREDIT Revenue + Tax` entries inside `BEGIN IMMEDIATE`. When `60` concurrent SQS deliveries (`12 × 5x`) arrive, `48` duplicates are blocked with `0` double charges and `$0.00` drift.
+          <div class="trace-stage">
+            <strong class="stage-head">Step 4 · SQLite ACID Settlement</strong>
+            <code>IdempotentSettlementLedger</code> computes <code>US-WA</code> (<code>10.25%</code>) tax via <code>Decimal(ROUND_HALF_UP)</code> and posts balanced debit and credit entries inside <code>BEGIN IMMEDIATE</code>. Across <code>60</code> concurrent SQS deliveries (<code>12 × 5x</code>), <code>48</code> duplicates are rejected with <code>0</code> double charges.
           </div>
         </div>
       </div>
@@ -1563,23 +1547,23 @@
   </section>
 
   <!-- =================================================================== -->
-  <!-- §02 · SYSTEM ARCHITECTURE                                           -->
+  <!-- 02 · ARCHITECTURE                                                   -->
   <!-- =================================================================== -->
   <section id="architecture" class="section" data-spy-section="architecture">
     <div class="container">
       <div class="section-header">
         <div>
-          <span class="section-kicker">§02 · System Architecture</span>
-          <h2 class="section-title">Multi-Plane Graph Solver, Bounded Fault-Tree &amp; ACID Double-Entry Topology</h2>
+          <span class="section-kicker">02 · Architecture</span>
+          <h2 class="section-title">Architecture</h2>
           <p class="section-desc">
-            End-to-end serverless topology across CloudFront (<code>E35WFLOHTA485K</code>) + Private S3 OAC + Python 3.12 Lambda, Capacity- &amp; SNR-Constrained Multi-Path Graph Routing, `&le;3`-Check Triage + Bedrock Nova, and SQLite ACID Settlement. <strong>Click any component node below to inspect its module, invariants, and measured latency.</strong>
+            Requests flow through CloudFront, S3, and Python 3.12 Lambda into the constrained multi-path graph solver, 3-check operational fault tree, Amazon Bedrock advisory client, and SQLite ACID double-entry ledger. Click any node below to inspect its module, invariants, and measured latency.
           </p>
         </div>
       </div>
 
-      <div class="excalidraw-toolbar">
+      <div class="arch-toolbar">
         <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
-          <span class="mono" style="font-size:0.72rem; font-weight:700;">SYSTEM ARCHITECTURE · CLICK ANY COMPONENT TO INSPECT</span>
+          <span class="mono" style="font-size:0.72rem; font-weight:700;">ARCHITECTURE DIAGRAM · CLICK ANY NODE TO INSPECT</span>
           <span class="tag tag-soft" id="archZoomLabel">Zoom: 100%</span>
         </div>
         <div style="display:flex; align-items:center; gap:0.45rem; flex-wrap:wrap;">
@@ -1590,8 +1574,8 @@
         </div>
       </div>
 
-      <div class="excalidraw-viewport" id="archViewport">
-        <svg id="rlArchSvg" class="excalidraw-svg" viewBox="0 0 1220 715" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RouteLedger System Architecture Diagram">
+      <div class="arch-viewport" id="archViewport">
+        <svg id="rlArchSvg" class="arch-svg" viewBox="0 0 1220 715" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RouteLedger System Architecture Diagram">
           <defs>
             <pattern id="rlDotGrid" width="20" height="20" patternUnits="userSpaceOnUse">
               <circle cx="2" cy="2" r="1" fill="#D4D4D8" />
@@ -1650,11 +1634,11 @@
             <text x="782" y="141" text-anchor="middle" class="ex-mono" font-size="9.3" fill="#9A3412">route_ledger/web_api.py · /api/*</text>
           </g>
 
-          <!-- Tilted Sticky Note -->
+          <!-- Benchmark Callout Box -->
           <g transform="rotate(-1.6 1060 95)">
             <path d="M 938,38 L 1182,38 L 1182,136 L 1164,152 L 938,152 Z" fill="#FEF3C7" stroke="#18181B" stroke-width="2" />
             <path d="M 1164,152 L 1164,136 L 1182,136" fill="#FDE68A" stroke="#18181B" stroke-width="1.6" />
-            <text x="952" y="64" class="ex-hand" font-size="19" font-weight="700" fill="#92400E">📌 Sticky Note: Verified Eval</text>
+            <text x="952" y="64" class="ex-hand" font-size="19" font-weight="700" fill="#92400E">Verified Benchmark Totals</text>
             <text x="952" y="86" class="ex-hand" font-size="17" font-weight="600" fill="#18181B">• 526.5→132.8ms p99 (-74.8%)</text>
             <text x="952" y="107" class="ex-hand" font-size="17" font-weight="600" fill="#18181B">• 35.7%→1.7% SLA · 0.465ms</text>
             <text x="952" y="129" class="ex-hand" font-size="17" font-weight="700" fill="#065F46">• 32,705 ev/s · $0.00 Drift</text>
@@ -1785,33 +1769,33 @@
   </section>
 
   <!-- =================================================================== -->
-  <!-- §03 · IMPLEMENTATION                                                -->
+  <!-- 03 · IMPLEMENTATION                                                 -->
   <!-- =================================================================== -->
   <section id="implementation" class="section" data-spy-section="implementation">
     <div class="container">
       <div class="section-header">
         <div>
-          <span class="section-kicker">§03 · Implementation</span>
-          <h2 class="section-title">Core Python Graph Solver, Fault-Tree &amp; SQLite ACID Modules</h2>
+          <span class="section-kicker">03 · Implementation</span>
+          <h2 class="section-title">Implementation</h2>
           <p class="section-desc">
-            Every constrained shortest-path solver, residual flow splitter, bounded operational decision tree, and `BEGIN IMMEDIATE` double-entry SQLite settlement engine in <code>route_ledger/</code> runs in zero-dependency Python stdlib.
+            The constrained shortest-path solver, 2-way residual flow splitter, 3-check operational decision tree, and SQLite <code>BEGIN IMMEDIATE</code> double-entry ledger in <code>route_ledger/</code> are built with the Python standard library.
           </p>
         </div>
       </div>
 
       <div class="dual-layer-grid">
-        <div class="intuition-card">
-          <span class="step-badge">PLAIN-ENGLISH INTUITION</span>
-          <h3>Why Residual Flow Splitting &amp; Double-Entry Integer Cents Matter</h3>
+        <div class="overview-card">
+          <span class="step-badge">FLOW SPLITTING &amp; INTEGER-CENT ACCOUNTING</span>
+          <h3>Residual Multi-Path Routing and Atomic Double-Entry Settlement</h3>
           <p>
-            When a single highway or network trunk cannot carry an elephant shipment alone, pushing 100% of the traffic onto one alternate road just creates a new traffic jam. RouteLedger saturates the cheapest valid path up to its safe headroom and automatically splits the remaining flow onto a second independent bypass. Then, on the billing side, every invoice is stored in integer cents (`19,376,379¢`) rather than binary floats (`0.1 + 0.2 != 0.3`), with every Debit matched by equal Revenue + Tax Credits inside a single atomic SQLite write lock.
+            When a single corridor cannot carry a large shipment alone, sending 100% of the load down one alternate route creates a second bottleneck. RouteLedger fills the lowest-cost healthy path up to its safe headroom and splits the remainder onto a second independent bypass. On the settlement side, every invoice is stored in integer cents (<code>19,376,379¢</code>) rather than binary floats, with every debit matched by equal revenue and tax credits inside a single SQLite write transaction.
           </p>
         </div>
-        <div class="hood-card">
-          <span class="step-badge">UNDER THE HOOD · EXACT CODE, MATH &amp; DATA STRUCTURES</span>
+        <div class="spec-card">
+          <span class="step-badge">CORE EQUATIONS &amp; LOCKING SEMANTICS</span>
           <h3>M/M/1 Convex Edge Costs, Canonical <code>SHA-256</code> Seals &amp; <code>BEGIN IMMEDIATE</code></h3>
           <p>
-            In <code>route_ledger/network_router.py</code>, edge latency is modeled as <code>d(e, Δf) = d_base + d_noise + d_queue((f + Δf)/C_eff)</code> with hard pruning when <code>outage == True</code> or <code>snr_db &lt; 8.0</code>, solved via `heapq` Dijkstra + 2-way residual augmentation (`0.1211 ms` p50 / `0.4648 ms` p99). In <code>double_entry_ledger.py</code>, `BEGIN IMMEDIATE` acquires SQLite's reserved write lock up front, verifies `SHA256(canonical_json)` against `settlement_events(idempotency_key)`, and quantizes basis-point taxes (`US-WA 1025`, `DE 1900`, `JP 1000`, `BR 2650`) via `Decimal.quantize(ROUND_HALF_UP)`.
+            In <code>route_ledger/network_router.py</code>, edge latency is modeled as <code>d(e, Δf) = d_base + d_noise + d_queue((f + Δf)/C_eff)</code> with hard pruning when <code>outage == True</code> or <code>snr_db &lt; 8.0</code>, solved via <code>heapq</code> Dijkstra + 2-way residual augmentation (<code>0.1211 ms</code> p50 / <code>0.4648 ms</code> p99). In <code>double_entry_ledger.py</code>, <code>BEGIN IMMEDIATE</code> acquires SQLite's reserved write lock up front, checks <code>SHA256(canonical_json)</code> against <code>settlement_events(idempotency_key)</code>, and quantizes basis-point taxes (<code>US-WA 1025</code>, <code>DE 1900</code>, <code>JP 1000</code>, <code>BR 2650</code>) via <code>Decimal.quantize(ROUND_HALF_UP)</code>.
           </p>
         </div>
       </div>
@@ -1823,11 +1807,11 @@
             <span style="color:#7DD3FC;">route_ledger/network_router.py</span>
           </div>
           <div class="module-card-body">
-            <h3>28-Node / 120-Link Constrained Dijkstra &amp; 2-Way Residual Flow Splitter</h3>
+            <h3>28-Node / 120-Link Constrained Dijkstra &amp; 2-Way Flow Splitter</h3>
             <ul class="module-list">
-              <li><strong>Capacity &amp; SNR-Threshold Pruning:</strong> Evaluates real-time `effective_capacity_mbps`, `residual_mbps`, and `snr_db &ge; 8.0` across `28` nodes and `120` directed links before admitting any edge into candidate paths.</li>
-              <li><strong>Convex Congestion Avoidance &amp; Splitting:</strong> Accounts for non-linear M/M/1 queuing delay and splits elephant demands across 2 residual subflows (`6` split flows in the `300`-demand suite) with flow-expiration bandwidth reclamation.</li>
-              <li><strong>Measured Tail-Latency &amp; SLA Gains:</strong> Cuts p99 path latency by **`74.78%` (`526.47 ms → 132.80 ms`)** and SLA violations by **`95.33%` (`107/300 → 5/300`)** in `0.1211 ms` p50 / `0.4648 ms` p99.</li>
+              <li><strong>Capacity &amp; SNR Pruning:</strong> Checks real-time <code>effective_capacity_mbps</code>, <code>residual_mbps</code>, and <code>snr_db &ge; 8.0</code> across <code>28</code> nodes and <code>120</code> directed links before admitting any edge into candidate paths.</li>
+              <li><strong>Congestion-Aware Splitting:</strong> Models non-linear M/M/1 queuing delay and splits large demands across 2 residual subflows (<code>6</code> split flows in the <code>300</code>-demand suite) while reclaiming bandwidth as flows expire.</li>
+              <li><strong>Measured Latency &amp; SLA Gains:</strong> Cuts p99 path latency by <strong>74.78% (526.47 ms → 132.80 ms)</strong> and SLA violations by <strong>95.33% (107/300 → 5/300)</strong> in <code>0.1211 ms</code> p50 / <code>0.4648 ms</code> p99.</li>
             </ul>
             <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
               <span class="tag tag-pass">-74.8% p99 Latency</span>
@@ -1844,9 +1828,9 @@
           <div class="module-card-body">
             <h3>SQLite <code>BEGIN IMMEDIATE</code> / WAL Idempotency &amp; Multi-Region Tax Engine</h3>
             <ul class="module-list">
-              <li><strong>Cryptographic Payload Idempotency:</strong> Seals every `UsageOrderEvent` with canonical sorted-key `SHA-256`; exact SQS replays return cached receipts (`0` double charges), while mutated payload replays raise `IdempotencyConflictError` and roll back.</li>
-              <li><strong>60-Way Concurrent Contention Proof:</strong> Verified under both the `2,000`-event benchmark (`32,704.9 ev/s`, `72` out-of-order watermarks) and a 60-worker `ThreadPoolExecutor` SQLite WAL contention storm (`60 → 12` settled, `48` blocked).</li>
-              <li><strong>Zero-Drift Conservation:</strong> Enforces atomic credit limits, SKU inventory reservations, and `Decimal(ROUND_HALF_UP)` taxes across `US-WA`, `DE`, `JP`, and `BR` with `19,376,379¢` `SUM(Debits) == SUM(Credits)` (`0¢` drift).</li>
+              <li><strong>Payload-Hashed Idempotency:</strong> Seals each <code>UsageOrderEvent</code> with canonical sorted-key <code>SHA-256</code>. Exact SQS replays return cached receipts (<code>0</code> double charges), while mutated replays raise <code>IdempotencyConflictError</code> and roll back.</li>
+              <li><strong>60-Thread Concurrency Verification:</strong> Tested on both the <code>2,000</code>-event benchmark (<code>32,704.9 ev/s</code>, <code>72</code> out-of-order watermarks) and a 60-worker <code>ThreadPoolExecutor</code> SQLite WAL retry storm (<code>60 → 12</code> settled, <code>48</code> blocked).</li>
+              <li><strong>Exact Cent Conservation:</strong> Enforces credit limits, inventory reservations, and <code>Decimal(ROUND_HALF_UP)</code> taxes across <code>US-WA</code>, <code>DE</code>, <code>JP</code>, and <code>BR</code> with <code>19,376,379¢</code> <code>SUM(Debits) == SUM(Credits)</code> (<code>0¢</code> drift).</li>
             </ul>
             <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
               <span class="tag tag-pass">32,704.9 events/sec</span>
@@ -1857,15 +1841,15 @@
 
         <div class="module-card">
           <div class="module-card-head">
-            <span>MODULE 03 · BOUNDED NOC &amp; FLOOR TRIAGE</span>
+            <span>MODULE 03 · FAULT-TREE TRIAGE</span>
             <span style="color:#DDD6FE;">route_ledger/noc_workflow.py</span>
           </div>
           <div class="module-card-body">
-            <h3>Deterministic <code>&le;3</code>-Check Operational Decision Trees</h3>
+            <h3>Bounded 3-Check Operational Decision Trees</h3>
             <ul class="module-list">
-              <li><strong>5 Production Alarm Classes:</strong> Covers `GROUND_GATEWAY_SNR_DROP`, `SATELLITE_HANDOFF_PACKET_LOSS`, `ISP_BILLING_RECONCILIATION_MISMATCH`, `FULFILLMENT_CONVEYOR_BUFFER_JAM`, and `INVENTORY_BIN_COUNT_DRIFT`.</li>
-              <li><strong>Hardware vs. Attenuation Isolation:</strong> Separates LNA bias hardware failures from weather rain fade and VFD motor overheats from downstream chute gridlock in **`2.41` mean checks** (`max = 3`, `0.0029 ms`/incident).</li>
-              <li><strong>100.0% Verified Accuracy:</strong> Diagnoses **`150/150` (`100.0%`)** benchmark incidents vs `64.0%` (`96/150`) and `36.95` scanned lines for unstructured log regex matching (`-93.47%` steps).</li>
+              <li><strong>Five Production Alarm Classes:</strong> Handles <code>GROUND_GATEWAY_SNR_DROP</code>, <code>SATELLITE_HANDOFF_PACKET_LOSS</code>, <code>ISP_BILLING_RECONCILIATION_MISMATCH</code>, <code>FULFILLMENT_CONVEYOR_BUFFER_JAM</code>, and <code>INVENTORY_BIN_COUNT_DRIFT</code>.</li>
+              <li><strong>Hardware vs. Weather Isolation:</strong> Separates LNA bias hardware faults from rain attenuation and motor overheats from chute congestion in <strong>2.41 mean checks</strong> (<code>max = 3</code>, <code>0.0029 ms</code>/incident).</li>
+              <li><strong>100.0% Diagnostic Accuracy:</strong> Correctly classifies <strong>150/150 (100.0%)</strong> benchmark incidents compared to <code>64.0%</code> (<code>96/150</code>) and <code>36.95</code> scanned lines for regex log matching (<code>-93.47%</code> steps).</li>
             </ul>
             <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
               <span class="tag tag-pass">100.0% Accuracy (150/150)</span>
@@ -1876,19 +1860,19 @@
 
         <div class="module-card">
           <div class="module-card-head">
-            <span>MODULE 04 · CLOUDFRONT API &amp; BEDROCK NOVA</span>
+            <span>MODULE 04 · API &amp; BEDROCK DISPATCH</span>
             <span style="color:#FDE68A;">route_ledger/web_api.py · aws_lambda_handler.py</span>
           </div>
           <div class="module-card-body">
-            <h3>Interactive Corridor Topologies &amp; Grounded AWS Bedrock Dispatch</h3>
+            <h3>Corridor Optimization API &amp; Grounded Amazon Bedrock Notes</h3>
             <ul class="module-list">
-              <li><strong>Dual Interactive Graph Topologies:</strong> Exposes `POST /api/topology/optimize` for both middle-mile hub corridors (`SEA1 → EWR7`) and SNR-gated multi-hop relay trunks (`Redmond ↔ Frankfurt`) with optional auto-settlement into SQLite.</li>
-              <li><strong>Grounded Bedrock Nova Synthesis:</strong> Invokes live **Amazon Bedrock (`us.amazon.nova-lite-v1:0`)** strictly over verified solver allocations and `<= 3`-check fault-tree outputs so the LLM never invents routing metrics.</li>
-              <li><strong>Zero-Idle Serverless Deployment:</strong> Served globally via CloudFront (`E35WFLOHTA485K`) + Private S3 OAC + Python 3.12 Lambda with instant client fallback.</li>
+              <li><strong>Two Live Network Topologies:</strong> Serves <code>POST /api/topology/optimize</code> for middle-mile freight hubs (<code>SEA1 → EWR7</code>) and SNR-gated multi-hop relay trunks (<code>Redmond ↔ Frankfurt</code>) with optional auto-settlement into SQLite.</li>
+              <li><strong>Grounded Bedrock Summaries:</strong> Calls <strong>Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>)</strong> over verified solver allocations and 3-check fault-tree outputs so the model never guesses link metrics from raw logs.</li>
+              <li><strong>Serverless Hosting:</strong> Delivered via CloudFront, S3, and Python 3.12 Lambda with deterministic client fallback.</li>
             </ul>
             <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <span class="tag tag-pass">CloudFront + S3 OAC Live</span>
-              <span class="tag tag-accent">Bedrock Nova Lite Grounded</span>
+              <span class="tag tag-pass">Serverless Python 3.12</span>
+              <span class="tag tag-accent">Grounded Bedrock Advisory</span>
             </div>
           </div>
         </div>
@@ -1897,33 +1881,33 @@
   </section>
 
   <!-- =================================================================== -->
-  <!-- §04 · DESIGN TRADE-OFFS                                             -->
+  <!-- 04 · TRADE-OFFS                                                     -->
   <!-- =================================================================== -->
   <section id="tradeoffs" class="section" data-spy-section="tradeoffs">
     <div class="container">
       <div class="section-header">
         <div>
-          <span class="section-kicker">§04 · Design Trade-Offs</span>
-          <h2 class="section-title">Key Routing, Concurrency &amp; Financial Engineering Trade-Offs</h2>
+          <span class="section-kicker">04 · Trade-Offs</span>
+          <h2 class="section-title">Trade-Offs</h2>
           <p class="section-desc">
-            Why constrained polynomial graph search beats heavy MILP solvers on sub-millisecond hot paths, why SQLite `BEGIN IMMEDIATE` + `SHA-256` eliminates Read-Committed races, and why fault trees precede LLMs.
+            Constrained polynomial graph search vs. global MILP solvers, immediate SQLite write locks vs. read-committed deduplication, and deterministic fault trees vs. raw-log LLM prompts.
           </p>
         </div>
       </div>
 
       <div class="dual-layer-grid">
-        <div class="intuition-card">
-          <span class="step-badge">PLAIN-ENGLISH INTUITION</span>
-          <h3>Sub-Millisecond Rerouting Over Global LP Optimality &amp; Immediate Write Locks Over Optimistic Retries</h3>
+        <div class="overview-card">
+          <span class="step-badge">SOLVER LATENCY &amp; WRITE SERIALIZATION</span>
+          <h3>Sub-Millisecond Graph Search and Upfront SQLite Write Locks</h3>
           <p>
-            A global Mixed-Integer Linear Program (MILP) might shave 1% off network cost, but taking `50–200 ms` per demand stalls real-time packet/freight dispatch. Constrained Dijkstra with 2-way residual splitting captures **99.0% (`297/300`)** demand delivery in **0.465 ms p99**. Similarly, checking "has this invoice ID been paid?" with a plain `SELECT` before `INSERT` lets two simultaneous SQS workers pass the check at the same microsecond; acquiring `BEGIN IMMEDIATE` serializes writers cleanly with zero race windows.
+            A global Mixed-Integer Linear Program (MILP) can optimize multi-commodity cost by another ~1%, but <code>50–200 ms</code> solve times stall real-time routing. Constrained Dijkstra with 2-way residual splitting delivers <strong>99.0% (297/300)</strong> of demands in <strong>0.465 ms p99</strong>. On the ledger side, checking an invoice ID with a plain <code>SELECT</code> before <code>INSERT</code> lets two concurrent SQS workers pass the check simultaneously; <code>BEGIN IMMEDIATE</code> serializes writers up front with zero race windows.
           </p>
         </div>
-        <div class="hood-card">
-          <span class="step-badge">UNDER THE HOOD · EXACT CODE, MATH &amp; DATA STRUCTURES</span>
-          <h3>2-Subflow Bound (Preventing Reordering) &amp; Canonical Payload Hashing</h3>
+        <div class="spec-card">
+          <span class="step-badge">REORDERING BOUNDS &amp; PAYLOAD SEALS</span>
+          <h3>Two-Subflow Split Cap and <code>(idempotency_key, payload_sha256)</code> Verification</h3>
           <p>
-            Splitting a demand across `k > 2` arbitrary paths causes severe TCP/ULD out-of-order arrival skew; capping `max_splits = 2` clears elephant bottlenecks while bounding arrival jitter. In `double_entry_ledger.py`, keying idempotency on `(idempotency_key, payload_sha256)` distinguishes benign network retries (`is_duplicate=True`) from upstream bug/tamper collisions (`IdempotencyConflictError` + `ROLLBACK`).
+            Splitting a demand across <code>k &gt; 2</code> paths increases packet and freight arrival skew. Capping <code>max_splits = 2</code> clears single-link bottlenecks while bounding arrival jitter. In <code>double_entry_ledger.py</code>, keying idempotency on <code>(idempotency_key, payload_sha256)</code> separates normal queue retries (<code>is_duplicate=True</code>) from payload mutations (<code>IdempotencyConflictError</code> + <code>ROLLBACK</code>).
           </p>
         </div>
       </div>
@@ -1933,29 +1917,29 @@
           <thead>
             <tr>
               <th>System Dimension</th>
-              <th>Naive / Fast-But-Unsafe Baseline</th>
-              <th>Over-Engineered / Fragile Alternative</th>
-              <th class="winner-col">RouteLedger Production Choice ★</th>
+              <th>Naive Baseline</th>
+              <th>Heavyweight or Fragile Alternative</th>
+              <th class="winner-col">RouteLedger Approach ★</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>Multi-Hop Path Solver</strong></td>
-              <td>Static OSPF base-latency Dijkstra (`526.47 ms` p99, `35.67%` SLA violations, `18.55%` drop)</td>
-              <td>Global MILP multi-commodity flow solver (`50–250 ms` per epoch, external C++ solver deps)</td>
-              <td class="winner-col"><strong>Constrained M/M/1 Dijkstra + `snr_db &ge; 8.0` Gate + 2-Way Split</strong> (`132.80 ms` p99, `1.67%` SLA violations, `0.465 ms` p99 compute)</td>
+              <td>Static OSPF base-latency Dijkstra (<code>526.47 ms</code> p99, <code>35.67%</code> SLA violations, <code>18.55%</code> drop)</td>
+              <td>Global MILP multi-commodity solver (<code>50–250 ms</code> per epoch, external C++ solver dependencies)</td>
+              <td class="winner-col"><strong>Constrained M/M/1 Dijkstra + <code>snr_db &ge; 8.0</code> Gate + 2-Way Split</strong> (<code>132.80 ms</code> p99, <code>1.67%</code> SLA violations, <code>0.465 ms</code> p99 compute)</td>
             </tr>
             <tr>
               <td><strong>At-Least-Once Settlement</strong></td>
-              <td>IEEE-754 float processor without idempotency (`245` double-charges, `+$17,792.88`, `60¢` drift)</td>
+              <td>IEEE-754 float processor without idempotency (<code>245</code> double-charges, <code>+$17,792.88</code>, <code>60¢</code> drift)</td>
               <td>Key-only dedup under Read-Committed isolation (race-prone on concurrent bursts; misses mutated payloads)</td>
-              <td class="winner-col"><strong>SQLite `BEGIN IMMEDIATE` / WAL + Canonical `SHA-256` + `Decimal` Cents</strong> (`0` double-charges, `0¢` drift, `32,704.9 ev/s`)</td>
+              <td class="winner-col"><strong>SQLite <code>BEGIN IMMEDIATE</code> / WAL + Canonical <code>SHA-256</code> + <code>Decimal</code> Cents</strong> (<code>0</code> double-charges, <code>0¢</code> drift, <code>32,704.9 ev/s</code>)</td>
             </tr>
             <tr>
-              <td><strong>Cascading Incident Triage</strong></td>
-              <td>Unstructured regex log scanning (`64.0%` accuracy across `36.95` log lines)</td>
-              <td>Raw 60-line log dump straight into an LLM (`>500 ms` latency + hallucinated hardware swaps)</td>
-              <td class="winner-col"><strong>Deterministic `&le;3`-Check Fault Tree (`100.0%` acc, `2.41` checks) → Bedrock Nova Runbook</strong></td>
+              <td><strong>Incident Triage</strong></td>
+              <td>Unstructured regex log scanning (<code>64.0%</code> accuracy across <code>36.95</code> log lines)</td>
+              <td>Raw 60-line log dump straight into an LLM (<code>&gt;500 ms</code> latency and unverified hardware swaps)</td>
+              <td class="winner-col"><strong>Deterministic 3-Check Fault Tree (<code>100.0%</code> accuracy, <code>2.41</code> checks) + Bedrock Runbook</strong></td>
             </tr>
           </tbody>
         </table>
@@ -1963,24 +1947,24 @@
 
       <div class="takeaway-grid">
         <div class="takeaway-card">
-          <span class="tag tag-pass">TAKEAWAY 01 · HARD EDGE PRUNING</span>
-          <h3>Prune Degraded Edges Before Shortest-Path Search</h3>
+          <span class="tag tag-pass">PRINCIPLE 01 · HARD EDGE PRUNING</span>
+          <h3>Filter Degraded Links Before Shortest-Path Search</h3>
           <p>
-            Removing links with `snr_db &lt; 8.0` or zero residual capacity before heap expansion prevents shortest-path search from ever routing onto brownout corridors—cutting SLA breaches by `95.33%`.
+            Removing links with <code>snr_db &lt; 8.0</code> or zero residual capacity before heap expansion keeps shortest-path search off brownout corridors and reduces SLA breaches by <code>95.33%</code>.
           </p>
         </div>
         <div class="takeaway-card">
-          <span class="tag tag-accent">TAKEAWAY 02 · HASHED IDEMPOTENCY</span>
-          <h3>Idempotency Keys Need Cryptographic Payload Seals</h3>
+          <span class="tag tag-accent">PRINCIPLE 02 · HASHED IDEMPOTENCY</span>
+          <h3>Pair Idempotency Keys With Payload Digests</h3>
           <p>
-            Storing `payload_sha256` alongside `idempotency_key` turns silent billing corruption (reusing an old key with a modified quantity) into an immediate, auditable `ROLLBACK`.
+            Storing <code>payload_sha256</code> alongside <code>idempotency_key</code> turns accidental key reuse with a modified quantity into an immediate, auditable transaction rollback.
           </p>
         </div>
         <div class="takeaway-card">
-          <span class="tag tag-purple">TAKEAWAY 03 · DETERMINISTIC FIRST, LLM SECOND</span>
-          <h3>Fault Trees Guarantee `100%` Root-Cause Precision</h3>
+          <span class="tag tag-purple">PRINCIPLE 03 · CHECK TELEMETRY FIRST</span>
+          <h3>Run Structured Fault Checks Before Calling the LLM</h3>
           <p>
-            Evaluating `<= 3` telemetry predicates in `0.0029 ms` locks in the exact root cause (`150/150`), letting Amazon Bedrock Nova focus on actionable human operator communication.
+            Evaluating at most 3 telemetry predicates in <code>0.0029 ms</code> locks in the root cause (<code>150/150</code>), so Amazon Bedrock writes clear operator instructions from verified facts.
           </p>
         </div>
       </div>
@@ -1988,39 +1972,39 @@
   </section>
 
   <!-- =================================================================== -->
-  <!-- §05 · INTERACTIVE STUDIO                                            -->
+  <!-- 05 · LIVE DEMO                                                      -->
   <!-- =================================================================== -->
   <main id="sandboxes" class="container tabs-wrapper" data-spy-section="sandboxes">
     <div class="section-header" style="margin-bottom:1rem;">
       <div>
-        <span class="section-kicker">§05 · Interactive Studio</span>
-        <h2 class="section-title">Live Multi-Path Graph Topologies, 60x SQS Retry Storm &amp; Sample Reroutes</h2>
+        <span class="section-kicker">05 · Live Demo</span>
+        <h2 class="section-title">Live Demo</h2>
         <p class="section-desc">
-          Connected live to CloudFront <code>/api/*</code> + Python 3.12 Lambda + Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>). Test hub closures, `&lt;8.0 dB` link attenuation rerouting, 60-delivery SQLite ACID retry storms, and `SHA-256` tamper traps.
+          Connected to live AWS Lambda endpoints and Amazon Bedrock. Simulate hub closures, link signal drops, 60-message SQS retry storms, and SQLite payload-tamper checks.
         </p>
       </div>
     </div>
 
-    <div class="tab-bar" role="tablist" aria-label="RouteLedger Interactive Studio Tabs">
+    <div class="tab-bar" role="tablist" aria-label="RouteLedger Live Demo Tabs">
       <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="scot-network" onclick="switchTab('scot-network')">
-        <span class="tab-btn-eyebrow">Sandbox 01 · Hub Corridor Graph</span>
-        <span class="tab-btn-title">1. Middle-Mile Fulfillment Graph (SEA1 → EWR7)</span>
-        <span class="tab-btn-metric">24.0h CPT SLA · Augmenting Multi-Path Split</span>
+        <span class="tab-btn-eyebrow">01 · Freight Corridors</span>
+        <span class="tab-btn-title">Reroute Hub Outages (SEA1 → EWR7)</span>
+        <span class="tab-btn-metric">24.0h CPT Target · Multi-Corridor Split</span>
       </button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="leo-mesh" onclick="switchTab('leo-mesh')">
-        <span class="tab-btn-eyebrow">Sandbox 02 · SNR-Threshold Graph</span>
-        <span class="tab-btn-title">2. Multi-Hop Relay &amp; SNR-Gated Router</span>
-        <span class="tab-btn-metric">&ge;8.0 dB SNR Gate · 2-Way Residual Subflows</span>
+        <span class="tab-btn-eyebrow">02 · Network Relay</span>
+        <span class="tab-btn-title">Split Traffic Around Weak Signal Links</span>
+        <span class="tab-btn-metric">&ge;8.0 dB SNR Gate · 2-Way Subflows</span>
       </button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="acid-ledger" onclick="switchTab('acid-ledger')">
-        <span class="tab-btn-eyebrow">Sandbox 03 · Transactional Billing</span>
-        <span class="tab-btn-title">3. 60x SQS Storm &amp; SHA-256 ACID Ledger</span>
-        <span class="tab-btn-metric">Debits == Credits · $0.00 Drift · Tamper Trap</span>
+        <span class="tab-btn-eyebrow">03 · Double-Entry Ledger</span>
+        <span class="tab-btn-title">Run 60x SQS Retry &amp; Tamper Tests</span>
+        <span class="tab-btn-metric">Debits == Credits · $0.00 Drift</span>
       </button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="benchmarks" id="benchmarks" onclick="switchTab('benchmarks')">
-        <span class="tab-btn-eyebrow">Sandbox 04 · Sample Demands &amp; CLI</span>
-        <span class="tab-btn-title">4. Per-Demand Reroute Trace &amp; Reproducer</span>
-        <span class="tab-btn-metric">DMD-0037..DMD-0261 · 29/29 Unit Tests</span>
+        <span class="tab-btn-eyebrow">04 · Sample Traces &amp; CLI</span>
+        <span class="tab-btn-title">Inspect Demand Paths &amp; Run Locally</span>
+        <span class="tab-btn-metric">DMD-0037..DMD-0261 · 29/29 Tests</span>
       </button>
     </div>
 
@@ -2028,17 +2012,11 @@
     <!-- TAB 1: SCOT MIDDLE-MILE FULFILLMENT NETWORK                        -->
     <!-- ================================================================== -->
     <section id="panel-scot-network" class="tab-panel active" role="tabpanel">
-      <div class="sandbox-guide-banner">
-        <strong class="guide-title">🧭 How to Try This Sandbox (What to Click &amp; What Happens)</strong>
-        <strong>1.</strong> Click <strong>❄️ ORD5 Blizzard</strong> or <strong>⚠️ DEN4 Linehaul Outage</strong> and drag the <strong>Induct Parcel Demand</strong> slider up toward <code>5,200 units/hr</code>.
-        <strong>2.</strong> Watch the blueprint graph sever `ORD5` and split parcel volume across `SEA1 → SLC2 → CVG3 → EWR7` and `DFW6` bypasses with `0` CPT breaches, then click <strong>⚡ Optimize + Diagnose via AWS Bedrock Nova</strong> to run the `&le;3`-check fault tree + live Bedrock dispatch advisory and auto-post the freight invoice to the ACID ledger!
-      </div>
-
       <div class="sim-header">
         <div>
-          <h2 class="sim-title">Middle-Mile Fulfillment Corridor Graph (<code>SEA1 → EWR7</code>) &amp; Outage Reroute Solver</h2>
+          <h2 class="sim-title">Freight Corridor Rerouting (<code>SEA1 → EWR7</code>)</h2>
           <p class="sim-desc">
-            Successive shortest augmenting-path min-cost solver across <code>SEA1</code>, <code>SLC2</code>, <code>DEN4</code>, <code>ORD5</code>, <code>DFW8</code>, <code>ATL6</code>, <code>CVG3</code>, and <code>EWR7</code>. Drag parcel demand up to <code>5,200 units/hr</code> or inject an <code>ORD5 Blizzard</code> to watch sub-millisecond multi-corridor rerouting.
+            Select <strong>ORD5 Blizzard</strong> or <strong>DEN4 Linehaul Outage</strong> and drag parcel demand up to <code>5,200 units/hr</code> to see shipments split across <code>SLC2 → CVG3</code> and <code>DFW8</code> bypasses. Click <strong>Optimize + Diagnose via AWS Bedrock Nova</strong> to run the 3-check fault tree and settle the route to the ledger.
           </p>
         </div>
         <span class="tag tag-accent" id="scotComputeTag">Solver: 0.12 ms · CPT &le; 24.0h</span>
@@ -2158,17 +2136,11 @@
     <!-- TAB 2: SNR-THRESHOLD & CAPACITY-AWARE MULTI-HOP RELAY ROUTER       -->
     <!-- ================================================================== -->
     <section id="panel-leo-mesh" class="tab-panel" role="tabpanel">
-      <div class="sandbox-guide-banner">
-        <strong class="guide-title">🧭 How to Try This Sandbox (What to Click &amp; What Happens)</strong>
-        <strong>1.</strong> Click <strong>🌧️ Feeder SNR Drop (5.4 dB &lt; 8.0 dB)</strong> or <strong>⚠️ Primary Relay Congestion (6.8 dB)</strong> and drag <strong>Backbone Trunk Demand</strong> up to <code>64.0 Gbps</code>.
-        <strong>2.</strong> Watch constrained Dijkstra prune edges below the <code>8.0 dB</code> SNR threshold and split excess Gbps across Plane-1 / Plane-2 diversity relays and terrestrial gateways (`Ashburn`, `Dublin`) with `0.0 Gbps` packet loss, while <strong>⚡ Run Link-State + Bedrock Advisory</strong> synthesizes the NOC runbook.
-      </div>
-
       <div class="sim-header">
         <div>
-          <h2 class="sim-title">SNR-Threshold &amp; Capacity-Aware Multi-Hop Backbone Graph Router</h2>
+          <h2 class="sim-title">Multi-Hop Relay Router With <code>8.0 dB</code> Signal Pruning</h2>
           <p class="sim-desc">
-            Dynamic `snr_db &ge; 8.0` threshold pruning and 2-way residual flow-splitting graph solver between <code>Gateway-Redmond</code> and <code>Gateway-Frankfurt</code> across primary (`LEO-Orb-14/22/31`) and diversity (`LEO-Orb-18/26`, `Ashburn`, `Dublin`) relay hops.
+            Select <strong>Feeder SNR Drop (5.4 dB)</strong> or <strong>Primary Relay Congestion (6.8 dB)</strong> and drag trunk demand up to <code>64.0 Gbps</code>. Links below <code>8.0 dB</code> are pruned before search and excess Gbps splits across diversity relays and terrestrial gateways (<code>Ashburn</code>, <code>Dublin</code>) with zero packet loss.
           </p>
         </div>
         <span class="tag tag-accent" id="leoComputeTag">Router: 0.14 ms · Min SNR &ge; 8.0 dB</span>
@@ -2307,17 +2279,11 @@
     <!-- TAB 3: 60x SQS RETRY STORM & TAMPER-EVIDENT SHA-256 ACID LEDGER    -->
     <!-- ================================================================== -->
     <section id="panel-acid-ledger" class="tab-panel" role="tabpanel">
-      <div class="sandbox-guide-banner">
-        <strong class="guide-title">🧭 How to Try This Sandbox (What to Click &amp; What Happens)</strong>
-        <strong>1.</strong> Click <strong>⚡ Fire 60x Duplicate SQS Settlement Storm</strong> (`POST /api/ledger/retry-storm`) to blast `60` deliveries (`12` unique events × `5x` replay with out-of-order timestamps across `US-WA`, `DE`, `JP`, `BR`): watch `48` duplicates get blocked with `0` double charges while `SUM(Debits) == SUM(Credits)` stays exact to the cent (`$0.00` drift).
-        <strong>2.</strong> Click <strong>🛡️ Simulate SQLite Ledger Tamper</strong> (`POST /api/ledger/tamper-test`) to replay an existing `idempotency_key` with a mutated quantity (`32.000 → 999.000`) and watch SQLite `BEGIN IMMEDIATE` + `SHA-256` throw `IdempotencyConflictError` and roll back cleanly!
-      </div>
-
       <div class="sim-header">
         <div>
-          <h2 class="sim-title">60x SQS Retry Storm &amp; Tamper-Evident SHA-256 ACID Double-Entry Ledger</h2>
+          <h2 class="sim-title">60x SQS Retry Storm &amp; Double-Entry SQLite Settlement Ledger</h2>
           <p class="sim-desc">
-            SQLite <code>BEGIN IMMEDIATE</code> / WAL settlement engine enforcing canonical <code>SHA-256</code> payload idempotency, out-of-order per-account watermarks, exact <code>Decimal(ROUND_HALF_UP)</code> tax postings across <code>US-WA</code>, <code>DE</code>, <code>JP</code>, and <code>BR</code>, and zero-drift double-entry conservation.
+            Click <strong>Fire 60x Duplicate SQS Settlement Storm</strong> to send 60 deliveries (12 unique events replayed 5x across <code>US-WA</code>, <code>DE</code>, <code>JP</code>, and <code>BR</code>) and verify <code>0</code> duplicate charges and <code>0¢</code> balance drift. Click <strong>Simulate SQLite Ledger Tamper</strong> to replay an existing key with a modified quantity and trigger <code>IdempotencyConflictError</code>.
           </p>
         </div>
         <span class="tag tag-pass" id="ledgerBalanceTag">Debits == Credits ($6,415.75)</span>
@@ -2440,17 +2406,11 @@
     <!-- TAB 4: SAMPLE REROUTE TRACES & CLI REPRODUCER                      -->
     <!-- ================================================================== -->
     <section id="panel-benchmarks" class="tab-panel" role="tabpanel">
-      <div class="sandbox-guide-banner">
-        <strong class="guide-title">🧭 How to Try This Sandbox (What to Click &amp; What Happens)</strong>
-        <strong>1.</strong> Inspect the exact per-demand reroute traces (`DMD-0037` through `DMD-0261`) recorded in <code>benchmarks/latest_results.json</code> across the 28-node / 120-directed-link graph.
-        <strong>2.</strong> Copy the 3-line Python CLI commands on the right to reproduce all 29 unit + 60-thread SQLite WAL concurrency tests and regenerate <code>benchmarks/latest_results.json</code> locally in <code>136.51 ms</code>.
-      </div>
-
       <div class="sim-header">
         <div>
-          <h2 class="sim-title">Sample Per-Demand Graph Reroutes &amp; Local Reproducibility</h2>
+          <h2 class="sim-title">Sample Demand Reroutes &amp; Local Test Commands</h2>
           <p class="sim-desc">
-            Exact sample demand allocations from <code>benchmarks/latest_results.json</code> (`router_benchmark.sample_reroutes`) alongside the local test and benchmark harness.
+            Per-demand hop allocations from <code>benchmarks/latest_results.json</code> (<code>router_benchmark.sample_reroutes</code>) alongside the Python commands to run all 29 unit and 60-thread concurrency tests locally in <code>136.51 ms</code>.
           </p>
         </div>
         <span class="tag tag-pass">29/29 Unit &amp; Concurrency Tests Passing</span>
@@ -2459,7 +2419,7 @@
       <div class="grid-studio">
         <div class="card">
           <div class="control-label" style="margin-bottom:0.65rem;">
-            <span>Sample Rerouted Demands (`benchmarks/latest_results.json`)</span>
+            <span>Sample Rerouted Demands (<code>benchmarks/latest_results.json</code>)</span>
             <span class="tag tag-accent">0.0 Mbps Dropped · 0 SLA Violations</span>
           </div>
           <div class="table-wrap">
@@ -2533,34 +2493,34 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
   </main>
 
   <!-- =================================================================== -->
-  <!-- §06 · BENCHMARKS                                                    -->
+  <!-- 06 · BENCHMARKS                                                     -->
   <!-- =================================================================== -->
   <section id="benchmarks-section" class="section" data-spy-section="benchmarks-section">
     <div class="container">
       <div class="section-header">
         <div>
-          <span class="section-kicker">§06 · Benchmarks</span>
-          <h2 class="section-title">Executed Evaluation Suite (<code>benchmarks/latest_results.json</code>)</h2>
+          <span class="section-kicker">06 · Benchmarks</span>
+          <h2 class="section-title">Benchmarks</h2>
           <p class="section-desc">
-            Every cell below comes directly from <code>python3 benchmarks/run_benchmarks.py</code> (<code>seed=42</code>, <code>136.51 ms</code> total suite wall time across 28 nodes, 120 directed links, 300 traffic demands, 2,000 settlement events, and 150 NOC/floor incidents).
+            Generated by <code>python3 benchmarks/run_benchmarks.py</code> into <code>benchmarks/latest_results.json</code> (<code>seed=42</code>, <code>136.51 ms</code> total suite wall time across 28 nodes, 120 directed links, 300 traffic demands, 2,000 settlement events, and 150 operational incidents).
           </p>
         </div>
-        <span class="tag tag-pass">100% Verified JSON Ground Truth</span>
+        <span class="tag tag-pass">Verified JSON Output</span>
       </div>
 
       <div class="dual-layer-grid">
-        <div class="intuition-card">
-          <span class="step-badge">PLAIN-ENGLISH INTUITION</span>
-          <h3>What These Executed Benchmarks Prove End to End</h3>
+        <div class="overview-card">
+          <span class="step-badge">ROUTING, BILLING &amp; TRIAGE RESULTS</span>
+          <h3>Lower Tail Latency, Zero Duplicate Charges, and Exact Trial Balance</h3>
           <p>
-            Across `300` demands hitting `6` mid-stream outages and link attenuations, capacity-aware multi-path routing cuts worst-case p99 path delay by nearly three-quarters (`526.47 ms → 132.80 ms`, `-74.78%`) and eliminates **95.33%** of SLA violations (`107 → 5`) in under half a millisecond (`0.4648 ms` p99). Meanwhile, the SQLite ACID ledger settles **32,704.9 events/sec** across 4 international tax regions with **0 duplicate charges** and **0¢ rounding drift**, and the `<= 3`-check fault tree hits **100.0% (`150/150`)** diagnostic accuracy.
+            Across <code>300</code> demands facing <code>6</code> mid-stream outages and link attenuations, capacity-aware multi-path routing lowers p99 path delay by <strong>74.78%</strong> (<code>526.47 ms → 132.80 ms</code>) and cuts SLA violations by <strong>95.33%</strong> (<code>107 → 5</code>) in <code>0.4648 ms</code> p99 solver time. The SQLite ACID ledger settles <strong>32,704.9 events/sec</strong> across 4 tax regions with <strong>0 duplicate charges</strong> and <strong>0¢ rounding drift</strong>, while the 3-check decision tree reaches <strong>100.0% (150/150)</strong> diagnostic accuracy.
           </p>
         </div>
-        <div class="hood-card">
-          <span class="step-badge">UNDER THE HOOD · EXACT CODE, MATH &amp; DATA STRUCTURES</span>
-          <h3>Exact Workload Parameters &amp; Conservation Totals</h3>
+        <div class="spec-card">
+          <span class="step-badge">BENCHMARK HARNESS DETAILS</span>
+          <h3>Workload Parameters &amp; Conservation Totals</h3>
           <p>
-            <code>run_router_comparison(num_demands=300, seed=42)</code> requests `23,041.4 Mbps` across `28` nodes / `120` directed links, reducing dropped bandwidth from `4,273.71 Mbps` (`18.55%`) to `372.40 Mbps` (`1.62%`, `-91.29%`) with `6` 2-way split flows (`38.727 ms` total compute). <code>run_ledger_comparison(total_events=2000, duplicate_rate=0.15)</code> settles `1,509` unique events (`191` rejected: `170` credit + `21` stock; `72` out-of-order) with `19,376,379¢` (`$193,763.79`) `SUM(Debits) == SUM(Credits)` in `61.15 ms` (`5.823 ms` recon audit).
+            <code>run_router_comparison(num_demands=300, seed=42)</code> routes <code>23,041.4 Mbps</code> across <code>28</code> nodes and <code>120</code> directed links, cutting dropped bandwidth from <code>4,273.71 Mbps</code> (<code>18.55%</code>) to <code>372.40 Mbps</code> (<code>1.62%</code>, <code>-91.29%</code>) with <code>6</code> 2-way split flows (<code>38.727 ms</code> total compute). <code>run_ledger_comparison(total_events=2000, duplicate_rate=0.15)</code> settles <code>1,509</code> unique events (<code>191</code> rejected: <code>170</code> credit + <code>21</code> stock; <code>72</code> out-of-order) with <code>19,376,379¢</code> (<code>$193,763.79</code>) <code>SUM(Debits) == SUM(Credits)</code> in <code>61.15 ms</code> (<code>5.823 ms</code> reconciliation audit).
           </p>
         </div>
       </div>
@@ -2705,10 +2665,10 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
       <!-- Footer -->
       <footer class="footer">
         <div>
-          <strong>RouteLedger</strong> — Capacity-Constrained Multi-Path Graph Solver, Bounded NOC Triage &amp; ACID Double-Entry Settlement Engine · Built by Ritwika Reddy Kancharla
+          <strong>RouteLedger</strong> — Rerouting Traffic Around Bottlenecks With a Zero-Duplicate Billing Ledger · Built by Ritwika Reddy Kancharla
         </div>
         <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
-          <a href="#architecture" style="color:var(--ink); font-weight:700;">System Architecture ↑</a>
+          <a href="#architecture" style="color:var(--ink); font-weight:700;">Architecture ↑</a>
           <span>·</span>
           <a href="https://github.com/ritwikareddykancharla/route-ledger" target="_blank" rel="noopener" style="color:var(--ink); font-weight:700;">GitHub Repository</a>
           <span>·</span>
@@ -3962,13 +3922,13 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
       async function probeHealthAndInitialState() {
         try {
           const health = await apiCall("/api/health", { method: "GET" });
-          const pyMajorMinor = String(health.python_version || "3.12").split(".").slice(0, 2).join(".");
-          const modelId = health.bedrock_model || "us.amazon.nova-lite-v1:0";
-          document.getElementById("runtimeModeText").textContent =
-            "AWS CloudFront + S3 (OAC) + Python " + pyMajorMinor + " + Bedrock (" + modelId + ") Live";
+          if (health && health.status === "ok") {
+            document.getElementById("runtimeModeText").textContent =
+              "Live on AWS · Powered by Amazon Bedrock";
+          }
         } catch (_) {
           document.getElementById("runtimeModeText").textContent =
-            "Deterministic In-Browser Studio · CloudFront /api/* Compatible";
+            "Offline Demo Mode · Benchmark Seed Loaded";
         }
 
         await fetchInitialMode("scot");
