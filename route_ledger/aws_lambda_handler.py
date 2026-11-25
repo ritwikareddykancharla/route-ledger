@@ -20,7 +20,9 @@ from typing import Any, Dict, Optional
 import urllib.parse
 
 from . import __version__
+from .atrops_pareto import solve_atrops_pareto_workbench
 from .cli import SUPPORTED_MODES, execute_cli_mode
+from .leo_flight_mcp import run_leo_diagnose_workbench
 from .noc_workflow import IncidentTelemetrySnapshot, OperationalWorkflowEngine
 
 
@@ -132,6 +134,35 @@ def handler(event: Dict[str, Any], context: Any = None) -> Dict[str, Any]:
                 "python_version": platform.python_version(),
                 "supported_modes": list(SUPPORTED_MODES) + ["diagnose"],
             }
+        )
+
+    if raw_path == "/api/atrops/pareto" and method in ("GET", "POST"):
+        raw_body = event.get("body") or "{}"
+        if event.get("isBase64Encoded") and isinstance(raw_body, str):
+            raw_body = base64.b64decode(raw_body).decode("utf-8")
+        body_in = json.loads(raw_body) if (method == "POST" and isinstance(raw_body, str)) else {}
+        merged = {**query_params, **(body_in if isinstance(body_in, dict) else {})}
+        return _json_response(
+            solve_atrops_pareto_workbench(
+                disruption=str(merged.get("disruption", "nominal")),
+                volume_pkgs=int(merged.get("volume_pkgs", 3600)),
+                sla_deadline_hr=float(merged.get("sla_deadline_hr", 34.0)),
+            ),
+            status_code=200,
+        )
+
+    if raw_path == "/api/leo/diagnose" and method in ("GET", "POST"):
+        raw_body = event.get("body") or "{}"
+        if event.get("isBase64Encoded") and isinstance(raw_body, str):
+            raw_body = base64.b64decode(raw_body).decode("utf-8")
+        body_in = json.loads(raw_body) if (method == "POST" and isinstance(raw_body, str)) else {}
+        merged = {**query_params, **(body_in if isinstance(body_in, dict) else {})}
+        return _json_response(
+            run_leo_diagnose_workbench(
+                scenario_key=str(merged.get("scenario_key", "beam_handover_ephemeris_slip")),
+                cpp_preset=str(merged.get("cpp_preset", "compliant_ccsds_framer")),
+            ),
+            status_code=200,
         )
 
     if raw_path == "/api/run":

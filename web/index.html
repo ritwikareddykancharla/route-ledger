@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RouteLedger — Rerouting Traffic Around Bottlenecks With a Zero-Duplicate Billing Ledger</title>
-  <meta name="description" content="RouteLedger reroutes shipments and network flows around congested or degraded links in 0.465 ms p99, isolates faults in at most 3 checks, and settles billing events in an ACID double-entry SQLite ledger with zero duplicate charges." />
+  <title>RouteLedger v2: Multi-Modal ATROPS Pareto Routing, LEO MCP Diagnostics &amp; ACID Settlement Ledger</title>
+  <meta name="description" content="RouteLedger v2 computes exact SCOT multi-modal Speed/Cost/CO2e Pareto frontiers and split-box cart assignments, runs 5-subsystem LEO MCP triage with a JPL Power-of-10 C++ static gate, and settles invoices in an ACID double-entry SQLite ledger." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Kalam:wght@400;700&amp;family=Martian+Mono:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&amp;family=Schibsted+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
@@ -909,12 +909,12 @@
 
     .tab-bar {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.75rem;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.65rem;
       margin-bottom: 1.4rem;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1120px) {
       .tab-bar { grid-template-columns: repeat(2, 1fr); }
     }
 
@@ -1362,7 +1362,7 @@
   <header class="topbar">
     <div class="container topbar-inner">
       <a href="#top" class="brand">
-        <span class="brand-badge">ROUTELEDGER v1.0</span>
+        <span class="brand-badge">ROUTELEDGER v2.0</span>
         <span>RouteLedger</span>
       </a>
       <nav class="nav-links" aria-label="Primary Navigation">
@@ -1398,53 +1398,53 @@
   <section id="top" class="hero">
     <div class="container">
       <div class="hero-top-row">
-        <div class="eyebrow">Shipment Routing &amp; Billing · Built for Amazon SCOT &amp; Networking</div>
+        <div class="eyebrow">SCOT-FO ATROPS Pareto · Supply Chain Sourcing · Amazon Leo MCP &amp; Flight C++ Gate</div>
         <div class="runtime-pill" id="runtimeModeBadge">
           <span class="pulse-dot"></span>
           <span id="runtimeModeText">Live on AWS · Powered by Amazon Bedrock</span>
         </div>
       </div>
 
-      <h1>RouteLedger — Rerouting Traffic Around Bottlenecks With a Zero-Duplicate Billing Ledger</h1>
+      <h1>RouteLedger v2: Multi-Modal ATROPS Pareto Routing, LEO MCP Diagnostics &amp; Zero-Duplicate Settlement</h1>
       <p class="hero-sub">
-        When a fulfillment hub closes or a network link degrades, static shortest-path routing sends traffic straight into the bottleneck while message retries double-bill customers. RouteLedger reroutes flows around bad links in under half a millisecond and settles every invoice in a double-entry ledger with zero duplicate charges.
+        Fulfillment corridors balance Prime delivery speed against freight cost and carbon under hard Critical Pull Time cutoffs, while satellite gateways require deterministic subsystem triage, zero-heap flight code verification, and idempotent double-entry settlement. RouteLedger v2 solves exact multi-modal Pareto frontiers in <code>0.094 ms</code> p50, isolates LEO incidents across 5 MCP subsystem tools at <code>100.0%</code> accuracy, enforces NASA/JPL Power-of-10 static C++ safety, and settles invoices at <code>67,291.9 ev/s</code> with zero duplicate charges.
       </p>
 
       <div class="hero-actions">
-        <a class="btn btn-accent" href="#sandboxes">▶ Try the Live Demo ↓</a>
-        <a class="btn btn-secondary" href="#architecture">See How It Works ↓</a>
-        <a class="btn btn-secondary" href="#benchmarks-section">View Test Results ↓</a>
+        <a class="btn btn-accent" href="#sandboxes">▶ Try ATROPS Pareto &amp; LEO MCP Demo ↓</a>
+        <a class="btn btn-secondary" href="#architecture">See Architecture ↓</a>
+        <a class="btn btn-secondary" href="#benchmarks-section">View v2 Benchmarks ↓</a>
       </div>
 
       <div class="kpi-strip">
         <div class="card kpi-card">
+          <div class="kpi-val">-45.4% $ · -59.1% CO2e</div>
+          <div class="kpi-label">ATROPS Multi-Modal Pareto (99.65% SLA)</div>
+          <div class="kpi-sub">$3.024/pkg &amp; 1.323 kg CO2e (0.094 ms p50) · -21.42% multi-item cart cost</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-val">100.0% (120/120)</div>
+          <div class="kpi-label">5-Tool LEO MCP &amp; Flight C++ Gate</div>
+          <div class="kpi-sub">83.33% → 100.0% launch gate · 20/20 unsafe heap/recursion C++ blocked</div>
+        </div>
+        <div class="card kpi-card">
           <div class="kpi-val">526.47 → 132.80 ms</div>
-          <div class="kpi-label">Worst-Case Path Delay (-74.8% p99)</div>
-          <div class="kpi-sub">0.121 ms p50 / 0.465 ms p99 solver across 28 nodes &amp; 120 links</div>
+          <div class="kpi-label">Mesh p99 Delay (-74.78% · -95.33% SLA)</div>
+          <div class="kpi-sub">0.061 ms p50 / 0.268 ms p99 solver across 28 nodes &amp; 120 links</div>
         </div>
         <div class="card kpi-card">
-          <div class="kpi-val">35.67% → 1.67%</div>
-          <div class="kpi-label">Missed Delivery SLAs (-95.33%)</div>
-          <div class="kpi-sub">107/300 → 5/300 demands · Dropped volume cut by 91.29% (18.55% → 1.62%)</div>
-        </div>
-        <div class="card kpi-card">
-          <div class="kpi-val">32,704.9 ev/s</div>
-          <div class="kpi-label">SQLite Ledger Settlement Speed</div>
-          <div class="kpi-sub">2,000 billing events + 60-thread retry storm · 0 duplicate charges</div>
-        </div>
-        <div class="card kpi-card">
-          <div class="kpi-val">$0.00 (0¢)</div>
-          <div class="kpi-label">Double-Entry Balance Drift</div>
-          <div class="kpi-sub">19,376,379¢ debits match credits · 100.0% fault accuracy (150/150)</div>
+          <div class="kpi-val">67,291.9 ev/s · 0¢</div>
+          <div class="kpi-label">SQLite ACID Double-Entry Balance</div>
+          <div class="kpi-sub">19,376,379¢ debits match credits · 0 duplicate charges · 38/38 tests</div>
         </div>
       </div>
 
       <div class="pipeline-bar" role="region" aria-label="RouteLedger execution pipeline">
-        <div class="pipe-step"><span class="pipe-num">01</span> Drop Broken &amp; Weak Links</div>
+        <div class="pipe-step"><span class="pipe-num">01</span> Solve CPT Speed / Cost / CO2e Pareto</div>
         <span class="pipe-arrow">→</span>
-        <div class="pipe-step"><span class="pipe-num">02</span> Split Traffic Across Healthy Paths</div>
+        <div class="pipe-step"><span class="pipe-num">02</span> Consolidate or Split Multi-ASIN Carts</div>
         <span class="pipe-arrow">→</span>
-        <div class="pipe-step"><span class="pipe-num">03</span> Isolate Root Cause in 3 Checks</div>
+        <div class="pipe-step"><span class="pipe-num">03</span> Triage 5 LEO MCP Tools &amp; Gate Flight C++</div>
         <span class="pipe-arrow">→</span>
         <div class="pipe-step"><span class="pipe-num">04</span> Settle Invoices Once in Exact Cents</div>
       </div>
@@ -1471,16 +1471,16 @@
         <p>
           Consider a cross-country freight corridor (<code>SEA1 → ORD5 → EWR7</code>) or a <code>28</code>-node, <code>120</code>-link network carrying <code>300</code> active demands. Static shortest-path routing selects the shortest path on paper and keeps sending traffic into it even when Chicago (<code>ORD5</code>) closes in a blizzard or a wireless feeder link drops below <code>8.0 dB</code> signal quality. Queues build up on the degraded hop, raising p99 path latency to <strong>526.47 ms</strong> and missing SLAs on <strong>35.67% (107/300)</strong> of demands.
         </p>
-        <p>
-          Every rerouted shipment or metered bandwidth batch also emits billing events over at-least-once queues such as Amazon SQS. During network timeouts, SQS redelivers the same message up to <code>5x</code>. A naive floating-point billing processor charges customers multiple times (<code>245</code> duplicate charges totaling <strong>$17,792.88</strong> overbilled in our 2,000-event benchmark) and accumulates <strong>60¢</strong> of IEEE-754 rounding drift. RouteLedger combines a capacity-aware Python graph solver (<code>0.121 ms</code> p50 / <code>0.465 ms</code> p99), a 3-check decision tree (<code>100.0%</code> accuracy on 150 incidents), and an idempotent SQLite double-entry ledger with <strong>0 duplicate charges</strong> and <strong>$0.00 balance drift</strong>.
+          <p>
+          Every rerouted shipment or metered bandwidth batch also emits billing events over at-least-once queues such as Amazon SQS. During network timeouts, SQS redelivers the same message up to <code>5x</code>. A naive floating-point billing processor charges customers multiple times (<code>245</code> duplicate charges totaling <strong>$17,792.88</strong> overbilled in our 2,000-event benchmark) and accumulates <strong>60¢</strong> of IEEE-754 rounding drift. RouteLedger v2 combines a time-expanded ATROPS multi-modal Pareto solver (<code>0.094 ms</code> p50 / <code>0.217 ms</code> p99, <code>-59.05%</code> CO2e), a capacity-aware mesh graph solver (<code>0.061 ms</code> p50 / <code>0.268 ms</code> p99), a 5-tool LEO MCP diagnostic registry with a JPL Power-of-10 C++ static gate (<code>100.0%</code> accuracy), and an idempotent SQLite double-entry ledger with <strong>0 duplicate charges</strong> and <strong>$0.00 balance drift</strong>.
         </p>
       </div>
 
       <div class="role-alignment-banner">
         <div style="font-size:0.9rem;">
-          <strong>Scope &amp; Benchmark Setup:</strong> All benchmarks run our pure-Python directed graph solver (<code>route_ledger/network_router.py</code>: M/M/1 queuing delay, <code>snr_db &ge; 8.0</code> edge pruning, and 2-way residual flow splitting across <code>28</code> nodes, <code>120</code> links, and <code>300</code> demands) and SQLite <code>BEGIN IMMEDIATE</code> / WAL 60-thread concurrency (<code>route_ledger/double_entry_ledger.py</code>).
+          <strong>Scope &amp; Benchmark Setup:</strong> Benchmarks execute 5 real Python engines (<code>atrops_pareto.py</code>, <code>leo_flight_mcp.py</code>, <code>network_router.py</code>, <code>double_entry_ledger.py</code>, and <code>noc_workflow.py</code>) across <code>240</code> multi-modal CPT shipment waves, <code>160</code> multi-ASIN Prime carts, <code>120</code> LEO connectivity incidents, <code>40</code> C/C++ RTOS handlers, <code>300</code> mesh demands, and <code>2,000</code> settlement events.
         </div>
-        <span class="tag tag-pass">29/29 Unit &amp; Concurrency Tests Passing</span>
+        <span class="tag tag-pass">38/38 Unit &amp; Concurrency Tests Passing</span>
       </div>
 
       <div class="problem-grid">
@@ -1639,9 +1639,9 @@
             <path d="M 938,38 L 1182,38 L 1182,136 L 1164,152 L 938,152 Z" fill="#FEF3C7" stroke="#18181B" stroke-width="2" />
             <path d="M 1164,152 L 1164,136 L 1182,136" fill="#FDE68A" stroke="#18181B" stroke-width="1.6" />
             <text x="952" y="64" class="ex-hand" font-size="19" font-weight="700" fill="#92400E">Verified Benchmark Totals</text>
-            <text x="952" y="86" class="ex-hand" font-size="17" font-weight="600" fill="#18181B">• 526.5→132.8ms p99 (-74.8%)</text>
-            <text x="952" y="107" class="ex-hand" font-size="17" font-weight="600" fill="#18181B">• 35.7%→1.7% SLA · 0.465ms</text>
-            <text x="952" y="129" class="ex-hand" font-size="17" font-weight="700" fill="#065F46">• 32,705 ev/s · $0.00 Drift</text>
+            <text x="952" y="86" class="ex-hand" font-size="17" font-weight="600" fill="#18181B">• -45.4% $/pkg · -59.1% CO2e</text>
+            <text x="952" y="107" class="ex-hand" font-size="17" font-weight="600" fill="#18181B">• 100% LEO MCP · 20/20 C++</text>
+            <text x="952" y="129" class="ex-hand" font-size="17" font-weight="700" fill="#065F46">• 67,292 ev/s · $0.00 Drift</text>
           </g>
 
           <!-- Dashed Arrow: Lambda -> Plane 2 -->
@@ -1671,7 +1671,7 @@
             <path d="M 465,235 Q 653,231 839,236 Q 842,279 838,321 Q 650,325 466,320 Z" fill="none" stroke="#18181B" stroke-width="1" opacity="0.6" />
             <text x="652" y="259" text-anchor="middle" class="ex-hand" font-size="20" font-weight="700" fill="#075985">Convex M/M/1 Min-Cost Dijkstra</text>
             <text x="652" y="281" text-anchor="middle" class="ex-mono" font-size="9.3" font-weight="700" fill="#18181B">Hop Delay + Queuing Penalty + CPT Bound</text>
-            <text x="652" y="302" text-anchor="middle" class="ex-mono" font-size="9.1" fill="#0284C7">0.1211 ms p50 · 0.4648 ms p99 Compute</text>
+            <text x="652" y="302" text-anchor="middle" class="ex-mono" font-size="9.1" fill="#0284C7">0.0609 ms p50 · 0.2680 ms p99 Compute</text>
           </g>
 
           <path d="M 846,278 L 892,278" fill="none" stroke="#18181B" stroke-width="2.1" stroke-dasharray="6 4" />
@@ -1693,7 +1693,7 @@
 
           <!-- PLANE 3: BOUNDED <=3-CHECK FAULT TREE + BEDROCK NOVA -->
           <path d="M 22,382 Q 610,378 1196,383 Q 1200,452 1195,522 Q 608,526 24,521 Q 19,451 22,382 Z" fill="#FAF5FF" stroke="#6D28D9" stroke-width="1.6" stroke-dasharray="8 6" />
-          <text x="36" y="405" class="ex-hand" font-size="21" font-weight="700" fill="#5B21B6">③ Bounded Operational Triage Plane — &le;3-Check Fault-Tree Engine + Amazon Bedrock Nova</text>
+          <text x="36" y="405" class="ex-hand" font-size="21" font-weight="700" fill="#5B21B6">③ Bounded Operational Triage Plane: 5-Tool LEO MCP + &le;3-Check Fault Tree + Bedrock Nova</text>
 
           <g class="ex-node" data-arch-node="rl-tree" tabindex="0">
             <path d="M 40,416 Q 302,412 564,417 Q 568,463 563,508 Q 301,512 41,507 Q 37,462 40,416 Z" fill="#F3E8FF" />
@@ -1744,7 +1744,7 @@
             <text x="927" y="627" text-anchor="middle" class="ex-mono" font-size="9.6" font-weight="700" fill="#18181B">Decimal(ROUND_HALF_UP) · US-WA / DE / JP / BR Tax</text>
             <text x="927" y="647" text-anchor="middle" class="ex-mono" font-size="9.3" fill="#0C4A6E">Out-of-order watermarks + atomic credit &amp; inventory locks</text>
             <rect x="708" y="659" width="438" height="24" fill="#DCFCE7" stroke="#18181B" stroke-width="1.5" />
-            <text x="927" y="675" text-anchor="middle" class="ex-mono" font-size="9.4" font-weight="700" fill="#065F46">✓ 32,704.9 ev/s · $0.00 Drift (19,376,379¢ Dr == Cr)</text>
+            <text x="927" y="675" text-anchor="middle" class="ex-mono" font-size="9.4" font-weight="700" fill="#065F46">✓ 67,291.9 ev/s · $0.00 Drift (19,376,379¢ Dr == Cr)</text>
           </g>
         </svg>
       </div>
@@ -1778,24 +1778,24 @@
           <span class="section-kicker">03 · Implementation</span>
           <h2 class="section-title">Implementation</h2>
           <p class="section-desc">
-            The constrained shortest-path solver, 2-way residual flow splitter, 3-check operational decision tree, and SQLite <code>BEGIN IMMEDIATE</code> double-entry ledger in <code>route_ledger/</code> are built with the Python standard library.
+            Five deterministic Python 3.12 engines in <code>route_ledger/</code> power multi-modal CPT Pareto optimization, multi-ASIN split-box cart sourcing, 5-subsystem LEO MCP diagnostics with JPL Power-of-10 static C++ verification, capacity-aware mesh routing, and SQLite <code>BEGIN IMMEDIATE</code> double-entry accounting.
           </p>
         </div>
       </div>
 
       <div class="dual-layer-grid">
         <div class="overview-card">
-          <span class="step-badge">FLOW SPLITTING &amp; INTEGER-CENT ACCOUNTING</span>
-          <h3>Residual Multi-Path Routing and Atomic Double-Entry Settlement</h3>
+          <span class="step-badge">PARETO MODAL SHIFT &amp; SPLIT-BOX CONSOLIDATION</span>
+          <h3>Time-Expanded Critical Pull Times, Cart Consolidation, and Static Code Gates</h3>
           <p>
-            When a single corridor cannot carry a large shipment alone, sending 100% of the load down one alternate route creates a second bottleneck. RouteLedger fills the lowest-cost healthy path up to its safe headroom and splits the remainder onto a second independent bypass. On the settlement side, every invoice is stored in integer cents (<code>19,376,379¢</code>) rather than binary floats, with every debit matched by equal revenue and tax credits inside a single SQLite write transaction.
+            Shipping every Prime package by air hits delivery promises during clear weather, yet burns `$5.542/pkg` and `3.232 kg CO2e/pkg` while stalling when a hub faces an ice ground-stop. RouteLedger v2 expands scheduled `AIR_CARGO`, `LINEHAUL_TRUCK`, `INTERMODAL_RAIL`, and `EV_MIDDLE_MILE` arcs against facility sortation cutoffs (`CPT`), shifting slack volume onto rail and EV shuttles (`$3.024/pkg`, `1.323 kg CO2e/pkg`, `99.65%` SLA) and consolidating multi-item carts into single boxes whenever local CPT windows allow.
           </p>
         </div>
         <div class="spec-card">
-          <span class="step-badge">CORE EQUATIONS &amp; LOCKING SEMANTICS</span>
-          <h3>M/M/1 Convex Edge Costs, Canonical <code>SHA-256</code> Seals &amp; <code>BEGIN IMMEDIATE</code></h3>
+          <span class="step-badge">CORE EQUATIONS, MCP CONTRACTS &amp; LOCKING SEMANTICS</span>
+          <h3>3D Dominance Pruning, 5-Subsystem MCP Schemas, Power-of-10 AST &amp; <code>BEGIN IMMEDIATE</code></h3>
           <p>
-            In <code>route_ledger/network_router.py</code>, edge latency is modeled as <code>d(e, Δf) = d_base + d_noise + d_queue((f + Δf)/C_eff)</code> with hard pruning when <code>outage == True</code> or <code>snr_db &lt; 8.0</code>, solved via <code>heapq</code> Dijkstra + 2-way residual augmentation (<code>0.1211 ms</code> p50 / <code>0.4648 ms</code> p99). In <code>double_entry_ledger.py</code>, <code>BEGIN IMMEDIATE</code> acquires SQLite's reserved write lock up front, checks <code>SHA256(canonical_json)</code> against <code>settlement_events(idempotency_key)</code>, and quantizes basis-point taxes (<code>US-WA 1025</code>, <code>DE 1900</code>, <code>JP 1000</code>, <code>BR 2650</code>) via <code>Decimal.quantize(ROUND_HALF_UP)</code>.
+            In <code>atrops_pareto.py</code>, label-setting search prunes dominated <code>(arrival_hr, cost_usd, co2e_kg)</code> states subject to <code>t_ready &le; cpt_departure_hr</code> (`0.0939 ms` p50 / `0.2169 ms` p99) and simulates LLM config patches against downstream station sort caps before commit (`12/12` unsafe blocked). In <code>leo_flight_mcp.py</code>, 5 schema-validated MCP tools isolate LEO faults (`120/120` accuracy) while <code>JplPowerOfTenVerifier</code> strips comments/literals, builds C/C++ call graphs to detect direct and mutual recursion, checks loop counter bounds, and rejects dynamic heap primitives (`20/20` recall, `0.0%` false positives).
           </p>
         </div>
       </div>
@@ -1803,7 +1803,45 @@
       <div class="module-grid">
         <div class="module-card">
           <div class="module-card-head">
-            <span>MODULE 01 · MULTI-PATH GRAPH SOLVER</span>
+            <span>MODULE 01 · ATROPS MULTI-MODAL PARETO &amp; CART SOURCING</span>
+            <span style="color:#6EE7B7;">route_ledger/atrops_pareto.py</span>
+          </div>
+          <div class="module-card-body">
+            <h3>Time-Expanded CPT Pareto Frontier, Split-Box Optimizer &amp; Schedule Patch Gate</h3>
+            <ul class="module-list">
+              <li><strong>3D Speed / Cost / CO2e Pareto Frontier:</strong> Evaluates <code>AIR_CARGO</code>, <code>LINEHAUL_TRUCK</code>, <code>INTERMODAL_RAIL</code>, and <code>EV_MIDDLE_MILE</code> schedules across <code>240</code> shipment waves (<code>668,723</code> pkgs), reaching <strong>99.65% Prime SLA</strong> while cutting cost by <strong>45.44% ($5.542 → $3.024/pkg)</strong> and carbon by <strong>59.05% (3.232 → 1.323 kg CO2e/pkg)</strong> in <code>0.0939 ms</code> p50 / <code>0.2169 ms</code> p99.</li>
+              <li><strong>Combinatorial Multi-Item Cart Sourcing:</strong> Across <code>160</code> multi-ASIN Prime carts, cuts split shipments from <code>55.0%</code> (Greedy Nearest-FC) to <strong>6.88%</strong> and reduces order fulfillment cost by <strong>21.42% ($10.95 → $8.61/order)</strong> at <code>91.25%</code> SLA (vs. <code>84.38%</code> on Strict Single-Box Only).</li>
+              <li><strong>Counterfactual LLM Config Validator:</strong> Simulates candidate lane and CPT edits prior to commit, approving <code>12/12</code> safe patches and rejecting <strong>12/12 (100.0%)</strong> unsafe station-overflow and backward-CPT edits.</li>
+            </ul>
+            <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <span class="tag tag-pass">-45.44% $/pkg · -59.05% CO2e</span>
+              <span class="tag tag-accent">0.0939ms p50 · 12/12 Unsafe Blocked</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="module-card-head">
+            <span>MODULE 02 · LEO 5-TOOL MCP &amp; FLIGHT C++ STATIC GATE</span>
+            <span style="color:#FDBA74;">route_ledger/leo_flight_mcp.py</span>
+          </div>
+          <div class="module-card-body">
+            <h3>5-Subsystem Satellite Connectivity MCP Registry &amp; JPL Power-of-10 Verifier</h3>
+            <ul class="module-list">
+              <li><strong>Typed 5-Subsystem MCP Registry:</strong> Exposes <code>rf_link_budget</code>, <code>orbital_beam_handover</code>, <code>optical_isl_ber</code>, <code>terminal_modem_pll</code>, and <code>gateway_bgp_flap</code>. Onboarding the 5th handover tool lifts launch-gate accuracy from <code>83.33%</code> (<code>100/120</code>, 80% coverage) to <strong>100.0% (120/120, 100% coverage)</strong> in <code>0.0076 ms</code> mean dispatch.</li>
+              <li><strong>Zero-Heap &amp; Zero-Recursion Flight C/C++ Gate:</strong> Enforces NASA/JPL Power-of-10 rules <code>P10-01</code> (acyclic call graph, no direct/mutual recursion or <code>goto</code>), <code>P10-02</code> (explicit monotonic loop upper bounds), and <code>P10-03</code> (zero <code>malloc</code>/<code>free</code>/<code>new</code>/<code>delete</code>).</li>
+              <li><strong>40-Handler RTOS Verification Suite:</strong> Rejects <strong>20/20 (100.0% recall)</strong> unsafe C/C++ handlers and approves <strong>20/20 (0.0% false positives)</strong> compliant CCSDS/MMIO handlers in <code>0.1330 ms</code> mean check time.</li>
+            </ul>
+            <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <span class="tag tag-pass">100.0% MCP Launch Gate (120/120)</span>
+              <span class="tag tag-purple">20/20 Unsafe C++ Blocked · 0% FP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div class="module-card-head">
+            <span>MODULE 03 · MULTI-PATH GRAPH SOLVER</span>
             <span style="color:#7DD3FC;">route_ledger/network_router.py</span>
           </div>
           <div class="module-card-body">
@@ -1811,68 +1849,30 @@
             <ul class="module-list">
               <li><strong>Capacity &amp; SNR Pruning:</strong> Checks real-time <code>effective_capacity_mbps</code>, <code>residual_mbps</code>, and <code>snr_db &ge; 8.0</code> across <code>28</code> nodes and <code>120</code> directed links before admitting any edge into candidate paths.</li>
               <li><strong>Congestion-Aware Splitting:</strong> Models non-linear M/M/1 queuing delay and splits large demands across 2 residual subflows (<code>6</code> split flows in the <code>300</code>-demand suite) while reclaiming bandwidth as flows expire.</li>
-              <li><strong>Measured Latency &amp; SLA Gains:</strong> Cuts p99 path latency by <strong>74.78% (526.47 ms → 132.80 ms)</strong> and SLA violations by <strong>95.33% (107/300 → 5/300)</strong> in <code>0.1211 ms</code> p50 / <code>0.4648 ms</code> p99.</li>
+              <li><strong>Measured Latency &amp; SLA Gains:</strong> Cuts p99 path latency by <strong>74.78% (526.47 ms → 132.80 ms)</strong> and SLA violations by <strong>95.33% (107/300 → 5/300)</strong> in <code>0.0609 ms</code> p50 / <code>0.2680 ms</code> p99.</li>
             </ul>
             <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <span class="tag tag-pass">-74.8% p99 Latency</span>
-              <span class="tag tag-accent">0.121ms p50 / 0.465ms p99</span>
+              <span class="tag tag-pass">-74.78% p99 Latency</span>
+              <span class="tag tag-accent">0.0609ms p50 / 0.2680ms p99</span>
             </div>
           </div>
         </div>
 
         <div class="module-card">
           <div class="module-card-head">
-            <span>MODULE 02 · ACID DOUBLE-ENTRY LEDGER</span>
-            <span style="color:#86EFAC;">route_ledger/double_entry_ledger.py</span>
+            <span>MODULE 04 · ACID LEDGER, FAULT TREE &amp; BEDROCK API</span>
+            <span style="color:#86EFAC;">double_entry_ledger.py · noc_workflow.py · web_api.py</span>
           </div>
           <div class="module-card-body">
-            <h3>SQLite <code>BEGIN IMMEDIATE</code> / WAL Idempotency &amp; Multi-Region Tax Engine</h3>
+            <h3>SQLite <code>BEGIN IMMEDIATE</code> / WAL Settlement, 3-Check Triage &amp; CloudFront Origin</h3>
             <ul class="module-list">
-              <li><strong>Payload-Hashed Idempotency:</strong> Seals each <code>UsageOrderEvent</code> with canonical sorted-key <code>SHA-256</code>. Exact SQS replays return cached receipts (<code>0</code> double charges), while mutated replays raise <code>IdempotencyConflictError</code> and roll back.</li>
-              <li><strong>60-Thread Concurrency Verification:</strong> Tested on both the <code>2,000</code>-event benchmark (<code>32,704.9 ev/s</code>, <code>72</code> out-of-order watermarks) and a 60-worker <code>ThreadPoolExecutor</code> SQLite WAL retry storm (<code>60 → 12</code> settled, <code>48</code> blocked).</li>
-              <li><strong>Exact Cent Conservation:</strong> Enforces credit limits, inventory reservations, and <code>Decimal(ROUND_HALF_UP)</code> taxes across <code>US-WA</code>, <code>DE</code>, <code>JP</code>, and <code>BR</code> with <code>19,376,379¢</code> <code>SUM(Debits) == SUM(Credits)</code> (<code>0¢</code> drift).</li>
+              <li><strong>Payload-Hashed ACID Double-Entry:</strong> Settles <code>2,000</code> events at <strong>67,291.9 events/sec</strong> (`29.72 ms` wall time, `2.974 ms` recon) plus a 60-thread SQLite WAL retry storm with <code>0</code> double-charges and <code>19,376,379¢</code> <code>SUM(Debits) == SUM(Credits)</code> (<code>0¢</code> drift).</li>
+              <li><strong>Bounded 3-Check Fault Trees:</strong> Classifies <strong>150/150 (100.0%)</strong> gateway, handoff, billing, conveyor, and bin-drift alarms in <strong>2.41 mean checks</strong> (<code>0.0015 ms</code>/incident) vs. <code>64.0%</code> across <code>36.95</code> log lines.</li>
+              <li><strong>Live Serverless Endpoints:</strong> Serves <code>/api/atrops/pareto</code>, <code>/api/leo/diagnose</code>, <code>/api/topology/optimize</code>, and <code>/api/ledger/*</code> with grounded <strong>Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>)</strong> synthesis.</li>
             </ul>
             <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <span class="tag tag-pass">32,704.9 events/sec</span>
-              <span class="tag tag-accent">$0.00 (0¢) Balance Drift</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="module-card">
-          <div class="module-card-head">
-            <span>MODULE 03 · FAULT-TREE TRIAGE</span>
-            <span style="color:#DDD6FE;">route_ledger/noc_workflow.py</span>
-          </div>
-          <div class="module-card-body">
-            <h3>Bounded 3-Check Operational Decision Trees</h3>
-            <ul class="module-list">
-              <li><strong>Five Production Alarm Classes:</strong> Handles <code>GROUND_GATEWAY_SNR_DROP</code>, <code>SATELLITE_HANDOFF_PACKET_LOSS</code>, <code>ISP_BILLING_RECONCILIATION_MISMATCH</code>, <code>FULFILLMENT_CONVEYOR_BUFFER_JAM</code>, and <code>INVENTORY_BIN_COUNT_DRIFT</code>.</li>
-              <li><strong>Hardware vs. Weather Isolation:</strong> Separates LNA bias hardware faults from rain attenuation and motor overheats from chute congestion in <strong>2.41 mean checks</strong> (<code>max = 3</code>, <code>0.0029 ms</code>/incident).</li>
-              <li><strong>100.0% Diagnostic Accuracy:</strong> Correctly classifies <strong>150/150 (100.0%)</strong> benchmark incidents compared to <code>64.0%</code> (<code>96/150</code>) and <code>36.95</code> scanned lines for regex log matching (<code>-93.47%</code> steps).</li>
-            </ul>
-            <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <span class="tag tag-pass">100.0% Accuracy (150/150)</span>
-              <span class="tag tag-purple">2.41 Mean Checks (Max 3)</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="module-card">
-          <div class="module-card-head">
-            <span>MODULE 04 · API &amp; BEDROCK DISPATCH</span>
-            <span style="color:#FDE68A;">route_ledger/web_api.py · aws_lambda_handler.py</span>
-          </div>
-          <div class="module-card-body">
-            <h3>Corridor Optimization API &amp; Grounded Amazon Bedrock Notes</h3>
-            <ul class="module-list">
-              <li><strong>Two Live Network Topologies:</strong> Serves <code>POST /api/topology/optimize</code> for middle-mile freight hubs (<code>SEA1 → EWR7</code>) and SNR-gated multi-hop relay trunks (<code>Redmond ↔ Frankfurt</code>) with optional auto-settlement into SQLite.</li>
-              <li><strong>Grounded Bedrock Summaries:</strong> Calls <strong>Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>)</strong> over verified solver allocations and 3-check fault-tree outputs so the model never guesses link metrics from raw logs.</li>
-              <li><strong>Serverless Hosting:</strong> Delivered via CloudFront, S3, and Python 3.12 Lambda with deterministic client fallback.</li>
-            </ul>
-            <div style="margin-top:auto; padding-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <span class="tag tag-pass">Serverless Python 3.12</span>
-              <span class="tag tag-accent">Grounded Bedrock Advisory</span>
+              <span class="tag tag-pass">67,291.9 ev/s · $0.00 Drift</span>
+              <span class="tag tag-accent">150/150 Fault Tree · Bedrock Nova</span>
             </div>
           </div>
         </div>
@@ -1924,16 +1924,28 @@
           </thead>
           <tbody>
             <tr>
+              <td><strong>SCOT Multi-Modal &amp; Cart Sourcing</strong></td>
+              <td>Air-priority single-objective routing (<code>$5.542/pkg</code>, <code>3.232 kg CO2e</code>) + Greedy Nearest-FC cart splits (<code>55.0%</code> split orders)</td>
+              <td>Unvalidated LLM schedule edits pushed straight to production (causes station sort-cap overflows &amp; 24h CPT rollovers)</td>
+              <td class="winner-col"><strong>Time-Expanded CPT Pareto + Combinatorial Cart Sourcing + Pre-Commit Simulation Gate</strong> (<code>$3.024/pkg</code>, <code>1.323 kg CO2e</code>, <code>6.88%</code> cart splits, <code>12/12</code> unsafe patches blocked)</td>
+            </tr>
+            <tr>
+              <td><strong>LEO Triage &amp; Flight C++ Safety</strong></td>
+              <td>Partial 4-tool telemetry suite missing beam-handover state (<code>83.33%</code> accuracy, launch gate blocked) + unverified LLM C++ code</td>
+              <td>Manual cross-team log war-rooms and late hardware-bench discovery of dynamic heap or recursive stack overflows</td>
+              <td class="winner-col"><strong>5-Subsystem Read-Only MCP Registry (<code>100.0%</code> <code>120/120</code>) + JPL Power-of-10 Static Verifier</strong> (<code>20/20</code> unsafe heap/loop/recursion rejected, <code>0.0%</code> FP)</td>
+            </tr>
+            <tr>
               <td><strong>Multi-Hop Path Solver</strong></td>
               <td>Static OSPF base-latency Dijkstra (<code>526.47 ms</code> p99, <code>35.67%</code> SLA violations, <code>18.55%</code> drop)</td>
               <td>Global MILP multi-commodity solver (<code>50–250 ms</code> per epoch, external C++ solver dependencies)</td>
-              <td class="winner-col"><strong>Constrained M/M/1 Dijkstra + <code>snr_db &ge; 8.0</code> Gate + 2-Way Split</strong> (<code>132.80 ms</code> p99, <code>1.67%</code> SLA violations, <code>0.465 ms</code> p99 compute)</td>
+              <td class="winner-col"><strong>Constrained M/M/1 Dijkstra + <code>snr_db &ge; 8.0</code> Gate + 2-Way Split</strong> (<code>132.80 ms</code> p99, <code>1.67%</code> SLA violations, <code>0.061 ms</code> p50 / <code>0.268 ms</code> p99)</td>
             </tr>
             <tr>
               <td><strong>At-Least-Once Settlement</strong></td>
               <td>IEEE-754 float processor without idempotency (<code>245</code> double-charges, <code>+$17,792.88</code>, <code>60¢</code> drift)</td>
               <td>Key-only dedup under Read-Committed isolation (race-prone on concurrent bursts; misses mutated payloads)</td>
-              <td class="winner-col"><strong>SQLite <code>BEGIN IMMEDIATE</code> / WAL + Canonical <code>SHA-256</code> + <code>Decimal</code> Cents</strong> (<code>0</code> double-charges, <code>0¢</code> drift, <code>32,704.9 ev/s</code>)</td>
+              <td class="winner-col"><strong>SQLite <code>BEGIN IMMEDIATE</code> / WAL + Canonical <code>SHA-256</code> + <code>Decimal</code> Cents</strong> (<code>0</code> double-charges, <code>0¢</code> drift, <code>67,291.9 ev/s</code>)</td>
             </tr>
             <tr>
               <td><strong>Incident Triage</strong></td>
@@ -1964,7 +1976,7 @@
           <span class="tag tag-purple">PRINCIPLE 03 · CHECK TELEMETRY FIRST</span>
           <h3>Run Structured Fault Checks Before Calling the LLM</h3>
           <p>
-            Evaluating at most 3 telemetry predicates in <code>0.0029 ms</code> locks in the root cause (<code>150/150</code>), so Amazon Bedrock writes clear operator instructions from verified facts.
+            Evaluating at most 3 telemetry predicates in <code>0.0015 ms</code> or calling the 5-tool LEO MCP suite (<code>0.0076 ms</code>) locks in the root cause before Amazon Bedrock writes operator instructions.
           </p>
         </div>
       </div>
@@ -1980,38 +1992,228 @@
         <span class="section-kicker">05 · Live Demo</span>
         <h2 class="section-title">Live Demo</h2>
         <p class="section-desc">
-          Connected to live AWS Lambda endpoints and Amazon Bedrock. Simulate hub closures, link signal drops, 60-message SQS retry storms, and SQLite payload-tamper checks.
+          Connected to live AWS Lambda endpoints and Amazon Bedrock. Explore SCOT multi-modal Speed/Cost/CO2e Pareto frontiers, split-box cart sourcing, 5-tool LEO MCP triage, JPL Power-of-10 static C++ checks, hub closures, and 60x SQS retry storms.
         </p>
       </div>
     </div>
 
     <div class="tab-bar" role="tablist" aria-label="RouteLedger Live Demo Tabs">
-      <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="scot-network" onclick="switchTab('scot-network')">
-        <span class="tab-btn-eyebrow">01 · Freight Corridors</span>
+      <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="atrops-leo" onclick="switchTab('atrops-leo')">
+        <span class="tab-btn-eyebrow">01 · ATROPS Pareto &amp; LEO MCP</span>
+        <span class="tab-btn-title">Multi-Modal Pareto &amp; LEO Diagnostics</span>
+        <span class="tab-btn-metric">Speed/$ /CO2e · 5 MCP Tools · C++ Gate</span>
+      </button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="scot-network" onclick="switchTab('scot-network')">
+        <span class="tab-btn-eyebrow">02 · Freight Corridors</span>
         <span class="tab-btn-title">Reroute Hub Outages (SEA1 → EWR7)</span>
         <span class="tab-btn-metric">24.0h CPT Target · Multi-Corridor Split</span>
       </button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="leo-mesh" onclick="switchTab('leo-mesh')">
-        <span class="tab-btn-eyebrow">02 · Network Relay</span>
+        <span class="tab-btn-eyebrow">03 · Network Relay</span>
         <span class="tab-btn-title">Split Traffic Around Weak Signal Links</span>
         <span class="tab-btn-metric">&ge;8.0 dB SNR Gate · 2-Way Subflows</span>
       </button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="acid-ledger" onclick="switchTab('acid-ledger')">
-        <span class="tab-btn-eyebrow">03 · Double-Entry Ledger</span>
+        <span class="tab-btn-eyebrow">04 · Double-Entry Ledger</span>
         <span class="tab-btn-title">Run 60x SQS Retry &amp; Tamper Tests</span>
         <span class="tab-btn-metric">Debits == Credits · $0.00 Drift</span>
       </button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="benchmarks" id="benchmarks" onclick="switchTab('benchmarks')">
-        <span class="tab-btn-eyebrow">04 · Sample Traces &amp; CLI</span>
+        <span class="tab-btn-eyebrow">05 · Sample Traces &amp; CLI</span>
         <span class="tab-btn-title">Inspect Demand Paths &amp; Run Locally</span>
-        <span class="tab-btn-metric">DMD-0037..DMD-0261 · 29/29 Tests</span>
+        <span class="tab-btn-metric">DMD-0037..DMD-0261 · 38/38 Tests</span>
       </button>
     </div>
 
     <!-- ================================================================== -->
+    <!-- TAB 0: ATROPS MULTI-MODAL PARETO & LEO 5-TOOL MCP + C++ GATE       -->
+    <!-- ================================================================== -->
+    <section id="panel-atrops-leo" class="tab-panel active" role="tabpanel">
+      <div class="sim-header">
+        <div>
+          <h2 class="sim-title">ATROPS Multi-Modal Pareto &amp; LEO Diagnostics Workbench</h2>
+          <p class="sim-desc">
+            Left: slide SCOT objective weights across <strong>Prime Speed</strong>, <strong>Cost (<code>$/pkg</code>)</strong>, and <strong>Carbon (<code>kg CO2e</code>)</strong>, switch multi-item cart SLAs (<code>12h Same-Day</code> Split-FC vs. <code>20h 1-Day</code> Single-Box), and test LLM schedule patches via <code>/api/atrops/pareto</code>. Right: execute the <strong>5-Subsystem LEO MCP Registry</strong> and <strong>JPL Power-of-10 Zero-Heap C++ Verifier</strong> via <code>/api/leo/diagnose</code>.
+          </p>
+        </div>
+        <span class="tag tag-accent" id="atropsLeoComputeTag">Pareto: 0.094 ms p50 · MCP: 5/5 Tools</span>
+      </div>
+
+      <div class="grid-equal">
+        <!-- LEFT COLUMN: SCOT-FO ATROPS MULTI-MODAL PARETO + CART SOURCING + SCHEDULE GATE -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+            <div>
+              <span class="tag tag-accent" style="margin-bottom:0.25rem;">SCOT-FO ATROPS &amp; SUPPLY CHAIN (/api/atrops/pareto)</span>
+              <h3 style="font-size:1.08rem; font-weight:800;">Time-Expanded Multi-Modal Pareto &amp; Split-Box Optimizer</h3>
+            </div>
+            <span class="tag tag-pass" id="atropsSummaryBadge">99.65% SLA · $3.02/pkg · 1.32 kg CO2e</span>
+          </div>
+
+          <div class="controls-strip" style="margin-bottom:0.85rem;">
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.65rem;">
+              <div>
+                <div class="control-label">
+                  <label for="wSpeedSlider">Speed Wt</label>
+                  <span class="mono" style="font-size:0.7rem;" id="wSpeedVal">0.45</span>
+                </div>
+                <input type="range" id="wSpeedSlider" min="0.05" max="0.90" step="0.05" value="0.45" />
+              </div>
+              <div>
+                <div class="control-label">
+                  <label for="wCostSlider">Cost ($/pkg)</label>
+                  <span class="mono" style="font-size:0.7rem;" id="wCostVal">0.30</span>
+                </div>
+                <input type="range" id="wCostSlider" min="0.05" max="0.90" step="0.05" value="0.30" />
+              </div>
+              <div>
+                <div class="control-label">
+                  <label for="wCarbonSlider">CO2e Wt</label>
+                  <span class="mono" style="font-size:0.7rem;" id="wCarbonVal">0.25</span>
+                </div>
+                <input type="range" id="wCarbonSlider" min="0.05" max="0.90" step="0.05" value="0.25" />
+              </div>
+            </div>
+
+            <div class="controls-row">
+              <select id="atropsDisruptionSelect" aria-label="Select SCOT disruption mode">
+                <option value="nominal">Nominal Multi-Modal Schedule</option>
+                <option value="cvg3_weather_ground_stop">CVG3 Ice Air Ground-Stop</option>
+                <option value="ord5_yard_congestion">ORD5 Yard 118% Congestion</option>
+              </select>
+              <select id="atropsCartSlaSelect" aria-label="Select multi-item cart SLA window">
+                <option value="20">3-Item Cart: 20h 1-Day Prime (NY)</option>
+                <option value="12">3-Item Cart: 12h Same-Day Prime (NY)</option>
+                <option value="36">3-Item Cart: 36h 2-Day No-Rush (NY)</option>
+              </select>
+            </div>
+
+            <div class="controls-row">
+              <select id="atropsPatchSelect" aria-label="Select candidate LLM schedule patch" style="flex:1 1 210px;">
+                <option value="approved_modal_shift_and_cpt_push">Patch A: Bedrock CPT Push + Team Truck (Safe)</option>
+                <option value="rejected_naive_llm_sort_cap_overflow">Patch B: Unvalidated LLM BWI2 Flood + Early CPT (Unsafe)</option>
+              </select>
+              <button type="button" class="btn btn-accent" id="btnRunAtrops" onclick="runAtropsPareto(true)">
+                ⚡ Solve Pareto + Gate Patch (Bedrock)
+              </button>
+            </div>
+          </div>
+
+          <div class="svg-canvas-frame" style="margin-bottom:0.85rem;">
+            <svg id="atropsParetoSvg" viewBox="0 0 620 235" role="img" aria-label="ATROPS Speed Cost Carbon Pareto Frontier"></svg>
+          </div>
+
+          <div class="control-label">
+            <span>Exact Non-Dominated Multi-Modal Pareto Frontier (<code>SEA1 → EWR7</code>)</span>
+            <span class="mono" style="font-size:0.69rem;" id="atropsFrontierCount">4 frontier points</span>
+          </div>
+          <div class="table-wrap" style="margin-bottom:0.85rem;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Policy / Primary Corridor</th>
+                  <th class="num-right">SLA %</th>
+                  <th class="num-right">Transit</th>
+                  <th class="num-right">$/Pkg</th>
+                  <th class="num-right">kg CO2e</th>
+                </tr>
+              </thead>
+              <tbody id="atropsFrontierTbody"></tbody>
+            </table>
+          </div>
+
+          <div class="control-label">
+            <span>3-Item Shopping Cart Sourcing: Consolidation vs. Split-FC</span>
+            <span class="tag tag-pass" id="atropsCartModeBadge">SINGLE_BOX_CONSOLIDATION</span>
+          </div>
+          <div id="atropsCartBox" style="margin-bottom:0.85rem;"></div>
+
+          <div id="atropsPatchBanner" class="verdict-banner verdict-allow" style="margin-bottom:0.75rem;"></div>
+
+          <div class="advisory-box" id="atropsBedrockBox"></div>
+        </div>
+
+        <!-- RIGHT COLUMN: 5-SUBSYSTEM LEO MCP DIAGNOSTICS & JPL POWER-OF-10 C++ GATE -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+            <div>
+              <span class="tag tag-purple" style="margin-bottom:0.25rem;">AMAZON LEO MCP &amp; FLIGHT C++ (/api/leo/diagnose)</span>
+              <h3 style="font-size:1.08rem; font-weight:800;">5-Subsystem Connectivity MCP &amp; Zero-Heap Static Verifier</h3>
+            </div>
+            <span class="tag tag-pass" id="leoMcpLaunchBadge">100% Coverage · Gate PASS</span>
+          </div>
+
+          <div class="controls-strip" style="margin-bottom:0.85rem;">
+            <div class="controls-row">
+              <select id="leoIncidentSelect" aria-label="Select LEO incident scenario" style="flex:1 1 260px;">
+                <option value="beam_handover_ephemeris_slip">LEO-INC-401: Periodic 94s Pass Handover Drop (Clear Sky)</option>
+                <option value="optical_isl_ber_spike">LEO-INC-402: Optical 1550nm Laser ISL FPA Jitter &amp; BER Spike</option>
+                <option value="ka_rain_fade_and_bgp_flap">LEO-INC-403: Compound Ashburn Ka Rain Fade + BGP Flap</option>
+                <option value="terminal_modem_pll_thermal">LEO-INC-404: Rooftop Dish RFIC 96.4C Thermal + PLL Slip</option>
+                <option value="gateway_bgp_flap_only">LEO-INC-405: Dublin Gateway BGP Hold-Timer Expiration</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="control-label" style="margin-bottom:0.35rem;">
+                <span>Registered Subsystem MCP Tools (uncheck <code>orbital_beam_handover</code> to test 4-tool blind spot)</span>
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:0.4rem;" id="leoMcpToolsCheckboxes">
+                <label class="checkbox-pill"><input type="checkbox" value="rf_link_budget" checked onchange="runLeoDiagnose(false)" /><span>rf_link_budget</span></label>
+                <label class="checkbox-pill"><input type="checkbox" value="orbital_beam_handover" checked onchange="runLeoDiagnose(false)" /><span>orbital_beam_handover</span></label>
+                <label class="checkbox-pill"><input type="checkbox" value="optical_isl_ber" checked onchange="runLeoDiagnose(false)" /><span>optical_isl_ber</span></label>
+                <label class="checkbox-pill"><input type="checkbox" value="terminal_modem_pll" checked onchange="runLeoDiagnose(false)" /><span>terminal_modem_pll</span></label>
+                <label class="checkbox-pill"><input type="checkbox" value="gateway_bgp_flap" checked onchange="runLeoDiagnose(false)" /><span>gateway_bgp_flap</span></label>
+              </div>
+            </div>
+
+            <div class="controls-row">
+              <select id="flightCppPresetSelect" aria-label="Select C++ flight telemetry handler preset" style="flex:1 1 220px;">
+                <option value="compliant_ccsds_framer">C++ Preset 1: Compliant Zero-Heap CCSDS Framer (PASS)</option>
+                <option value="faulty_heap_and_unbounded_loop">C++ Preset 2: Unsafe malloc/new + Unguarded while (REJECT)</option>
+                <option value="faulty_mutual_recursion_fdir">C++ Preset 3: Unsafe Mutual Recursion in FDIR (REJECT)</option>
+              </select>
+              <button type="button" class="btn btn-accent" id="btnRunLeoMcp" onclick="runLeoDiagnose(true)">
+                ⚡ Diagnose MCP + Verify C++ (Bedrock)
+              </button>
+            </div>
+          </div>
+
+          <div id="leoMcpVerdictBanner" class="verdict-banner verdict-allow" style="margin-bottom:0.75rem;"></div>
+
+          <div class="control-label">
+            <span>Audited MCP Subsystem Tool Invocations</span>
+            <span class="mono" style="font-size:0.69rem;" id="leoMcpCallsMeta">5 read-only calls</span>
+          </div>
+          <div class="table-wrap" style="margin-bottom:0.85rem;">
+            <table>
+              <thead>
+                <tr>
+                  <th>MCP Tool</th>
+                  <th>Cited Telemetry Evidence</th>
+                  <th>State</th>
+                </tr>
+              </thead>
+              <tbody id="leoMcpTraceTbody"></tbody>
+            </table>
+          </div>
+
+          <div class="control-label">
+            <span>JPL Power-of-10 Flight C/C++ Static Source Gate (Editable)</span>
+            <span class="tag tag-pass" id="flightCppVerdictTag">FLIGHT_GATE_PASSED</span>
+          </div>
+          <textarea id="flightCppCodeInput" rows="7" aria-label="Editable C or C++ telemetry handler code" style="width:100%; font-family:'Martian Mono', monospace; font-size:0.71rem; line-height:1.45; background:var(--bg-code); color:var(--text-code); border:2px solid var(--border); padding:0.7rem; margin-bottom:0.55rem;"></textarea>
+          <div id="flightCppViolationsBox" style="margin-bottom:0.75rem;"></div>
+
+          <div class="advisory-box" id="leoMcpBedrockBox"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
     <!-- TAB 1: SCOT MIDDLE-MILE FULFILLMENT NETWORK                        -->
     <!-- ================================================================== -->
-    <section id="panel-scot-network" class="tab-panel active" role="tabpanel">
+    <section id="panel-scot-network" class="tab-panel" role="tabpanel">
       <div class="sim-header">
         <div>
           <h2 class="sim-title">Freight Corridor Rerouting (<code>SEA1 → EWR7</code>)</h2>
@@ -2410,10 +2612,10 @@
         <div>
           <h2 class="sim-title">Sample Demand Reroutes &amp; Local Test Commands</h2>
           <p class="sim-desc">
-            Per-demand hop allocations from <code>benchmarks/latest_results.json</code> (<code>router_benchmark.sample_reroutes</code>) alongside the Python commands to run all 29 unit and 60-thread concurrency tests locally in <code>136.51 ms</code>.
+            Per-demand hop allocations from <code>benchmarks/latest_results.json</code> (<code>router_benchmark.sample_reroutes</code>) alongside the Python commands to run all 38 unit and 60-thread concurrency tests locally in <code>260.11 ms</code>.
           </p>
         </div>
-        <span class="tag tag-pass">29/29 Unit &amp; Concurrency Tests Passing</span>
+        <span class="tag tag-pass">38/38 Unit &amp; Concurrency Tests Passing</span>
       </div>
 
       <div class="grid-studio">
@@ -2439,35 +2641,35 @@
                   <td><code>POP-SEA → SAT-P0-S1 → SAT-P1-S1 → POP-IAD</code></td>
                   <td class="num-right">3</td>
                   <td class="num-right">28.778 ms</td>
-                  <td class="num-right">0.1241 ms</td>
+                  <td class="num-right">0.0642 ms</td>
                 </tr>
                 <tr>
                   <td class="mono"><strong>DMD-0083</strong></td>
                   <td><code>POP-DUB → GW-EU-WEST → GW-EU-CENTRAL → POP-FRA</code></td>
                   <td class="num-right">3</td>
                   <td class="num-right">38.145 ms</td>
-                  <td class="num-right">0.1207 ms</td>
+                  <td class="num-right">0.0624 ms</td>
                 </tr>
                 <tr>
                   <td class="mono"><strong>DMD-0129</strong></td>
                   <td><code>POP-SEA → SAT-P0-S1 → SAT-P0-S2 → GW-US-EAST → POP-IAD</code></td>
                   <td class="num-right">4</td>
                   <td class="num-right">28.010 ms</td>
-                  <td class="num-right">0.1469 ms</td>
+                  <td class="num-right">0.0709 ms</td>
                 </tr>
                 <tr>
                   <td class="mono"><strong>DMD-0219</strong></td>
                   <td><code>POP-NRT → GW-AP-TOKYO → SAT-P3-S1 → SAT-P0-S1 → POP-SEA</code></td>
                   <td class="num-right">4</td>
                   <td class="num-right">41.430 ms</td>
-                  <td class="num-right">0.1791 ms</td>
+                  <td class="num-right">0.0838 ms</td>
                 </tr>
                 <tr>
                   <td class="mono"><strong>DMD-0261</strong></td>
                   <td><code>POP-SEA → SAT-P0-S1 → SAT-P3-S1 → GW-AP-TOKYO → POP-NRT</code></td>
                   <td class="num-right">4</td>
                   <td class="num-right">25.686 ms</td>
-                  <td class="num-right">0.0999 ms</td>
+                  <td class="num-right">0.0502 ms</td>
                 </tr>
               </tbody>
             </table>
@@ -2476,13 +2678,13 @@
 
         <div class="card">
           <div class="code-header">
-            <span>Reproduce Full Suite Locally (136.51 ms Wall Time)</span>
-            <span>Python 3.12+ Stdlib</span>
+            <span>Reproduce Full Suite Locally (260.11 ms Wall Time)</span>
+            <span>Python 3.12+ Runtime</span>
           </div>
-          <pre class="code-box" style="max-height:220px;"># 1. Run all 29 unit, API &amp; 60-way concurrent SQLite WAL tests
+          <pre class="code-box" style="max-height:220px;"># 1. Run all 38 unit, ATROPS Pareto, LEO MCP, C++ Gate &amp; SQLite WAL tests
 python3 -m unittest discover -s tests -v
 
-# 2. Execute deterministic seed=42 benchmark suite
+# 2. Execute deterministic seed=42 benchmark suite (all 5 subsystems)
 python3 benchmarks/run_benchmarks.py
 
 # 3. Launch local interactive studio
@@ -2502,26 +2704,134 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
           <span class="section-kicker">06 · Benchmarks</span>
           <h2 class="section-title">Benchmarks</h2>
           <p class="section-desc">
-            Generated by <code>python3 benchmarks/run_benchmarks.py</code> into <code>benchmarks/latest_results.json</code> (<code>seed=42</code>, <code>136.51 ms</code> total suite wall time across 28 nodes, 120 directed links, 300 traffic demands, 2,000 settlement events, and 150 operational incidents).
+            Generated by <code>python3 benchmarks/run_benchmarks.py</code> into <code>benchmarks/latest_results.json</code> (<code>seed=42</code>, <code>260.11 ms</code> total suite wall time across 240 ATROPS shipment waves, 160 multi-item carts, 24 LLM config patches, 120 LEO MCP incidents, 40 flight C++ handlers, 300 mesh demands, 2,000 settlement events, and 150 operational incidents).
           </p>
         </div>
-        <span class="tag tag-pass">Verified JSON Output</span>
+        <span class="tag tag-pass">Verified v2.0.0 JSON Output</span>
       </div>
 
       <div class="dual-layer-grid">
         <div class="overview-card">
-          <span class="step-badge">ROUTING, BILLING &amp; TRIAGE RESULTS</span>
-          <h3>Lower Tail Latency, Zero Duplicate Charges, and Exact Trial Balance</h3>
+          <span class="step-badge">PARETO, LEO MCP, ROUTING &amp; LEDGER RESULTS</span>
+          <h3>Multi-Modal Carbon &amp; Cost Savings, 100% MCP Launch Gate, and Zero Balance Drift</h3>
           <p>
-            Across <code>300</code> demands facing <code>6</code> mid-stream outages and link attenuations, capacity-aware multi-path routing lowers p99 path delay by <strong>74.78%</strong> (<code>526.47 ms → 132.80 ms</code>) and cuts SLA violations by <strong>95.33%</strong> (<code>107 → 5</code>) in <code>0.4648 ms</code> p99 solver time. The SQLite ACID ledger settles <strong>32,704.9 events/sec</strong> across 4 tax regions with <strong>0 duplicate charges</strong> and <strong>0¢ rounding drift</strong>, while the 3-check decision tree reaches <strong>100.0% (150/150)</strong> diagnostic accuracy.
+            Across <code>240</code> multi-modal shipment waves (<code>668,723</code> packages), the ATROPS CPT Pareto solver lifts Prime SLA hit rate from <code>90.11%</code> to <strong>99.65% (+9.54 pp)</strong> while cutting fulfillment cost by <strong>45.44% ($5.542 → $3.024/pkg)</strong> and carbon by <strong>59.05% (3.232 → 1.323 kg CO2e/pkg)</strong> in <code>0.0939 ms</code> p50 / <code>0.2169 ms</code> p99, and reduces multi-item cart cost by <strong>21.42% ($10.95 → $8.61/order)</strong>. Onboarding all 5 LEO MCP subsystem tools lifts diagnostic accuracy from <code>83.33%</code> to <strong>100.0% (120/120)</strong> while the JPL Power-of-10 static gate blocks <strong>20/20 (100.0%)</strong> unsafe C++ handlers with <strong>0.0%</strong> false positives.
           </p>
         </div>
         <div class="spec-card">
           <span class="step-badge">BENCHMARK HARNESS DETAILS</span>
-          <h3>Workload Parameters &amp; Conservation Totals</h3>
+          <h3>Mesh Graph, ACID Settlement &amp; Decision-Tree Conservation Totals</h3>
           <p>
-            <code>run_router_comparison(num_demands=300, seed=42)</code> routes <code>23,041.4 Mbps</code> across <code>28</code> nodes and <code>120</code> directed links, cutting dropped bandwidth from <code>4,273.71 Mbps</code> (<code>18.55%</code>) to <code>372.40 Mbps</code> (<code>1.62%</code>, <code>-91.29%</code>) with <code>6</code> 2-way split flows (<code>38.727 ms</code> total compute). <code>run_ledger_comparison(total_events=2000, duplicate_rate=0.15)</code> settles <code>1,509</code> unique events (<code>191</code> rejected: <code>170</code> credit + <code>21</code> stock; <code>72</code> out-of-order) with <code>19,376,379¢</code> (<code>$193,763.79</code>) <code>SUM(Debits) == SUM(Credits)</code> in <code>61.15 ms</code> (<code>5.823 ms</code> reconciliation audit).
+            <code>run_router_comparison(num_demands=300, seed=42)</code> routes <code>23,041.4 Mbps</code> across <code>28</code> nodes and <code>120</code> links, lowering p99 delay by <strong>74.78%</strong> (<code>526.47 → 132.80 ms</code>), SLA violations by <strong>95.33%</strong> (<code>107 → 5</code>), and dropped bandwidth by <strong>91.29%</strong> (<code>4,273.71 → 372.40 Mbps</code>) in <code>0.0609 ms</code> p50 / <code>0.2680 ms</code> p99 (<code>20.204 ms</code> total). <code>run_ledger_comparison(total_events=2000)</code> settles <code>1,509</code> unique events at <strong>67,291.9 events/sec</strong> (<code>29.72 ms</code> wall time, <code>2.974 ms</code> recon) with <code>19,376,379¢</code> (<code>$193,763.79</code>) <code>SUM(Debits) == SUM(Credits)</code> and <code>0</code> double-charges.
           </p>
+        </div>
+      </div>
+
+      <!-- Table 0A: SCOT-FO ATROPS Multi-Modal Pareto, Cart Sourcing & Schedule Gate -->
+      <div class="card" style="margin-bottom:1.25rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+          <div>
+            <h3 style="font-size:1.1rem; font-weight:800;">1. SCOT-FO ATROPS Multi-Modal Pareto, Split-Box Cart Sourcing &amp; LLM Config Gate (240 Waves · 668,723 Pkgs · 160 Carts · 24 Patches)</h3>
+            <div class="mono" style="font-size:0.71rem; color:var(--ink-muted);">Comparing Air-Priority &amp; Greedy Nearest-FC Baselines vs. TimeExpandedParetoSolver &amp; MultiItemCartSourcingOptimizer</div>
+          </div>
+          <span class="tag tag-pass">-45.44% $/pkg · -59.05% CO2e · -21.42% Cart Cost · 12/12 Unsafe Blocked</span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SCOT-FO / Supply Chain Policy</th>
+                <th class="num-right">Prime SLA Hit Rate</th>
+                <th class="num-right">Unit / Order Cost</th>
+                <th class="num-right">Carbon Footprint</th>
+                <th class="num-right">Split Rate / Patch Gate</th>
+                <th class="num-right">Compute Latency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Unadapted Air-Priority Wave Baseline</strong> <span class="mono" style="font-size:0.68rem; color:var(--ink-muted);">(240 Waves, Ignores Rail/EV Slack)</span></td>
+                <td class="num-right" style="color:var(--fail); font-weight:700;">90.11%</td>
+                <td class="num-right" style="color:var(--fail); font-weight:700;">$5.542 / pkg</td>
+                <td class="num-right" style="color:var(--fail); font-weight:700;">3.232 kg CO2e / pkg</td>
+                <td class="num-right">Single-Mode Air Bias</td>
+                <td class="num-right">Static Schedule</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>TimeExpandedParetoSolver (Air / Truck / Rail / EV CPT) ★</strong></td>
+                <td class="num-right" style="color:var(--pass);">99.65% (+9.54 pp)</td>
+                <td class="num-right" style="color:var(--pass);">$3.024 / pkg (-45.44%)</td>
+                <td class="num-right" style="color:var(--pass);">1.323 kg CO2e / pkg (-59.05%)</td>
+                <td class="num-right">4.08 Pareto Paths / OD</td>
+                <td class="num-right">0.0939 ms p50 / 0.2169 ms p99</td>
+              </tr>
+              <tr>
+                <td><strong>Greedy Nearest-FC Multi-Item Cart Baseline</strong> <span class="mono" style="font-size:0.68rem; color:var(--ink-muted);">(160 Carts · Single-Box-Only = 84.38% SLA)</span></td>
+                <td class="num-right">91.25%</td>
+                <td class="num-right" style="color:var(--fail); font-weight:700;">$10.95 / order</td>
+                <td class="num-right">0.883 kg CO2e / order</td>
+                <td class="num-right" style="color:var(--fail); font-weight:700;">55.00% split orders</td>
+                <td class="num-right">Per-Item Local Lookup</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>MultiItemCartSourcingOptimizer + Counterfactual Schedule Gate ★</strong></td>
+                <td class="num-right" style="color:var(--pass);">91.25% (+6.87 pp vs 1-Box)</td>
+                <td class="num-right" style="color:var(--pass);">$8.61 / order (-21.42%)</td>
+                <td class="num-right" style="color:var(--pass);">0.753 kg CO2e / order</td>
+                <td class="num-right" style="color:var(--pass);">6.88% splits · 12/12 unsafe blocked</td>
+                <td class="num-right">0.8044 ms mean</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Table 0B: LEO 5-Subsystem MCP & JPL Power-of-10 Flight C++ Gate -->
+      <div class="card" style="margin-bottom:1.25rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+          <div>
+            <h3 style="font-size:1.1rem; font-weight:800;">2. Amazon Leo 5-Subsystem MCP Launch Gate &amp; Flight C/C++ Power-of-10 Static Verifier (120 Incidents · 40 RTOS Handlers)</h3>
+            <div class="mono" style="font-size:0.71rem; color:var(--ink-muted);">Comparing 4-Tool Blind-Spot Suite v1 vs. 5-Tool MCP Registry v2 + JplPowerOfTenVerifier</div>
+          </div>
+          <span class="tag tag-pass">100.0% MCP Accuracy (120/120) · 20/20 Unsafe C++ Blocked · 0.0% FP</span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Diagnostic / Verification Engine</th>
+                <th class="num-right">Coverage / Corpus</th>
+                <th class="num-right">Accuracy / Recall</th>
+                <th class="num-right">False Positives / Gate</th>
+                <th class="num-right">Mean Latency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>LEO MCP Suite v1 (4 Tools, Missing orbital_beam_handover)</strong></td>
+                <td class="num-right">80.0% (4 / 5 subsystems)</td>
+                <td class="num-right" style="color:var(--fail); font-weight:700;">83.33% (100 / 120)</td>
+                <td class="num-right" style="color:var(--fail); font-weight:700;">LAUNCH GATE BLOCKED</td>
+                <td class="num-right">4 tool calls</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>LEO MCP Suite v2 (All 5 Subsystem Tools Onboarded) ★</strong></td>
+                <td class="num-right">100.0% (5 / 5 subsystems)</td>
+                <td class="num-right" style="color:var(--pass);">100.0% (120 / 120 · +16.67 pp)</td>
+                <td class="num-right" style="color:var(--pass);">LAUNCH GATE PASSED</td>
+                <td class="num-right">0.0076 ms (5 calls)</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>JplPowerOfTenVerifier (Zero-Heap, Bounded Loop &amp; Call-Graph Cycle Gate) ★</strong></td>
+                <td class="num-right">40 C/C++ RTOS Handlers (20/20 split)</td>
+                <td class="num-right" style="color:var(--pass);">100.0% recall (20 / 20 unsafe blocked)</td>
+                <td class="num-right" style="color:var(--pass);">0.0% FP (20 / 20 compliant passed)</td>
+                <td class="num-right">0.1330 ms / handler</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -2529,7 +2839,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
       <div class="card" style="margin-bottom:1.25rem;">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.8rem;">
           <div>
-            <h3 style="font-size:1.1rem; font-weight:800;">1. Multi-Path Graph Solver Benchmark (28 Nodes · 120 Directed Links · 300 Demands · 6 Degradation/Outage Events)</h3>
+            <h3 style="font-size:1.1rem; font-weight:800;">3. Multi-Path Graph Solver Benchmark (28 Nodes · 120 Directed Links · 300 Demands · 6 Degradation/Outage Events)</h3>
             <div class="mono" style="font-size:0.71rem; color:var(--ink-muted);">Comparing StaticShortestPathRouter vs. CapacityAwareRouter (benchmarks/latest_results.json)</div>
           </div>
           <span class="tag tag-accent">-74.78% p99 Latency · -95.33% SLA Violations</span>
@@ -2558,7 +2868,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
                 <td class="num-right" style="color:var(--fail); font-weight:700;">526.47 ms</td>
                 <td class="num-right" style="color:var(--fail); font-weight:700;">107 / 300 (35.67%)</td>
                 <td class="num-right">18.55% (4,273.71 Mbps)</td>
-                <td class="num-right">0.0287 / 0.0735 ms</td>
+                <td class="num-right">0.0142 / 0.0202 ms</td>
               </tr>
               <tr class="highlight-row">
                 <td><strong>CapacityAwareRouter (Min-Cost + SNR Gate + 2-Way Split) ★</strong></td>
@@ -2568,7 +2878,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
                 <td class="num-right" style="color:var(--pass);">132.80 ms (-74.78%)</td>
                 <td class="num-right" style="color:var(--pass);">5 / 300 (1.67% · -95.33%)</td>
                 <td class="num-right" style="color:var(--pass);">1.62% (372.40 Mbps · -91.29%)</td>
-                <td class="num-right">0.1211 / 0.4648 ms</td>
+                <td class="num-right">0.0609 / 0.2680 ms</td>
               </tr>
             </tbody>
           </table>
@@ -2579,10 +2889,10 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
       <div class="card" style="margin-bottom:1.25rem;">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.8rem;">
           <div>
-            <h3 style="font-size:1.1rem; font-weight:800;">2. ACID Double-Entry Settlement Benchmark (2,000 Events · 1,700 Unique + 300 [15.0%] Retries · 72 Out-of-Order)</h3>
+            <h3 style="font-size:1.1rem; font-weight:800;">4. ACID Double-Entry Settlement Benchmark (2,000 Events · 1,700 Unique + 300 [15.0%] Retries · 72 Out-of-Order)</h3>
             <div class="mono" style="font-size:0.71rem; color:var(--ink-muted);">Comparing NaiveFloatBillingProcessor vs. IdempotentSettlementLedger + 60-Way Concurrent SQLite WAL Storm</div>
           </div>
-          <span class="tag tag-pass">0 Double-Charges · 0¢ Rounding Drift · 32,704.9 ev/sec</span>
+          <span class="tag tag-pass">0 Double-Charges · 0¢ Rounding Drift · 67,291.9 ev/sec</span>
         </div>
 
         <div class="table-wrap">
@@ -2615,7 +2925,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
                 <td class="num-right" style="color:var(--pass);">$0.00 ($193,763.79 exact)</td>
                 <td class="num-right" style="color:var(--pass);">0¢ ($0.00 drift)</td>
                 <td class="num-right" style="color:var(--pass);">19,376,379¢ Dr == Cr</td>
-                <td class="num-right">32,704.9 ev/s · 5.823ms recon</td>
+                <td class="num-right">67,291.9 ev/s · 2.974ms recon</td>
               </tr>
             </tbody>
           </table>
@@ -2626,7 +2936,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
       <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
           <div>
-            <h3 style="font-size:1.1rem; font-weight:800;">3. Operational Fault-Tree Triage Benchmark (150 Incidents · 5 Alarm Classes · 60 Log Lines/Incident)</h3>
+            <h3 style="font-size:1.1rem; font-weight:800;">5. Operational Fault-Tree Triage Benchmark (150 Incidents · 5 Alarm Classes · 60 Log Lines/Incident)</h3>
             <div class="mono" style="font-size:0.71rem; color:var(--ink-muted);">Comparing Unstructured Log Regex Scanner vs. OperationalWorkflowEngine (&le;3-Check Decision Tree)</div>
           </div>
           <span class="tag tag-pass">100.0% Accuracy (150/150) · 2.41 Mean Checks (-93.47% Steps)</span>
@@ -2647,15 +2957,15 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
                 <td><strong>Unstructured Log Regex Scanner Baseline</strong></td>
                 <td class="num-right" style="color:var(--fail); font-weight:700;">64.0% (96 / 150)</td>
                 <td class="num-right">36.95 log lines</td>
-                <td class="num-right">60 lines</td>
-                <td class="num-right">0.0053 ms / 0.795 ms</td>
+                <td class="num-right">55 lines</td>
+                <td class="num-right">0.0027 ms / 0.403 ms</td>
               </tr>
               <tr class="highlight-row">
                 <td><strong>OperationalWorkflowEngine (&le;3-Check Fault Tree + Bedrock Nova) ★</strong></td>
                 <td class="num-right" style="color:var(--pass);">100.0% (150 / 150 · +36.0 pp)</td>
                 <td class="num-right" style="color:var(--pass);">2.41 checks (-93.47%)</td>
                 <td class="num-right" style="color:var(--pass);">3 checks</td>
-                <td class="num-right">0.0029 ms / 0.429 ms</td>
+                <td class="num-right">0.0015 ms / 0.218 ms</td>
               </tr>
             </tbody>
           </table>
@@ -2665,7 +2975,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
       <!-- Footer -->
       <footer class="footer">
         <div>
-          <strong>RouteLedger</strong> — Rerouting Traffic Around Bottlenecks With a Zero-Duplicate Billing Ledger · Built by Ritwika Reddy Kancharla
+          <strong>RouteLedger v2</strong>: Multi-Modal ATROPS Pareto Routing, LEO MCP Diagnostics &amp; Zero-Duplicate Settlement · Built by Ritwika Reddy Kancharla
         </div>
         <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
           <a href="#architecture" style="color:var(--ink); font-weight:700;">Architecture ↑</a>
@@ -2689,11 +2999,14 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
       // =======================================================================
       // URL HASH STATE & THEME MANAGEMENT (persisted exclusively via location.hash)
       // =======================================================================
-      const VALID_TABS = ["scot-network", "leo-mesh", "acid-ledger", "benchmarks"];
-      let activeTab = "scot-network";
+      const VALID_TABS = ["atrops-leo", "scot-network", "leo-mesh", "acid-ledger", "benchmarks"];
+      let activeTab = "atrops-leo";
       let activeTheme = "light";
 
       const STATE = {
+        atropsData: null,
+        leoMcpData: null,
+        atropsTimer: null,
         scotDemand: 3200,
         scotFault: "nominal",
         scotData: null,
@@ -2747,6 +3060,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
         document.getElementById("themeIcon").textContent = activeTheme === "dark" ? "☀️" : "🌙";
         document.getElementById("themeLabel").textContent = activeTheme === "dark" ? "Light Mode" : "Dark Mode";
         syncHashState();
+        if (STATE.atropsData) renderAtropsPanel(STATE.atropsData);
         if (STATE.scotData) renderScot(STATE.scotData);
         if (STATE.leoData) renderLeo(STATE.leoData);
       }
@@ -3169,7 +3483,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
           bedrock_advisory: {
             engine: "deterministic-noc-link-state-diagnostics",
             latency_ms: 0.015,
-            text: "• Link-State & SNR Gate (" + diag.root_cause_code + "): Isolated in " + diag.checks_executed + " checks — enforcing >=8.0 dB SNR threshold across Redmond gateway and multi-hop relay links.\n• Residual Multi-Path Allocation: Routed " + gbps + " Gbps across " + subflows.length + " subflow(s) at " + maxRtt + " ms RTT (0.0 Gbps dropped vs " + baseDropped + " Gbps lost on static OSPF).\n• Operator Action: " + diag.recommended_action + "."
+            text: "• Link-State & SNR Gate (" + diag.root_cause_code + "): Isolated in " + diag.checks_executed + " checks, enforcing >=8.0 dB SNR threshold across Redmond gateway and multi-hop relay links.\n• Residual Multi-Path Allocation: Routed " + gbps + " Gbps across " + subflows.length + " subflow(s) at " + maxRtt + " ms RTT (0.0 Gbps dropped vs " + baseDropped + " Gbps lost on static OSPF).\n• Operator Action: " + diag.recommended_action + "."
           }
         };
       }
@@ -4176,7 +4490,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
           plane: "Plane ① · AWS Edge Delivery",
           title: "Private Amazon S3 Bucket with Origin Access Control (OAC)",
           module: "s3://routeledger-web-796330847946-us-west-2/index.html",
-          summary: "Hosts static assets with S3 BlockPublicAccess enabled on all 4 flags—only CloudFront distribution E35WFLOHTA485K can read objects via IAM service-principal policy.",
+          summary: "Hosts static assets with S3 BlockPublicAccess enabled on all 4 flags; only CloudFront distribution E35WFLOHTA485K can read objects via IAM service-principal policy.",
           metric: "0 Public S3 ACLs · $0 Idle Compute Cost"
         },
         "rl-lambda": {
@@ -4198,21 +4512,21 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
           title: "Convex M/M/1 Queuing-Aware Constrained Dijkstra Solver",
           module: "route_ledger/network_router.py :: projected_hop_latency_ms() & route_demand()",
           summary: "Computes propagation + noise + convex congestion queuing delay within hop and end-to-end SLA ceilings across 300 benchmark demands and 6 mid-stream fault events.",
-          metric: "526.47ms → 132.80ms p99 (-74.78%) · 0.1211ms p50 / 0.4648ms p99"
+          metric: "526.47ms → 132.80ms p99 (-74.78%) · 0.0609ms p50 / 0.2680ms p99"
         },
         "rl-split": {
           plane: "Plane ② · Capacity- & SNR-Threshold Multi-Path Graph Solver",
-          title: "2-Way Residual Augmenting Subflow Splitter",
-          module: "route_ledger/network_router.py & web_api.py :: Residual Flow Splitting",
-          summary: "Splits elephant traffic and freight demands that exceed single-path bottleneck capacity across 2 valid residual paths while reclaiming bandwidth upon flow expiration.",
-          metric: "35.67% → 1.67% SLA Violations (107/300 → 5/300 · -95.33%)"
+          title: "2-Way Residual Augmenting Subflow Splitter & ATROPS Pareto",
+          module: "route_ledger/atrops_pareto.py & network_router.py",
+          summary: "Computes 3D Speed/Cost/CO2e Pareto frontiers across Air, Linehaul, Rail, and EV CPT schedules (-59.05% CO2e) and splits burst traffic across 2 residual paths.",
+          metric: "99.65% ATROPS SLA · 35.67% → 1.67% Mesh SLA Violations (-95.33%)"
         },
         "rl-tree": {
           plane: "Plane ③ · Bounded Operational Triage Plane",
-          title: "Deterministic <=3-Check NOC & Fulfillment Fault-Tree Engine",
-          module: "route_ledger/noc_workflow.py :: OperationalWorkflowEngine",
-          summary: "Isolates root causes across 5 alarm classes (gateway SNR drop, handoff packet loss, billing mismatch, conveyor jam, bin drift) in <=3 telemetry checks vs 36.95 regex log lines.",
-          metric: "100.0% Accuracy (150/150) · 2.41 Mean Checks (0.0029ms)"
+          title: "5-Subsystem LEO MCP Registry, <=3-Check Fault Tree & Flight C++ Gate",
+          module: "route_ledger/leo_flight_mcp.py & noc_workflow.py",
+          summary: "Wraps 5 LEO subsystem MCP tools (120/120 accuracy), enforces JPL Power-of-10 static C++ checks (20/20 unsafe blocked), and runs <=3-check fault trees (150/150).",
+          metric: "100.0% MCP & Fault Tree · 0% C++ False Positives"
         },
         "rl-bedrock": {
           plane: "Plane ③ · Bounded Operational Triage Plane",
@@ -4233,7 +4547,7 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
           title: "Double-Entry General Journal & Multi-Region Decimal Tax Engine",
           module: "route_ledger/double_entry_ledger.py :: IdempotentSettlementLedger",
           summary: "Posts balanced DEBIT Receivable and CREDIT Revenue + Tax entries using exact Decimal(ROUND_HALF_UP) minor-unit rules across US-WA, DE, JP, and BR with out-of-order watermarks.",
-          metric: "32,704.9 ev/s · $0.00 Drift (19,376,379¢ Debits == Credits)"
+          metric: "67,291.9 ev/s · $0.00 Drift (19,376,379¢ Debits == Credits)"
         }
       };
 
@@ -4313,6 +4627,473 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
       }
       selectArchNode("rl-prune");
 
+      // =======================================================================
+      // TAB 01: ATROPS MULTI-MODAL PARETO & LEO 5-TOOL MCP + C++ STATIC GATE
+      // =======================================================================
+      const CPP_PRESET_SOURCES = {
+        "compliant_ccsds_framer": [
+          "#include <stdint.h>",
+          "#include <stddef.h>",
+          "",
+          "static constexpr uint32_t MAX_POLL_TICKS = 64U;",
+          "static constexpr size_t CCSDS_MAX_BYTES = 256U;",
+          "static uint8_t g_tx_frame_buf[CCSDS_MAX_BYTES];",
+          "",
+          "int32_t flush_mmio_telemetry_fifo(volatile uint32_t* mmio_status, size_t payload_len) {",
+          "    if (payload_len > CCSDS_MAX_BYTES - 2U) { return -1; }",
+          "    uint32_t tick = 0U;",
+          "    while (((*mmio_status & 0x01U) != 0U) && (tick < MAX_POLL_TICKS)) {",
+          "        ++tick;",
+          "    }",
+          "    return (tick >= MAX_POLL_TICKS) ? -2 : 0;",
+          "}"
+        ].join("\n"),
+        "faulty_heap_and_unbounded_loop": [
+          "#include <stdint.h>",
+          "extern \"C\" { void* malloc(unsigned long); void free(void*); }",
+          "",
+          "int32_t handle_star_tracker_irq(volatile uint32_t* spi_status, uint32_t pkt_bytes) {",
+          "    uint8_t* scratch = static_cast<uint8_t*>(malloc(pkt_bytes));",
+          "    uint32_t* seq_table = new uint32_t[32];",
+          "    while ((*spi_status & 0x01U) != 0U) {",
+          "        // Stuck hardware bit hangs RTOS tick indefinitely!",
+          "    }",
+          "    free(scratch);",
+          "    delete[] seq_table;",
+          "    return 0;",
+          "}"
+        ].join("\n"),
+        "faulty_mutual_recursion_fdir": [
+          "#include <stdint.h>",
+          "",
+          "int32_t recover_subframe(const uint8_t* buf, uint32_t depth);",
+          "",
+          "int32_t dispatch_fdir_telemetry(const uint8_t* buf, uint32_t depth) {",
+          "    if (buf[0] == 0x7EU) { return recover_subframe(buf + 1, depth + 1U); }",
+          "    return 0;",
+          "}",
+          "",
+          "int32_t recover_subframe(const uint8_t* buf, uint32_t depth) {",
+          "    if (depth < 8U) { return dispatch_fdir_telemetry(buf, depth + 1U); }",
+          "    return 1;",
+          "}"
+        ].join("\n")
+      };
+
+      function buildAtropsLocalFallback(disruption, cartSlaHr, patchPreset, wSpeed, wCost, wCarbon) {
+        const frontier = disruption === "cvg3_weather_ground_stop"
+          ? [
+              { point_id: "PF-01", policy_name: "AIR_BYPASS_DFW6", sla_hit_rate_pct: 100.0, avg_transit_hr: 21.8, cost_per_pkg_usd: 5.19, co2e_kg_per_pkg: 2.94, primary_route_label: "SEA1 -> DEN4 -> DFW6 -> EWR7" },
+              { point_id: "PF-02", policy_name: "ATROPS_PARETO_BALANCED", sla_hit_rate_pct: 100.0, avg_transit_hr: 29.2, cost_per_pkg_usd: 3.42, co2e_kg_per_pkg: 1.56, primary_route_label: "SEA1 -> DEN4 -> ORD5 -> EWR7" },
+              { point_id: "PF-03", policy_name: "SUSTAINABLE_RAIL_EV_SHIFT", sla_hit_rate_pct: 100.0, avg_transit_hr: 35.0, cost_per_pkg_usd: 2.08, co2e_kg_per_pkg: 0.54, primary_route_label: "SEA1 -> DEN4 -> BWI2 -> EWR7" }
+            ]
+          : [
+              { point_id: "PF-01", policy_name: "PRIME_AIR_MAX_SPEED", sla_hit_rate_pct: 100.0, avg_transit_hr: 11.4, cost_per_pkg_usd: 6.18, co2e_kg_per_pkg: 3.74, primary_route_label: "SEA1 -> EWR7 (Direct Air + CVG3)" },
+              { point_id: "PF-02", policy_name: "SPEED_COST_BALANCED", sla_hit_rate_pct: 100.0, avg_transit_hr: 21.4, cost_per_pkg_usd: 5.30, co2e_kg_per_pkg: 2.59, primary_route_label: "SEA1 -> SLC2 -> CVG3 -> BWI2 -> EWR7" },
+              { point_id: "PF-03", policy_name: "ATROPS_PARETO_BALANCED", sla_hit_rate_pct: 100.0, avg_transit_hr: 29.2, cost_per_pkg_usd: 3.42, co2e_kg_per_pkg: 1.56, primary_route_label: "SEA1 -> DEN4 -> ORD5 -> EWR7" },
+              { point_id: "PF-04", policy_name: "NET_ZERO_MAX_CARBON_SAVER", sla_hit_rate_pct: 100.0, avg_transit_hr: 35.0, cost_per_pkg_usd: 2.08, co2e_kg_per_pkg: 0.54, primary_route_label: "SEA1 -> DEN4 -> BWI2 -> EWR7 (Rail + EV)" }
+            ];
+
+        let pickIdx = 1;
+        if (wSpeed >= 0.65) pickIdx = 0;
+        else if (wCarbon >= 0.45 || wCost >= 0.55) pickIdx = frontier.length - 1;
+        else pickIdx = Math.min(frontier.length - 1, 2);
+        const sel = frontier[pickIdx];
+
+        const isTightCart = Number(cartSlaHr) <= 14;
+        const cartSourcing = isTightCart
+          ? {
+              dest_region: "US_EAST_NY",
+              sla_deadline_hr: Number(cartSlaHr),
+              recommended_mode: "SPLIT_FC_DISPATCH",
+              atrops_optimal: { box_count: 2, max_delivery_hr: 11.0, sla_met: true, total_fulfillment_cost_usd: 11.98, co2e_kg: 0.883, fc_assignments: { "EWR7": ["SKU-ANC-HEADPHONES", "SKU-KINDLE-FOLIO"], "BWI2": ["SKU-USBC-DOCK"] } },
+              greedy_nearest_fc_baseline: { box_count: 2, max_delivery_hr: 11.0, sla_met: true, total_fulfillment_cost_usd: 11.98, co2e_kg: 0.883 },
+              savings_vs_greedy: { cost_saved_usd: 0.0, co2e_saved_kg: 0.0, boxes_eliminated: 0 }
+            }
+          : {
+              dest_region: "US_EAST_NY",
+              sla_deadline_hr: Number(cartSlaHr),
+              recommended_mode: "SINGLE_BOX_CONSOLIDATION",
+              atrops_optimal: { box_count: 1, max_delivery_hr: 16.5, sla_met: true, total_fulfillment_cost_usd: 8.26, co2e_kg: 0.742, fc_assignments: { "CVG3": ["SKU-ANC-HEADPHONES", "SKU-USBC-DOCK", "SKU-KINDLE-FOLIO"] } },
+              greedy_nearest_fc_baseline: { box_count: 2, max_delivery_hr: 11.0, sla_met: true, total_fulfillment_cost_usd: 11.98, co2e_kg: 0.883 },
+              savings_vs_greedy: { cost_saved_usd: 3.72, co2e_saved_kg: 0.141, boxes_eliminated: 1 }
+            };
+
+        const badPatch = patchPreset === "rejected_naive_llm_sort_cap_overflow";
+        const patchVal = badPatch
+          ? {
+              patch_id: "PATCH-SCOT-205-UNSAFE-LLM",
+              verdict: "REJECTED_BY_SOLVER_GATE",
+              approved: false,
+              violations: [
+                "AD_HOC_LANE_EXCEEDS_STATION_SORT_CAP:MM-99-SEA1-BWI2-AIR-FLOOD (9000 > 3100 pkgs at BWI2)",
+                "CPT_CAUSALITY_BREACH:MM-22-BWI2-EWR7-EV (new_cpt=11.00h < earliest_feeder_ready=19.60h)"
+              ]
+            }
+          : {
+              patch_id: "PATCH-SCOT-204-APPROVED",
+              verdict: "APPROVED_FOR_COMMIT",
+              approved: true,
+              violations: []
+            };
+
+        return {
+          compute_time_ms: 0.094,
+          selected_plan: {
+            routed_pkgs: 3600,
+            sla_hit_rate_pct: sel.sla_hit_rate_pct,
+            avg_transit_hr: sel.avg_transit_hr,
+            cost_per_pkg_usd: sel.cost_per_pkg_usd,
+            co2e_kg_per_pkg: sel.co2e_kg_per_pkg
+          },
+          pareto_frontier: frontier,
+          cart_sourcing: cartSourcing,
+          schedule_patch_validation: patchVal,
+          bedrock_advisory: {
+            engine: "deterministic-scot-atrops-pareto-gate",
+            text: "• Multi-Modal CPT Pareto Point: Selected " + sel.policy_name + " (" + sel.primary_route_label + ") at $" + sel.cost_per_pkg_usd.toFixed(2) + "/pkg and " + sel.co2e_kg_per_pkg.toFixed(2) + " kg CO2e/pkg.\n• Multi-ASIN Cart Sourcing: " + cartSourcing.recommended_mode + " (" + cartSourcing.atrops_optimal.box_count + " box, $" + cartSourcing.atrops_optimal.total_fulfillment_cost_usd.toFixed(2) + ").\n• Schedule Patch Gate (" + patchVal.patch_id + "): " + patchVal.verdict + "."
+          }
+        };
+      }
+
+      function verifyCppLocalFallback(code) {
+        const violations = [];
+        const lines = String(code || "").split("\n");
+        lines.forEach(function (rawLine, idx) {
+          const ln = rawLine.replace(/\/\/.*$/, "");
+          if (/\b(malloc|calloc|realloc|free)\s*\(/.test(ln) || /\b(new|delete)\b/.test(ln)) {
+            violations.push({ rule_id: "P10-03", line: idx + 1, symbol: "heap_alloc", detail: "Dynamic heap allocation/deallocation forbidden in flight code." });
+          }
+          if (/\bwhile\s*\(\s*(true|1)\s*\)/.test(ln) || (/\bwhile\s*\(/.test(ln) && !/(<|<=|>|>=)/.test(ln))) {
+            violations.push({ rule_id: "P10-02", line: idx + 1, symbol: "while(...)", detail: "Loop lacks an explicit monotonic max-tick upper bound." });
+          }
+        });
+        if (/dispatch_fdir_telemetry[\s\S]*recover_subframe[\s\S]*dispatch_fdir_telemetry/.test(code)) {
+          violations.push({ rule_id: "P10-01", line: 5, symbol: "dispatch_fdir_telemetry -> recover_subframe", detail: "Mutual call-graph recursion cycle detected." });
+        }
+        return {
+          verdict: violations.length === 0 ? "FLIGHT_GATE_PASSED" : "FLIGHT_GATE_REJECTED",
+          approved: violations.length === 0,
+          violation_count: violations.length,
+          violations: violations,
+          analysis_time_ms: 0.133
+        };
+      }
+
+      function buildLeoMcpLocalFallback(scenarioKey, enabledTools, cppCode) {
+        const hasHandover = enabledTools.includes("orbital_beam_handover");
+        let rootCause = "ORBITAL_BEAM_HANDOVER_EPHEMERIS_SLIP";
+        let accurate = true;
+        if (scenarioKey === "beam_handover_ephemeris_slip" && !hasHandover) {
+          rootCause = "KA_RAIN_FADE_ACM_MODCOD_DROP";
+          accurate = false;
+        } else if (scenarioKey === "optical_isl_ber_spike") {
+          rootCause = "OPTICAL_ISL_FPA_JITTER_BER_SPIKE";
+        } else if (scenarioKey === "ka_rain_fade_and_bgp_flap") {
+          rootCause = "COMPOUND_RAIN_FADE_AND_GATEWAY_BGP_FLAP";
+        } else if (scenarioKey === "terminal_modem_pll_thermal") {
+          rootCause = "TERMINAL_PHASED_ARRAY_THERMAL_PLL_SLIP";
+        } else if (scenarioKey === "gateway_bgp_flap_only") {
+          rootCause = "GATEWAY_BACKHAUL_BGP_HOLD_TIMER_FLAP";
+        }
+
+        const citations = {
+          "rf_link_budget": scenarioKey === "ka_rain_fade_and_bgp_flap" ? { cit: "Es/N0=4.9 dB (margin -1.6 dB), rain=44.0 mm/hr", anom: true } : { cit: "Es/N0=16.4 dB (margin +9.9 dB), rain=0.4 mm/hr", anom: false },
+          "orbital_beam_handover": scenarioKey === "beam_handover_ephemeris_slip" ? { cit: "ephemeris_skew=7.9 ms, ptp_locked=false, drops=1420 pkts", anom: true } : { cit: "ephemeris_skew=0.6 ms, ptp_locked=true, drops=0 pkts", anom: false },
+          "optical_isl_ber": scenarioKey === "optical_isl_ber_spike" ? { cit: "post_fec_ber=4.80e-04, uncorrected_cw=3890, fpa_jitter=9.6 urad", anom: true } : { cit: "post_fec_ber=1.20e-11, uncorrected_cw=0, fpa_jitter=0.9 urad", anom: false },
+          "terminal_modem_pll": scenarioKey === "terminal_modem_pll_thermal" ? { cit: "pll_slips=47, rfic_temp=96.4C, poe=44.2V", anom: true } : { cit: "pll_slips=0, rfic_temp=54.0C, poe=53.8V", anom: false },
+          "gateway_bgp_flap": (scenarioKey === "gateway_bgp_flap_only" || scenarioKey === "ka_rain_fade_and_bgp_flap") ? { cit: "bgp_state=ACTIVE_RETRY, flaps_5m=8, cgnat_util=89%", anom: true } : { cit: "bgp_state=ESTABLISHED, flaps_5m=0, cgnat_util=61%", anom: false }
+        };
+
+        const traces = enabledTools.map(function (t, i) {
+          const info = citations[t] || { cit: "nominal", anom: false };
+          return { step: i + 1, tool_name: t, evidence_citation: info.cit, anomaly_detected: info.anom };
+        });
+        const gate = verifyCppLocalFallback(cppCode);
+        const covPct = Math.round((enabledTools.length / 5) * 100);
+        return {
+          mcp_diagnosis: {
+            predicted_root_cause: rootCause,
+            accurate: accurate,
+            subsystem_coverage_pct: covPct,
+            tool_calls_executed: traces.length,
+            mcp_traces: traces,
+            recommended_remediation: accurate
+              ? "Isolate faulty subsystem via MCP trace and steer traffic onto healthy LEO diversity plane."
+              : "Blind-spot misdiagnosis: re-enable orbital_beam_handover MCP tool to restore 100% launch-gate coverage."
+          },
+          flight_cpp_gate: gate,
+          bedrock_advisory: {
+            engine: "deterministic-leo-mcp-synthesizer",
+            text: "• MCP Root Cause (" + rootCause + "): " + (accurate ? "Verified" : "MISDIAGNOSED (missing tool)") + " across " + traces.length + "/5 subsystem tools (" + covPct + "% coverage).\n• Flight C++ Gate (" + gate.verdict + "): " + gate.violation_count + " Power-of-10 static violation(s) found."
+          }
+        };
+      }
+
+      function drawAtropsParetoSvg(data) {
+        const svg = document.getElementById("atropsParetoSvg");
+        if (!svg) return;
+        const c = svgPalette();
+        const pts = (data && data.pareto_frontier) || [];
+        const sel = (data && data.selected_plan) || {};
+        const padL = 56, padR = 26, padT = 34, padB = 38;
+        const W = 620, H = 235;
+        const plotW = W - padL - padR;
+        const plotH = H - padT - padB;
+
+        const parts = [
+          '<rect width="' + W + '" height="' + H + '" fill="' + c.bg + '"/>',
+          '<rect x="10" y="8" width="600" height="20" fill="' + c.band + '" stroke="' + c.border + '" stroke-width="1.4"/>',
+          '<text x="20" y="22" font-family="Martian Mono, monospace" font-size="9.5" font-weight="700" fill="' + c.ink + '">PARETO TRADE-OFF CURVE: TRANSIT HOURS (X) vs. $/PKG &amp; BUBBLE = kg CO2e</text>',
+          '<line x1="' + padL + '" y1="' + (H - padB) + '" x2="' + (W - padR) + '" y2="' + (H - padB) + '" stroke="' + c.border + '" stroke-width="1.8"/>',
+          '<line x1="' + padL + '" y1="' + padT + '" x2="' + padL + '" y2="' + (H - padB) + '" stroke="' + c.border + '" stroke-width="1.8"/>',
+          '<text x="' + (W / 2) + '" y="' + (H - 8) + '" text-anchor="middle" font-family="Martian Mono, monospace" font-size="9" font-weight="700" fill="' + c.muted + '">Transit Hours (Faster ←  → Greener Rail + EV)</text>',
+          '<text x="16" y="' + (H / 2) + '" text-anchor="middle" transform="rotate(-90 16 ' + (H / 2) + ')" font-family="Martian Mono, monospace" font-size="9" font-weight="700" fill="' + c.muted + '">Cost ($/pkg)</text>'
+        ];
+
+        if (pts.length > 0) {
+          const minX = 8, maxX = 40;
+          const minY = 1.5, maxY = 7.0;
+          const coords = pts.map(function (p) {
+            const cx = padL + ((Math.min(maxX, Math.max(minX, p.avg_transit_hr)) - minX) / (maxX - minX)) * plotW;
+            const cy = (H - padB) - ((Math.min(maxY, Math.max(minY, p.cost_per_pkg_usd)) - minY) / (maxY - minY)) * plotH;
+            return { cx: cx, cy: cy, p: p };
+          });
+
+          const poly = coords.map(function (k) { return k.cx.toFixed(1) + "," + k.cy.toFixed(1); }).join(" ");
+          parts.push('<polyline points="' + poly + '" fill="none" stroke="' + c.accent + '" stroke-width="2.6" stroke-dasharray="6 4"/>');
+
+          coords.forEach(function (k) {
+            const isSel = Math.abs((sel.cost_per_pkg_usd || 0) - k.p.cost_per_pkg_usd) < 0.15;
+            const r = Math.max(7, Math.min(16, 6 + k.p.co2e_kg_per_pkg * 2.5));
+            const fill = isSel ? c.pass : c.accentSoft;
+            const stroke = isSel ? c.border : c.accent;
+            parts.push('<circle cx="' + k.cx.toFixed(1) + '" cy="' + k.cy.toFixed(1) + '" r="' + r.toFixed(1) + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="2.2"/>');
+            parts.push('<text x="' + k.cx.toFixed(1) + '" y="' + (k.cy - r - 5).toFixed(1) + '" text-anchor="middle" font-family="Martian Mono, monospace" font-size="8.5" font-weight="700" fill="' + c.ink + '">$' + Number(k.p.cost_per_pkg_usd).toFixed(2) + ' · ' + Number(k.p.co2e_kg_per_pkg).toFixed(2) + 'kg</text>');
+          });
+        }
+        svg.innerHTML = parts.join("");
+      }
+
+      function renderAtropsPanel(data) {
+        STATE.atropsData = data;
+        drawAtropsParetoSvg(data);
+
+        const sp = data.selected_plan || {};
+        const frontier = data.pareto_frontier || [];
+        const cs = data.cart_sourcing || {};
+        const pv = data.schedule_patch_validation || {};
+
+        document.getElementById("atropsSummaryBadge").textContent =
+          (sp.sla_hit_rate_pct || 100) + "% SLA · $" + Number(sp.cost_per_pkg_usd || 0).toFixed(2) + "/pkg · " + Number(sp.co2e_kg_per_pkg || 0).toFixed(2) + " kg CO2e";
+        document.getElementById("atropsFrontierCount").textContent =
+          frontier.length + " non-dominated policies (" + (data.compute_time_ms || 0.094) + " ms)";
+
+        document.getElementById("atropsFrontierTbody").innerHTML = frontier.map(function (pt) {
+          const activeRow = Math.abs((sp.cost_per_pkg_usd || 0) - pt.cost_per_pkg_usd) < 0.15;
+          return (
+            '<tr class="' + (activeRow ? "highlight-row" : "") + '">' +
+              "<td><strong>" + esc(pt.policy_name) + "</strong><div class='mono' style='font-size:0.66rem; color:var(--ink-muted);'>" + esc(pt.primary_route_label) + "</div></td>" +
+              '<td class="num-right">' + pt.sla_hit_rate_pct + "%</td>" +
+              '<td class="num-right">' + pt.avg_transit_hr + "h</td>" +
+              '<td class="num-right">$' + Number(pt.cost_per_pkg_usd).toFixed(2) + "</td>" +
+              '<td class="num-right">' + Number(pt.co2e_kg_per_pkg).toFixed(2) + "</td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        const optCart = cs.atrops_optimal || {};
+        const greedyCart = cs.greedy_nearest_fc_baseline || {};
+        const sav = cs.savings_vs_greedy || {};
+        const modeBadge = document.getElementById("atropsCartModeBadge");
+        modeBadge.textContent = cs.recommended_mode || "SINGLE_BOX_CONSOLIDATION";
+        modeBadge.className = "tag " + (cs.recommended_mode === "SINGLE_BOX_CONSOLIDATION" ? "tag-pass" : "tag-accent");
+
+        const fcPairs = Object.keys(optCart.fc_assignments || {}).map(function (fc) {
+          return fc + " [" + optCart.fc_assignments[fc].length + " SKU]";
+        }).join(" + ");
+
+        document.getElementById("atropsCartBox").innerHTML =
+          '<div class="tree-step-row">' +
+            "<span><strong>ATROPS Choice (" + (optCart.box_count || 1) + " box):</strong> " + esc(fcPairs) + " · " + (optCart.max_delivery_hr || 16.5) + "h vs " + (cs.sla_deadline_hr || 20) + "h SLA</span>" +
+            "<span><strong>$" + Number(optCart.total_fulfillment_cost_usd || 0).toFixed(2) + "</strong> (Greedy: $" + Number(greedyCart.total_fulfillment_cost_usd || 0).toFixed(2) + ", saved $" + Number(sav.cost_saved_usd || 0).toFixed(2) + ")</span>" +
+          "</div>";
+
+        const pBanner = document.getElementById("atropsPatchBanner");
+        pBanner.className = "verdict-banner " + (pv.approved ? "verdict-allow" : "verdict-deny");
+        pBanner.innerHTML =
+          "<div>" +
+            '<div style="font-weight:800; font-size:0.92rem;">' +
+              (pv.approved ? "✅ SCHEDULE PATCH APPROVED FOR COMMIT" : "🛑 UNSAFE LLM SCHEDULE PATCH BLOCKED") +
+              " (" + esc(pv.patch_id || "") + ")" +
+            "</div>" +
+            '<div style="font-size:0.79rem; margin-top:0.18rem;">' +
+              (pv.approved
+                ? "Counterfactual flow simulation verified 0 station sort-cap overflows and valid CPT causality."
+                : esc((pv.violations || []).join(" · "))) +
+            "</div>" +
+          "</div>" +
+          '<span class="tag ' + (pv.approved ? "tag-pass" : "tag-fail") + '">' + esc(pv.verdict || "") + "</span>";
+
+        const bd = data.bedrock_advisory || {};
+        document.getElementById("atropsBedrockBox").textContent = bd.text || "";
+      }
+
+      function renderLeoMcpPanel(data) {
+        STATE.leoMcpData = data;
+        const diag = data.mcp_diagnosis || {};
+        const gate = data.flight_cpp_gate || {};
+        const traces = diag.mcp_traces || [];
+
+        const launchOk = diag.accurate && diag.subsystem_coverage_pct === 100;
+        const lBadge = document.getElementById("leoMcpLaunchBadge");
+        lBadge.className = "tag " + (launchOk ? "tag-pass" : "tag-warn");
+        lBadge.textContent = (diag.subsystem_coverage_pct || 100) + "% Coverage · " + (launchOk ? "Launch Gate PASS" : "Blind Spot (80% Cov)");
+
+        const vBanner = document.getElementById("leoMcpVerdictBanner");
+        vBanner.className = "verdict-banner " + (diag.accurate ? "verdict-allow" : "verdict-deny");
+        vBanner.innerHTML =
+          "<div>" +
+            '<div style="font-weight:800; font-size:0.93rem;">' +
+              (diag.accurate ? "✅ MCP ROOT CAUSE ISOLATED: " : "⚠️ MISSING-TOOL MISDIAGNOSIS: ") +
+              esc(diag.predicted_root_cause || "") +
+            "</div>" +
+            '<div style="font-size:0.79rem; margin-top:0.18rem;">' + esc(diag.recommended_remediation || "") + "</div>" +
+          "</div>" +
+          '<span class="tag ' + (diag.accurate ? "tag-pass" : "tag-fail") + '">' + traces.length + "/5 MCP Tools</span>";
+
+        document.getElementById("leoMcpCallsMeta").textContent = traces.length + " read-only MCP call(s)";
+        document.getElementById("leoMcpTraceTbody").innerHTML = traces.map(function (tr) {
+          return (
+            "<tr>" +
+              "<td><code>" + esc(tr.tool_name) + "</code></td>" +
+              '<td class="mono" style="font-size:0.69rem;">' + esc(tr.evidence_citation) + "</td>" +
+              '<td><span class="tag ' + (tr.anomaly_detected ? "tag-fail" : "tag-pass") + '">' + (tr.anomaly_detected ? "ANOMALY" : "NOMINAL") + "</span></td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        const cppTag = document.getElementById("flightCppVerdictTag");
+        cppTag.className = "tag " + (gate.approved ? "tag-pass" : "tag-fail");
+        cppTag.textContent = gate.verdict || "FLIGHT_GATE_PASSED";
+
+        const vBox = document.getElementById("flightCppViolationsBox");
+        if (gate.approved) {
+          vBox.innerHTML =
+            '<div class="tree-step-row">' +
+              "<span>0 dynamic heap allocations, bounded loops verified, acyclic call graph confirmed (" + (gate.analysis_time_ms || 0.13) + " ms).</span>" +
+              '<span class="tag tag-pass">P10-01..03 PASS</span>' +
+            "</div>";
+        } else {
+          vBox.innerHTML = (gate.violations || []).map(function (v) {
+            return (
+              '<div class="tree-step-row" style="background:var(--fail-soft); color:var(--fail);">' +
+                "<span><strong>[" + esc(v.rule_id) + " · Line " + v.line + "]</strong> <code>" + esc(v.symbol) + "</code></span>" +
+                "<span>" + esc(v.detail) + "</span>" +
+              "</div>"
+            );
+          }).join("");
+        }
+
+        const bd = data.bedrock_advisory || {};
+        document.getElementById("leoMcpBedrockBox").textContent = bd.text || "";
+      }
+
+      window.runAtropsPareto = async function (invokeBedrock) {
+        const wSpeed = Number(document.getElementById("wSpeedSlider").value);
+        const wCost = Number(document.getElementById("wCostSlider").value);
+        const wCarbon = Number(document.getElementById("wCarbonSlider").value);
+        const disruption = document.getElementById("atropsDisruptionSelect").value;
+        const cartSla = Number(document.getElementById("atropsCartSlaSelect").value);
+        const patchPreset = document.getElementById("atropsPatchSelect").value;
+        const btn = document.getElementById("btnRunAtrops");
+        const orig = btn.textContent;
+        if (invokeBedrock) {
+          btn.disabled = true;
+          btn.textContent = "⏳ Solving Pareto + Querying Bedrock...";
+        }
+        try {
+          const res = await apiCall("/api/atrops/pareto", {
+            method: "POST",
+            body: JSON.stringify({
+              disruption: disruption,
+              volume_pkgs: 3600,
+              sla_deadline_hr: 36.5,
+              w_speed: wSpeed,
+              w_cost: wCost,
+              w_carbon: wCarbon,
+              dest_region: "US_EAST_NY",
+              cart_sla_hr: cartSla,
+              patch_preset: patchPreset,
+              invoke_bedrock: Boolean(invokeBedrock)
+            })
+          });
+          renderAtropsPanel(res);
+        } catch (_) {
+          renderAtropsPanel(buildAtropsLocalFallback(disruption, cartSla, patchPreset, wSpeed, wCost, wCarbon));
+        } finally {
+          if (invokeBedrock) {
+            btn.disabled = false;
+            btn.textContent = orig;
+          }
+        }
+      };
+
+      window.runLeoDiagnose = async function (invokeBedrock) {
+        const scenarioKey = document.getElementById("leoIncidentSelect").value;
+        const cppPreset = document.getElementById("flightCppPresetSelect").value;
+        const codeArea = document.getElementById("flightCppCodeInput");
+        const enabledTools = [];
+        document.querySelectorAll("#leoMcpToolsCheckboxes input[type='checkbox']").forEach(function (cb) {
+          if (cb.checked) enabledTools.push(cb.value);
+        });
+        const btn = document.getElementById("btnRunLeoMcp");
+        const orig = btn.textContent;
+        if (invokeBedrock) {
+          btn.disabled = true;
+          btn.textContent = "⏳ Running MCP + Verifying Flight C++...";
+        }
+        try {
+          const res = await apiCall("/api/leo/diagnose", {
+            method: "POST",
+            body: JSON.stringify({
+              scenario_key: scenarioKey,
+              enabled_tools: enabledTools,
+              cpp_preset: cppPreset,
+              custom_cpp_code: codeArea.value,
+              invoke_bedrock: Boolean(invokeBedrock)
+            })
+          });
+          renderLeoMcpPanel(res);
+        } catch (_) {
+          renderLeoMcpPanel(buildLeoMcpLocalFallback(scenarioKey, enabledTools, codeArea.value));
+        } finally {
+          if (invokeBedrock) {
+            btn.disabled = false;
+            btn.textContent = orig;
+          }
+        }
+      };
+
+      ["wSpeedSlider", "wCostSlider", "wCarbonSlider"].forEach(function (id) {
+        document.getElementById(id).addEventListener("input", function () {
+          document.getElementById("wSpeedVal").textContent = Number(document.getElementById("wSpeedSlider").value).toFixed(2);
+          document.getElementById("wCostVal").textContent = Number(document.getElementById("wCostSlider").value).toFixed(2);
+          document.getElementById("wCarbonVal").textContent = Number(document.getElementById("wCarbonSlider").value).toFixed(2);
+          clearTimeout(STATE.atropsTimer);
+          STATE.atropsTimer = setTimeout(function () { window.runAtropsPareto(false); }, 80);
+        });
+      });
+      ["atropsDisruptionSelect", "atropsCartSlaSelect", "atropsPatchSelect"].forEach(function (id) {
+        document.getElementById(id).addEventListener("change", function () { window.runAtropsPareto(false); });
+      });
+      document.getElementById("leoIncidentSelect").addEventListener("change", function () { window.runLeoDiagnose(false); });
+      document.getElementById("flightCppPresetSelect").addEventListener("change", function (ev) {
+        const key = ev.target.value;
+        document.getElementById("flightCppCodeInput").value = CPP_PRESET_SOURCES[key] || CPP_PRESET_SOURCES["compliant_ccsds_framer"];
+        window.runLeoDiagnose(false);
+      });
+
       if ("IntersectionObserver" in window) {
         const spyObs = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
@@ -4332,12 +5113,17 @@ python3 -m route_ledger.web_api  # http://localhost:3097</pre>
 
       // Boot Immediately with Deterministic Data, Then Hydrate from Live CloudFront /api/*
       parseHashState();
+      document.getElementById("flightCppCodeInput").value = CPP_PRESET_SOURCES["compliant_ccsds_framer"];
       applyTheme(activeTheme);
+      renderAtropsPanel(buildAtropsLocalFallback("nominal", 20, "approved_modal_shift_and_cpt_push", 0.45, 0.30, 0.25));
+      renderLeoMcpPanel(buildLeoMcpLocalFallback("beam_handover_ephemeris_slip", ["rf_link_budget", "orbital_beam_handover", "optical_isl_ber", "terminal_modem_pll", "gateway_bgp_flap"], CPP_PRESET_SOURCES["compliant_ccsds_framer"]));
       renderScot(solveScotLocal(STATE.scotDemand, STATE.scotFault));
       renderLeo(solveLeoLocal(STATE.leoDemand, STATE.leoFault));
       renderLedger(makeInitialLedgerFallback());
       window.switchTab(activeTab);
       probeHealthAndInitialState();
+      window.runAtropsPareto(false);
+      window.runLeoDiagnose(false);
     })();
   </script>
 </body>

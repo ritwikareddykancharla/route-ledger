@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "route-ledger"
-version = "0.1.0"
-description = "Capacity-aware network router, double-entry usage/inventory ledger, and 3-step NOC fault isolator"
+version = "2.0.0"
+description = "Multi-modal ATROPS Pareto router, multi-item split-box optimizer, LEO 5-subsystem MCP diagnostics, JPL Power-of-10 static C++ gate, and ACID double-entry ledger"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }

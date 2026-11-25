@@ -26,12 +26,14 @@ from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import parse_qs, urlparse
 
 from . import __version__
+from .atrops_pareto import solve_atrops_pareto_workbench
 from .double_entry_ledger import (
     IdempotencyConflictError,
     IdempotentSettlementLedger,
     NaiveFloatBillingProcessor,
     UsageOrderEvent,
 )
+from .leo_flight_mcp import MCP_SUBSYSTEM_TOOLS, run_leo_diagnose_workbench
 from .network_router import (
     CapacityAwareRouter,
     LinkDegradationEvent,
@@ -926,11 +928,110 @@ def route_api_request(
                 "aws_region": os.environ.get("AWS_REGION", "us-west-2"),
                 "bedrock_model": os.environ.get("ROUTELEDGER_BEDROCK_MODEL", "us.amazon.nova-lite-v1:0"),
                 "python_version": platform.python_version(),
-                "supported_modes": ["scot", "leo"],
+                "supported_modes": ["scot", "leo", "atrops_pareto", "leo_flight_mcp"],
+                "endpoints": [
+                    "/api/health",
+                    "/api/state",
+                    "/api/topology/optimize",
+                    "/api/atrops/pareto",
+                    "/api/leo/diagnose",
+                    "/api/ledger/retry-storm",
+                    "/api/ledger/tamper-test",
+                ],
                 "ledger_trial_balance_ok": balanced,
                 "ledger_total_usd": f"${debits / 100.0:,.2f}",
                 "request_id": request_id,
             }
+
+        if path == "/api/atrops/pareto" and method in ("GET", "POST"):
+            params: Dict[str, Any] = {**query, **body} if method == "POST" else dict(query)
+            disruption = str(params.get("disruption") or "nominal")
+            volume_pkgs = int(params.get("volume_pkgs") or 3600)
+            sla_deadline_hr = float(params.get("sla_deadline_hr") or 34.0)
+            w_speed = float(params.get("w_speed") if params.get("w_speed") is not None else 0.45)
+            w_cost = float(params.get("w_cost") if params.get("w_cost") is not None else 0.30)
+            w_carbon = float(params.get("w_carbon") if params.get("w_carbon") is not None else 0.25)
+            dest_region = str(params.get("dest_region") or "US_EAST_NY")
+            cart_sla_hr = float(params.get("cart_sla_hr") or 20.0)
+            patch_preset = str(params.get("patch_preset") or "approved_modal_shift_and_cpt_push")
+            invoke_bedrock = str(params.get("invoke_bedrock", "false")).lower() in ("1", "true", "yes")
+
+            out = solve_atrops_pareto_workbench(
+                disruption=disruption,
+                volume_pkgs=volume_pkgs,
+                sla_deadline_hr=sla_deadline_hr,
+                w_speed=w_speed,
+                w_cost=w_cost,
+                w_carbon=w_carbon,
+                dest_region=dest_region,
+                cart_sla_hr=cart_sla_hr,
+                patch_preset=patch_preset,
+            )
+            bedrock_note = None
+            if invoke_bedrock:
+                sp = out["selected_plan"]
+                cs = out["cart_sourcing"]
+                pv = out["schedule_patch_validation"]
+                sys_p = (
+                    "You are an Amazon SCOT-FO ATROPS Principal Optimization Engineer. "
+                    "Summarize the multi-modal Pareto allocation, multi-item cart split/consolidation choice, "
+                    "and pre-commit schedule patch simulation gate in 3 concise bullets (<125 words) citing exact metrics."
+                )
+                usr_p = (
+                    f"Disruption: {disruption}, Volume: {volume_pkgs} pkgs, SLA: {sla_deadline_hr}h\n"
+                    f"Selected Plan: SLA={sp['sla_hit_rate_pct']}%, Cost=${sp['cost_per_pkg_usd']}/pkg, CO2e={sp['co2e_kg_per_pkg']} kg/pkg, ModalShare={sp['modal_share_pct']}\n"
+                    f"Cart Sourcing ({cs['dest_region']}): {cs['recommended_mode']} ({cs['atrops_optimal']['box_count']} box, ${cs['atrops_optimal']['total_fulfillment_cost_usd']})\n"
+                    f"Schedule Patch {pv['patch_id']}: {pv['verdict']} (violations={pv['violations']})"
+                )
+                bedrock_note = call_bedrock_nova(sys_p, usr_p, max_tokens=240)
+
+            if bedrock_note is None:
+                sp = out["selected_plan"]
+                cs = out["cart_sourcing"]
+                pv = out["schedule_patch_validation"]
+                bedrock_note = {
+                    "engine": "deterministic-scot-atrops-pareto-gate",
+                    "latency_ms": out["compute_time_ms"],
+                    "tokens": 0,
+                    "text": (
+                        f"• Multi-Modal CPT Pareto Point: Routed {sp['routed_pkgs']} pkgs at {sp['sla_hit_rate_pct']}% Prime SLA, "
+                        f"${sp['cost_per_pkg_usd']:.2f}/pkg, and {sp['co2e_kg_per_pkg']:.2f} kg CO2e/pkg across {len(out['pareto_frontier'])} non-dominated frontier policies.\n"
+                        f"• Multi-ASIN Cart Sourcing ({cs['dest_region']}): Selected {cs['recommended_mode']} "
+                        f"({cs['atrops_optimal']['box_count']} box, ${cs['atrops_optimal']['total_fulfillment_cost_usd']:.2f}, "
+                        f"saving ${cs['savings_vs_greedy']['cost_saved_usd']:.2f} vs greedy nearest-FC).\n"
+                        f"• Schedule Config Gate ({pv['patch_id']}): {pv['verdict']}"
+                        + (f" ({'; '.join(pv['violations'])})" if pv["violations"] else " (0 sort-cap or CPT causality breaches).")
+                    ),
+                }
+            out["bedrock_advisory"] = bedrock_note
+            out["request_id"] = request_id
+            return 200, out
+
+        if path == "/api/leo/diagnose" and method in ("GET", "POST"):
+            params = {**query, **body} if method == "POST" else dict(query)
+            scenario_key = str(params.get("scenario_key") or "beam_handover_ephemeris_slip")
+            raw_tools = params.get("enabled_tools")
+            if isinstance(raw_tools, str):
+                enabled_tools = [t.strip() for t in raw_tools.split(",") if t.strip()]
+            elif isinstance(raw_tools, list):
+                enabled_tools = [str(t) for t in raw_tools]
+            else:
+                enabled_tools = list(MCP_SUBSYSTEM_TOOLS)
+
+            cpp_preset = str(params.get("cpp_preset") or "compliant_ccsds_framer")
+            custom_cpp = params.get("custom_cpp_code")
+            invoke_bedrock = str(params.get("invoke_bedrock", "false")).lower() in ("1", "true", "yes")
+
+            out_leo = run_leo_diagnose_workbench(
+                scenario_key=scenario_key,
+                enabled_tools=enabled_tools,
+                cpp_preset=cpp_preset,
+                custom_cpp_code=str(custom_cpp) if custom_cpp else None,
+                bedrock_callable=call_bedrock_nova,
+                invoke_bedrock=invoke_bedrock,
+            )
+            out_leo["request_id"] = request_id
+            return 200, out_leo
 
         if method == "GET" and path == "/api/state":
             mode = query.get("mode") or "scot"

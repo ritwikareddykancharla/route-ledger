@@ -1,9 +1,9 @@
 {
   "service": "RouteLedger",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "seed": 42,
   "python_version": "3.14.6",
-  "total_benchmark_wall_ms": 136.51,
+  "total_benchmark_wall_ms": 260.11,
   "router_benchmark": {
     "topology": {
       "node_count": 28,
@@ -24,10 +24,10 @@
       "sla_violation_rate_pct": 35.67,
       "dropped_bandwidth_mbps": 4273.71,
       "packet_drop_rate_pct": 18.55,
-      "p50_compute_ms": 0.0287,
-      "p99_compute_ms": 0.0735,
-      "mean_compute_ms": 0.0353,
-      "total_compute_ms": 10.579
+      "p50_compute_ms": 0.0142,
+      "p99_compute_ms": 0.0202,
+      "mean_compute_ms": 0.0137,
+      "total_compute_ms": 4.109
     },
     "capacity_aware_router": {
       "demands_total": 300,
@@ -41,18 +41,18 @@
       "sla_violation_rate_pct": 1.67,
       "dropped_bandwidth_mbps": 372.4,
       "packet_drop_rate_pct": 1.62,
-      "p50_compute_ms": 0.1211,
-      "p99_compute_ms": 0.4648,
-      "mean_compute_ms": 0.1291,
-      "total_compute_ms": 38.727
+      "p50_compute_ms": 0.0609,
+      "p99_compute_ms": 0.268,
+      "mean_compute_ms": 0.0673,
+      "total_compute_ms": 20.204
     },
     "improvements": {
       "p99_latency_reduction_pct": 74.78,
       "sla_violation_reduction_pct": 95.33,
       "packet_drop_reduction_pct": 91.29,
-      "reroute_p50_compute_ms": 0.1211,
-      "reroute_p99_compute_ms": 0.4648,
-      "reroute_mean_compute_ms": 0.1291
+      "reroute_p50_compute_ms": 0.0609,
+      "reroute_p99_compute_ms": 0.268,
+      "reroute_mean_compute_ms": 0.0673
     },
     "sample_reroutes": [
       {
@@ -72,7 +72,7 @@
         "dropped_mbps": 0.0,
         "sla_violated": false,
         "violation_reasons": [],
-        "compute_time_ms": 0.1241
+        "compute_time_ms": 0.0642
       },
       {
         "demand_id": "DMD-0083",
@@ -91,7 +91,7 @@
         "dropped_mbps": 0.0,
         "sla_violated": false,
         "violation_reasons": [],
-        "compute_time_ms": 0.1207
+        "compute_time_ms": 0.0624
       },
       {
         "demand_id": "DMD-0129",
@@ -111,7 +111,7 @@
         "dropped_mbps": 0.0,
         "sla_violated": false,
         "violation_reasons": [],
-        "compute_time_ms": 0.1469
+        "compute_time_ms": 0.0709
       },
       {
         "demand_id": "DMD-0219",
@@ -131,7 +131,7 @@
         "dropped_mbps": 0.0,
         "sla_violated": false,
         "violation_reasons": [],
-        "compute_time_ms": 0.1791
+        "compute_time_ms": 0.0838
       },
       {
         "demand_id": "DMD-0261",
@@ -151,7 +151,7 @@
         "dropped_mbps": 0.0,
         "sla_violated": false,
         "violation_reasons": [],
-        "compute_time_ms": 0.0999
+        "compute_time_ms": 0.0502
       }
     ]
   },
@@ -182,9 +182,9 @@
       "total_debits_cents": 19376379,
       "total_credits_cents": 19376379,
       "double_entry_balanced": true,
-      "settlement_wall_time_ms": 61.15,
-      "settlement_throughput_events_per_sec": 32704.9,
-      "reconciliation_audit_ms": 5.823
+      "settlement_wall_time_ms": 29.72,
+      "settlement_throughput_events_per_sec": 67291.9,
+      "reconciliation_audit_ms": 2.974
     },
     "naive_float_baseline": {
       "accepted_events_including_duplicates": 1701,
@@ -211,15 +211,15 @@
       "correct_diagnoses": 150,
       "max_checks_executed": 3,
       "mean_checks_executed": 2.41,
-      "total_eval_time_ms": 0.429,
-      "mean_eval_time_ms": 0.0029
+      "total_eval_time_ms": 0.218,
+      "mean_eval_time_ms": 0.0015
     },
     "unstructured_log_scanner_baseline": {
       "diagnostic_accuracy_pct": 64.0,
       "correct_diagnoses": 96,
       "mean_lines_scanned": 36.95,
       "max_lines_scanned": 55,
-      "total_scan_time_ms": 0.795
+      "total_scan_time_ms": 0.403
     },
     "improvements": {
       "accuracy_gain_pct_points": 36.0,
@@ -251,7 +251,7 @@
             "passed": true
           }
         ],
-        "eval_time_ms": 0.0183
+        "eval_time_ms": 0.0068
       },
       {
         "incident_id": "INC-0002",
@@ -277,7 +277,7 @@
             "passed": false
           }
         ],
-        "eval_time_ms": 0.0051
+        "eval_time_ms": 0.0028
       },
       {
         "incident_id": "INC-0003",
@@ -310,7 +310,7 @@
             "passed": true
           }
         ],
-        "eval_time_ms": 0.0047
+        "eval_time_ms": 0.0029
       },
       {
         "incident_id": "INC-0004",
@@ -343,7 +343,7 @@
             "passed": false
           }
         ],
-        "eval_time_ms": 0.0042
+        "eval_time_ms": 0.0022
       },
       {
         "incident_id": "INC-0005",
@@ -369,8 +369,106 @@
             "passed": false
           }
         ],
-        "eval_time_ms": 0.0023
+        "eval_time_ms": 0.0014
       }
     ]
+  },
+  "atrops_pareto_benchmark": {
+    "workload": {
+      "shipment_waves": 240,
+      "total_packages": 668723,
+      "multi_item_carts": 160,
+      "schedule_patches_tested": 24,
+      "modes": [
+        "AIR_CARGO",
+        "LINEHAUL_TRUCK",
+        "INTERMODAL_RAIL",
+        "EV_MIDDLE_MILE"
+      ]
+    },
+    "multimodal_pareto_solver": {
+      "prime_sla_hit_rate_pct": 99.65,
+      "cost_per_pkg_usd": 3.024,
+      "co2e_kg_per_pkg": 1.323,
+      "mean_pareto_paths_per_od": 4.08,
+      "p50_compute_ms": 0.0939,
+      "p99_compute_ms": 0.2169
+    },
+    "unadapted_air_priority_baseline": {
+      "prime_sla_hit_rate_pct": 90.11,
+      "cost_per_pkg_usd": 5.542,
+      "co2e_kg_per_pkg": 3.232
+    },
+    "pareto_improvements": {
+      "cost_per_pkg_reduction_pct": 45.44,
+      "co2e_per_pkg_reduction_pct": 59.05,
+      "sla_gain_pct_points": 9.54
+    },
+    "cart_sourcing_benchmark": {
+      "atrops_optimal": {
+        "prime_sla_hit_rate_pct": 91.25,
+        "avg_cost_per_order_usd": 8.61,
+        "split_shipment_rate_pct": 6.88,
+        "avg_co2e_kg_per_order": 0.753,
+        "mean_compute_ms": 0.8044
+      },
+      "greedy_nearest_fc_baseline": {
+        "prime_sla_hit_rate_pct": 91.25,
+        "avg_cost_per_order_usd": 10.95,
+        "split_shipment_rate_pct": 55.0,
+        "avg_co2e_kg_per_order": 0.883
+      },
+      "strict_single_box_only": {
+        "prime_sla_hit_rate_pct": 84.38
+      },
+      "order_cost_reduction_pct": 21.42
+    },
+    "schedule_patch_gate": {
+      "valid_patches_approved": 12,
+      "valid_patches_total": 12,
+      "unsafe_llm_patches_rejected": 12,
+      "unsafe_llm_patches_total": 12,
+      "unsafe_patch_rejection_rate_pct": 100.0
+    }
+  },
+  "leo_flight_mcp_benchmark": {
+    "workload": {
+      "incident_count": 120,
+      "failure_classes": [
+        "KA_RAIN_FADE_ACM_MODCOD_DROP",
+        "ORBITAL_BEAM_HANDOVER_EPHEMERIS_SLIP",
+        "OPTICAL_ISL_FPA_JITTER_BER_SPIKE",
+        "TERMINAL_PHASED_ARRAY_THERMAL_PLL_SLIP",
+        "GATEWAY_BACKHAUL_BGP_HOLD_TIMER_FLAP",
+        "COMPOUND_RAIN_FADE_AND_GATEWAY_BGP_FLAP"
+      ],
+      "mcp_tools_total": 5,
+      "flight_cpp_handlers_tested": 40
+    },
+    "mcp_suite_v1_missing_handover_tool": {
+      "enabled_tool_count": 4,
+      "subsystem_coverage_pct": 80.0,
+      "diagnostic_accuracy_pct": 83.33,
+      "correct_diagnoses": 100,
+      "launch_gate_passed": false
+    },
+    "mcp_suite_v2_full_5_subsystem": {
+      "enabled_tool_count": 5,
+      "subsystem_coverage_pct": 100.0,
+      "diagnostic_accuracy_pct": 100.0,
+      "correct_diagnoses": 120,
+      "mean_tool_calls": 5,
+      "mean_diagnosis_ms": 0.0076,
+      "launch_gate_passed": true
+    },
+    "flight_cpp_power_of_10_gate": {
+      "compliant_handlers_approved": 20,
+      "compliant_handlers_total": 20,
+      "false_positive_rate_pct": 0.0,
+      "unsafe_handlers_rejected": 20,
+      "unsafe_handlers_total": 20,
+      "unsafe_violation_recall_pct": 100.0,
+      "mean_static_check_ms": 0.133
+    }
   }
 }

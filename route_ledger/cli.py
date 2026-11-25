@@ -15,12 +15,14 @@ import time
 from typing import Any, Dict, Optional, Sequence, Tuple
 
 from . import __version__
+from .atrops_pareto import run_atrops_benchmark
 from .double_entry_ledger import run_ledger_comparison
+from .leo_flight_mcp import run_leo_mcp_benchmark
 from .network_router import run_router_comparison
 from .noc_workflow import run_workflow_comparison
 
 
-SUPPORTED_MODES: Tuple[str, ...] = ("demo-all", "router", "ledger", "workflow")
+SUPPORTED_MODES: Tuple[str, ...] = ("demo-all", "router", "ledger", "workflow", "atrops", "leo-mcp")
 
 
 def execute_cli_mode(
@@ -51,6 +53,12 @@ def execute_cli_mode(
 
     if mode in ("demo-all", "workflow"):
         payload["workflow"] = run_workflow_comparison(num_incidents=incidents, seed=seed)
+
+    if mode in ("demo-all", "atrops"):
+        payload["atrops"] = run_atrops_benchmark(seed=seed)
+
+    if mode in ("demo-all", "leo-mcp"):
+        payload["leo_mcp"] = run_leo_mcp_benchmark(seed=seed)
 
     payload["wall_time_ms"] = round((time.perf_counter() - t0) * 1000.0, 2)
     return payload
