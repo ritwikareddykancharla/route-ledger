@@ -1,75 +1,12 @@
-/* RouteLedger Blueprint Interactive Topology, Bedrock Diagnostics & Double-Entry Ledger */
+/* RouteLedger Mission Control Runtime — Radar, Laser Constellation & ACID Ledger */
 (function () {
   "use strict";
 
-  const root = document.documentElement;
-  root.classList.add("js");
-
-  /* ---------- Light / Dark Theme Toggle (dataset.theme + URL hash) ---------- */
-  const themeBtn = document.querySelector(".theme");
-  if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-      const next = root.dataset.theme === "dark" ? "light" : "dark";
-      root.dataset.theme = next;
-      const baseHash = (location.hash || "").replace(/(&|\?)?theme=(dark|light)/g, "").replace(/^#&/, "#");
-      const suffix = "theme=" + next;
-      const newHash = !baseHash || baseHash === "#" ? "#" + suffix : baseHash + "&" + suffix;
-      history.replaceState(null, "", newHash);
-      if (STATE.lastTopo) renderSvgTopology(STATE.lastTopo);
-    });
-  }
-
-  /* ---------- Contents Sidebar Progress, Active Marker & Back-to-Top Ring ---------- */
-  const HEADER = 92;
-  const side = document.querySelector(".side");
-  const postBody = document.querySelector(".post-body");
-  const sideLinks = side ? [...side.querySelectorAll(".side-list a")] : [];
-  const sideTargets = sideLinks.map((a) => document.getElementById(a.hash.slice(1)));
-  const sideInd = side && side.querySelector(".side-ind");
-  const sideBar = side && side.querySelector(".side-bar i");
-  const sidePct = side && side.querySelector(".side-pct");
-  const toTop = document.querySelector(".totop");
-  const ring = toTop && toTop.querySelector(".ring");
-  const RING = 2 * Math.PI * 21;
-  if (ring) ring.style.strokeDasharray = String(RING);
-
-  function updateScrollChrome() {
-    const y = window.scrollY;
-    const max = root.scrollHeight - window.innerHeight;
-    const whole = max > 0 ? y / max : 0;
-    if (toTop && ring) {
-      toTop.classList.toggle("show", y > 520);
-      ring.style.strokeDashoffset = String(RING * (1 - whole));
-    }
-    if (side && postBody && sideBar && sidePct) {
-      const r = postBody.getBoundingClientRect();
-      const read = Math.min(1, Math.max(0, (window.innerHeight * 0.45 - r.top) / Math.max(1, r.height)));
-      sideBar.style.transform = `scaleX(${read})`;
-      sidePct.textContent = Math.round(read * 100) + "%";
-      let active = sideLinks[0] || null;
-      sideTargets.forEach((t, i) => {
-        if (t && t.getBoundingClientRect().top <= HEADER + 80) active = sideLinks[i];
-      });
-      sideLinks.forEach((a) => a.classList.toggle("on", a === active));
-      if (sideInd && active) {
-        const listRect = side.querySelector(".side-list").getBoundingClientRect();
-        const aRect = active.getBoundingClientRect();
-        sideInd.style.opacity = "1";
-        sideInd.style.transform = `translateY(${aRect.top - listRect.top}px)`;
-        sideInd.style.height = aRect.height + "px";
-      }
-    }
-  }
-  window.addEventListener("scroll", updateScrollChrome, { passive: true });
-  window.addEventListener("resize", updateScrollChrome);
-
-  /* ---------- RouteLedger State ---------- */
   const STATE = {
     mode: "scot",
     faultMode: "nominal",
     scotDemand: 3200,
     leoDemandGbps: 28.0,
-    lastTopo: null,
     sliderTimer: null,
   };
 
@@ -77,7 +14,7 @@
     return document.getElementById(id);
   }
 
-  function escapeHtml(str) {
+  function esc(str) {
     return String(str || "")
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
@@ -85,508 +22,466 @@
       .replace(/"/g, "&quot;");
   }
 
-  async function apiFetch(path, options) {
-    const resp = await fetch(path, {
+  async function api(path, options) {
+    const r = await fetch(path, {
       headers: { "Content-Type": "application/json" },
       ...(options || {}),
     });
-    const data = await resp.json();
-    if (!resp.ok) {
-      throw new Error(data.error || "API error " + resp.status);
-    }
-    return data;
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || "HTTP " + r.status);
+    return d;
   }
 
-  function syncSliderForMode() {
-    const slider = el("demand-slider");
+  function syncSlider() {
+    const s = el("demand-slider");
     if (STATE.mode === "scot") {
-      slider.min = "1200";
-      slider.max = "7400";
-      slider.step = "200";
-      slider.value = String(STATE.scotDemand);
-      el("slider-title").textContent = "SCOT Parcel Demand:";
-      el("slider-readout").textContent = `${STATE.scotDemand.toLocaleString()} units/hr`;
+      s.min = "1200";
+      s.max = "7400";
+      s.step = "200";
+      s.value = String(STATE.scotDemand);
+      el("vol-label").textContent = "SCOT PARCEL DEMAND";
+      el("vol-readout").textContent = `${STATE.scotDemand.toLocaleString()} u/hr`;
+      el("vol-readout").style.color = "var(--amber)";
+      s.style.accentColor = "var(--amber)";
     } else {
-      slider.min = "10";
-      slider.max = "74";
-      slider.step = "2";
-      slider.value = String(STATE.leoDemandGbps);
-      el("slider-title").textContent = "Orbital Trunk Demand:";
-      el("slider-readout").textContent = `${STATE.leoDemandGbps.toFixed(1)} Gbps`;
+      s.min = "10";
+      s.max = "74";
+      s.step = "2";
+      s.value = String(STATE.leoDemandGbps);
+      el("vol-label").textContent = "LEO ORBITAL TRUNK";
+      el("vol-readout").textContent = `${STATE.leoDemandGbps.toFixed(1)} Gbps`;
+      el("vol-readout").style.color = "var(--cyan)";
+      s.style.accentColor = "var(--cyan)";
     }
   }
 
-  function renderSvgTopology(topo) {
+  function drawRadarSvg(topo) {
     const svg = el("topology-svg");
-    const stage = el("svg-canvas-wrap");
     const isLeo = topo.mode === "leo";
-    stage.classList.toggle("leo-dark", isLeo);
-
     const nodesById = {};
     (topo.nodes || []).forEach((n) => {
       nodesById[n.id] = n;
     });
 
-    const isDarkTheme = root.dataset.theme === "dark";
-    const bgGridColor = isLeo
-      ? "rgba(143,176,230,0.12)"
-      : isDarkTheme
-      ? "rgba(255,255,255,0.06)"
-      : "rgba(53,82,126,0.11)";
-
-    let parts = [];
-    parts.push(`
+    const p = [];
+    p.push(`
       <defs>
-        <pattern id="bp-grid" width="28" height="28" patternUnits="userSpaceOnUse">
-          <path d="M 28 0 L 0 0 0 28" fill="none" stroke="${bgGridColor}" stroke-width="0.8"/>
+        <pattern id="rgrid" width="32" height="32" patternUnits="userSpaceOnUse">
+          <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(56,189,248,0.08)" stroke-width="0.8"/>
         </pattern>
-        <marker id="flow-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M0 0L10 5L0 10z" fill="#0c8a4d"/>
-        </marker>
-        <marker id="flow-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M0 0L10 5L0 10z" fill="#38bdf8"/>
-        </marker>
+        <filter id="glow-beam" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
       </defs>
-      <rect width="920" height="400" fill="url(#bp-grid)"/>
+      <rect width="920" height="405" fill="url(#rgrid)"/>
+      <circle cx="460" cy="202" r="175" fill="none" stroke="rgba(22,48,82,0.55)" stroke-dasharray="3 5"/>
+      <circle cx="460" cy="202" r="295" fill="none" stroke="rgba(22,48,82,0.4)" stroke-dasharray="3 6"/>
+      <line x1="460" y1="0" x2="460" y2="405" stroke="rgba(22,48,82,0.35)"/>
+      <line x1="0" y1="202" x2="920" y2="202" stroke="rgba(22,48,82,0.35)"/>
     `);
 
     if (isLeo) {
-      // Subtle orbital plane guide lines & Earth ground horizon band
-      parts.push(`
-        <line x1="40" y1="100" x2="880" y2="100" stroke="rgba(143,176,230,0.22)" stroke-dasharray="4 6"/>
-        <text x="48" y="92" font-family="Martian Mono, monospace" font-size="9.5" fill="#8fb0e6">ORBITAL PLANE 01 · LASER ISL RING (590 KM)</text>
-        <line x1="40" y1="212" x2="880" y2="212" stroke="rgba(143,176,230,0.18)" stroke-dasharray="4 6"/>
-        <text x="48" y="204" font-family="Martian Mono, monospace" font-size="9.5" fill="#8fb0e6">ORBITAL PLANE 02 · DIVERSITY SHELL (610 KM)</text>
-        <path d="M 0 368 Q 460 302 920 368 L 920 400 L 0 400 Z" fill="rgba(18,115,122,0.22)" stroke="#12737a" stroke-width="1.2"/>
+      p.push(`
+        <line x1="36" y1="98" x2="884" y2="98" stroke="rgba(56,189,248,0.22)" stroke-dasharray="5 6"/>
+        <text x="42" y="90" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#7da0c4">ORBITAL SHELL P1 // 590 KM LASER ISL</text>
+        <line x1="36" y1="212" x2="884" y2="212" stroke="rgba(56,189,248,0.16)" stroke-dasharray="5 6"/>
+        <text x="42" y="204" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#7da0c4">ORBITAL SHELL P2 // 610 KM DIVERSITY</text>
+        <path d="M 0 370 Q 460 300 920 370 L 920 405 L 0 405 Z" fill="rgba(14,52,89,0.34)" stroke="#1f538a" stroke-width="1.4"/>
       `);
     } else {
-      parts.push(`
-        <text x="24" y="28" font-family="Martian Mono, monospace" font-size="10" fill="${isDarkTheme ? "#8b8b8b" : "#6b7a92"}">SCOT MIDDLE-MILE FULFILLMENT GRAPH · CPT SLA &le; 24.0H · MIN-COST AUGMENTING FLOW</text>
+      p.push(`
+        <text x="20" y="24" font-family="IBM Plex Mono, monospace" font-size="10" fill="#7da0c4">SCOT ATROPS CORRIDOR RADAR // CPT PULL WINDOW &le; 24.0H</text>
       `);
     }
 
-    // Draw Arcs
-    (topo.arcs || []).forEach((arc) => {
-      const u = nodesById[arc.src];
-      const v = nodesById[arc.dst];
+    // Arcs
+    (topo.arcs || []).forEach((a) => {
+      const u = nodesById[a.src];
+      const v = nodesById[a.dst];
       if (!u || !v) return;
 
-      const activeFlow = isLeo ? arc.flow_gbps > 0 : arc.flow_units > 0;
-      const isOutage = Boolean(arc.outage);
-      const isDegraded = Boolean(arc.degraded);
+      const active = isLeo ? a.flow_gbps > 0 : a.flow_units > 0;
+      const out = Boolean(a.outage);
+      const deg = Boolean(a.degraded);
 
-      let stroke = isLeo ? "rgba(148,163,184,0.35)" : "#94a3b8";
-      let width = 1.6;
-      let dash = "3 4";
-      let animClass = "";
+      let baseStroke = "rgba(125,160,196,0.28)";
+      let w = 1.5;
+      let dash = "3 5";
 
-      if (isOutage) {
-        stroke = "#d4301a";
-        width = 2.4;
+      if (out) {
+        baseStroke = "#fb7185";
+        w = 2.4;
         dash = "5 4";
-      } else if (isDegraded) {
-        stroke = "#ff6433";
-        width = 2.4;
+      } else if (deg) {
+        baseStroke = "#fbbf24";
+        w = 2.4;
         dash = "6 4";
-      } else if (activeFlow) {
-        stroke = isLeo ? "#38bdf8" : "#0c8a4d";
-        width = 3.4;
+      } else if (active) {
+        baseStroke = isLeo ? "#38bdf8" : "#fbbf24";
+        w = 3.2;
         dash = "";
-        animClass = "animated-flow";
       }
 
-      // Base line
-      parts.push(
-        `<line x1="${u.x}" y1="${u.y}" x2="${v.x}" y2="${v.y}" stroke="${stroke}" stroke-width="${width}" ${dash ? `stroke-dasharray="${dash}"` : ""} ${activeFlow && !isLeo ? 'marker-end="url(#flow-ok)"' : ""}/>`
+      p.push(
+        `<line x1="${u.x}" y1="${u.y}" x2="${v.x}" y2="${v.y}" stroke="${baseStroke}" stroke-width="${w}" ${dash ? `stroke-dasharray="${dash}"` : ""} ${active ? 'filter="url(#glow-beam)"' : ""}/>`
       );
-      if (activeFlow && !isOutage) {
-        parts.push(
-          `<line x1="${u.x}" y1="${u.y}" x2="${v.x}" y2="${v.y}" stroke="${isLeo ? "#a5f3fc" : "#34d399"}" stroke-width="2.2" class="${animClass}"/>`
+      if (active && !out) {
+        p.push(
+          `<line x1="${u.x}" y1="${u.y}" x2="${v.x}" y2="${v.y}" stroke="${isLeo ? "#e0f2fe" : "#fef3c7"}" stroke-width="2" class="beam-flow"/>`
         );
       }
 
-      // Midpoint telemetry tag
       const mx = (u.x + v.x) / 2;
       const my = (u.y + v.y) / 2;
-      let labelTxt = "";
-      if (isOutage) {
-        labelTxt = isLeo ? "FLAP / OUTAGE" : "BLIZZARD CLOSED";
-      } else if (isDegraded) {
-        labelTxt = isLeo ? `${arc.snr_db} dB RAIN FADE` : `THROTTLED (${arc.utilization_pct}%)`;
-      } else if (activeFlow) {
-        labelTxt = isLeo
-          ? `${arc.flow_gbps}G · ${arc.snr_db}dB (${arc.utilization_pct}%)`
-          : `${arc.flow_units}u/h · $${arc.cost_per_unit.toFixed(2)} (${arc.utilization_pct}%)`;
+      let tag = "";
+      if (out) {
+        tag = isLeo ? "ISL FLAP / DOWN" : "BLIZZARD OUTAGE";
+      } else if (deg) {
+        tag = isLeo ? `${a.snr_db}dB RAIN FADE` : `THROTTLED ${a.utilization_pct}%`;
+      } else if (active) {
+        tag = isLeo
+          ? `${a.flow_gbps}G · ${a.snr_db}dB (${a.utilization_pct}%)`
+          : `${a.flow_units}u/h · $${a.cost_per_unit.toFixed(2)} (${a.utilization_pct}%)`;
       } else {
-        labelTxt = isLeo ? `${arc.snr_db}dB · idle` : `$${arc.cost_per_unit.toFixed(2)}/u`;
+        tag = isLeo ? `${a.snr_db}dB standby` : `$${a.cost_per_unit.toFixed(2)}/u`;
       }
 
-      const pillW = Math.max(78, labelTxt.length * 6.1 + 10);
-      const pillBg = isOutage
-        ? "#d4301a"
-        : isDegraded
-        ? "#ff6433"
-        : activeFlow
+      const tw = Math.max(76, tag.length * 6 + 12);
+      const tBg = out
+        ? "rgba(159,18,57,0.92)"
+        : deg
+        ? "rgba(146,64,14,0.92)"
+        : active
+        ? "#071426"
+        : "rgba(5,14,28,0.82)";
+      const tBorder = out
+        ? "#fb7185"
+        : deg
+        ? "#fbbf24"
+        : active
         ? isLeo
-          ? "#0e1a2b"
-          : "#0e1a2b"
-        : isLeo
-        ? "rgba(15,23,42,0.82)"
-        : isDarkTheme
-        ? "#262626"
-        : "#ffffff";
-      const pillInk =
-        isOutage || isDegraded || activeFlow
-          ? "#ffffff"
-          : isLeo
-          ? "#94a3b8"
-          : isDarkTheme
-          ? "#bdbdbd"
-          : "#475569";
-      const pillStroke = isOutage ? "#d4301a" : activeFlow ? stroke : "#64748b";
+          ? "#38bdf8"
+          : "#fbbf24"
+        : "#163052";
+      const tText = out || deg || active ? "#f8fafc" : "#7da0c4";
 
-      parts.push(`
-        <g transform="translate(${mx - pillW / 2}, ${my - 10})">
-          <rect width="${pillW}" height="18" fill="${pillBg}" stroke="${pillStroke}" stroke-width="1"/>
-          <text x="${pillW / 2}" y="12.5" text-anchor="middle" font-family="Martian Mono, monospace" font-size="9" fill="${pillInk}">${escapeHtml(labelTxt)}</text>
+      p.push(`
+        <g transform="translate(${mx - tw / 2}, ${my - 9})">
+          <rect width="${tw}" height="18" rx="4" fill="${tBg}" stroke="${tBorder}" stroke-width="1"/>
+          <text x="${tw / 2}" y="12.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="${tText}">${esc(tag)}</text>
         </g>
       `);
     });
 
-    // Draw Nodes (sharp rectangular blueprint blocks)
+    // Nodes
     (topo.nodes || []).forEach((n) => {
-      const w = isLeo ? 136 : 122;
-      const h = 44;
+      const w = isLeo ? 136 : 120;
+      const h = 42;
       const nx = n.x - w / 2;
       const ny = n.y - h / 2;
 
-      let fill = isLeo ? "#102136" : isDarkTheme ? "#1d1d1d" : "#ffffff";
-      let border = isLeo ? "#8fb0e6" : "#0e1a2b";
-      let titleColor = isLeo ? "#f8fafc" : isDarkTheme ? "#f1f1f1" : "#0e1a2b";
-      let subColor = isLeo ? "#93c5fd" : "#6b7a92";
-
-      if (n.status === "OUTAGE") {
-        fill = "#d4301a";
-        border = "#0e1a2b";
-        titleColor = "#ffffff";
-        subColor = "#fee2e2";
-      } else if (n.status === "DEGRADED") {
-        fill = "#ff6433";
-        border = "#0e1a2b";
-        titleColor = "#ffffff";
-        subColor = "#fff3ee";
-      } else if (n.status === "ACTIVE") {
-        border = isLeo ? "#38bdf8" : "#0c8a4d";
+      const isFault = n.status === "OUTAGE" || n.status === "DEGRADED";
+      if (isFault) {
+        p.push(
+          `<circle cx="${n.x}" cy="${n.y}" r="24" fill="none" stroke="#fb7185" stroke-width="2" class="outage-pulse"/>`
+        );
       }
 
-      parts.push(`
+      let fill = "#08172c";
+      let stroke = "#1e3f6d";
+      let titleCol = "#e2f1ff";
+      let subCol = "#7da0c4";
+
+      if (n.status === "OUTAGE") {
+        fill = "#4c0519";
+        stroke = "#fb7185";
+        titleCol = "#ffe4e6";
+        subCol = "#fda4af";
+      } else if (n.status === "DEGRADED") {
+        fill = "#451a03";
+        stroke = "#fbbf24";
+        titleCol = "#fef3c7";
+        subCol = "#fcd34d";
+      } else if (n.status === "ACTIVE") {
+        stroke = isLeo ? "#38bdf8" : "#fbbf24";
+      }
+
+      p.push(`
         <g transform="translate(${nx}, ${ny})">
-          <rect width="${w}" height="${h}" fill="${fill}" stroke="${border}" stroke-width="2"/>
-          <text x="${w / 2}" y="18" text-anchor="middle" font-family="Schibsted Grotesk, sans-serif" font-size="11.5" font-weight="800" fill="${titleColor}">${escapeHtml(n.id)}</text>
-          <text x="${w / 2}" y="33" text-anchor="middle" font-family="Martian Mono, monospace" font-size="8.8" fill="${subColor}">${escapeHtml(n.sub)}</text>
+          <rect width="${w}" height="${h}" rx="7" fill="${fill}" stroke="${stroke}" stroke-width="1.8"/>
+          <text x="${w / 2}" y="17.5" text-anchor="middle" font-family="Barlow, sans-serif" font-size="12" font-weight="700" fill="${titleCol}">${esc(n.id)}</text>
+          <text x="${w / 2}" y="31.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="${subCol}">${esc(n.sub)}</text>
         </g>
       `);
     });
 
-    svg.innerHTML = parts.join("");
+    svg.innerHTML = p.join("");
   }
 
-  function renderTopologyTelemetry(topo) {
-    STATE.lastTopo = topo;
-    renderSvgTopology(topo);
+  function renderMission(topo) {
+    drawRadarSvg(topo);
 
     const opt = topo.optimizer_summary || {};
     const base = topo.static_baseline_comparison || {};
+    const hasFault = topo.fault_mode !== "nominal";
 
-    el("kpi-4-val").textContent = `${topo.compute_time_ms} ms`;
+    el("mission-shell").classList.toggle("is-alert", hasFault);
+    el("g-compute").textContent = `${topo.compute_time_ms} ms`;
 
     if (topo.mode === "scot") {
-      el("kpi-1-label").textContent = "SCOT Parcel Volume";
-      el("kpi-1-val").textContent = `${topo.demand_units_hr.toLocaleString()} u/hr`;
-      el("kpi-1-sub").textContent = `Fault: ${topo.fault_mode}`;
+      el("map-head").innerHTML =
+        `SCOT FREIGHT RADAR // SEA1 &rarr; SLC2 &rarr; DEN4 &rarr; ORD5 &rarr; CVG3 &rarr; EWR7 (${esc(topo.fault_mode.toUpperCase())})`;
+      el("cost-rtt-pill").textContent = `$${Number(opt.avg_cost_per_unit_usd || 0).toFixed(2)}/unit · ${opt.max_corridor_transit_hr}h CPT`;
+      el("g-sla").textContent = `${opt.cpt_sla_pct}% (${opt.sla_breaches_units} breach)`;
+      el("g-sla").className = opt.sla_breaches_units === 0 ? "good" : "bad";
 
-      el("kpi-2-label").textContent = "CPT SLA Compliance";
-      el("kpi-2-val").textContent = `${opt.cpt_sla_pct}% (${opt.sla_breaches_units} breach)`;
-      el("kpi-2-val").style.color = opt.sla_breaches_units === 0 ? "var(--ok)" : "var(--bad)";
-      el("kpi-2-sub").textContent = `Static Plan: ${base.cpt_sla_pct}% SLA`;
-
-      el("kpi-3-label").textContent = "Blended Freight / Unit";
-      el("kpi-3-val").textContent = `$${Number(opt.avg_cost_per_unit_usd || 0).toFixed(2)} / unit`;
-      el("kpi-3-sub").textContent = `Max Transit: ${opt.max_corridor_transit_hr}h (&le;24h CPT)`;
-
-      el("optimizer-vs-static").innerHTML =
-        `<strong>MIN-COST FLOW OPTIMIZER (${topo.compute_time_ms} ms):</strong> Routed <strong>${opt.routed_units_hr.toLocaleString()}/${topo.demand_units_hr.toLocaleString()} units/hr</strong> within 24.0h CPT SLA (<strong>${opt.sla_breaches_units} breaches</strong>) &middot; Static <code>SEA1&rarr;ORD5&rarr;EWR7</code> plan delivered <strong>${base.delivered_on_time_units.toLocaleString()} units/hr</strong> (${base.sla_breaches_units.toLocaleString()} stalled/breached).`;
+      el("hud-comparison").innerHTML =
+        `<span class="amber">[SCOT MIN-COST SOLVER · ${topo.compute_time_ms} ms]</span> Routed <strong>${opt.routed_units_hr.toLocaleString()}/${topo.demand_units_hr.toLocaleString()} u/hr</strong> within 24.0h CPT SLA (<strong class="good">${opt.sla_breaches_units} breaches</strong>) &middot; Static <code>SEA1&rarr;ORD5&rarr;EWR7</code> plan delivered <strong>${base.delivered_on_time_units.toLocaleString()} u/hr</strong> (<span class="bad">${base.sla_breaches_units.toLocaleString()} stalled</span>).`;
 
       const cors = opt.active_corridors || [];
-      el("corridor-split-badge").textContent = `${cors.length} Active Corridor(s)`;
-      el("corridors-list").innerHTML = cors
+      el("subflow-badge").textContent = `${cors.length} Active Corridor(s)`;
+      el("subflow-badge").className = "amber small";
+      el("subflow-list").innerHTML = cors
         .map(
           (c, i) => `
-          <div class="corridor-row">
-            <div style="display:flex;justify-content:space-between;font-weight:500;color:var(--ink);">
-              <span>#${i + 1} &middot; ${escapeHtml(c.route_label)}</span>
-              <span style="color:var(--ok);">${c.units_routed.toLocaleString()} u/hr</span>
+          <div class="sf-card">
+            <div style="display:flex;justify-content:space-between;">
+              <strong>#${i + 1} ${esc(c.route_label)}</strong>
+              <strong class="amber">${c.units_routed.toLocaleString()} u/h</strong>
             </div>
-            <div style="color:var(--soft);">transit=${c.transit_hours}h &middot; unit_cost=$${c.cost_per_unit_usd.toFixed(2)} &middot; total=$${c.total_corridor_cost_usd.toLocaleString()}</div>
+            <div class="dim">${c.transit_hours}h transit &middot; $${c.cost_per_unit_usd.toFixed(2)}/u &middot; $${c.total_corridor_cost_usd.toLocaleString()}/hr</div>
           </div>
         `
         )
         .join("");
     } else {
-      el("kpi-1-label").textContent = "Orbital Trunk Demand";
-      el("kpi-1-val").textContent = `${topo.demand_gbps} Gbps`;
-      el("kpi-1-sub").textContent = `Fault: ${topo.fault_mode}`;
+      el("map-head").innerHTML =
+        `AMAZON LEO LASER ISL CONSTELLATION // REDMOND &harr; ORB-14/18/22/26/31 &harr; FRANKFURT (${esc(topo.fault_mode.toUpperCase())})`;
+      el("cost-rtt-pill").textContent = `${opt.end_to_end_rtt_ms} ms RTT · ${topo.demand_gbps} Gbps`;
+      el("g-sla").textContent = opt.sla_violated ? `DROP ${opt.dropped_gbps}G` : `100% (0.0G drop)`;
+      el("g-sla").className = opt.sla_violated ? "bad" : "good";
 
-      el("kpi-2-label").textContent = "Packet Delivery / SLA";
-      el("kpi-2-val").textContent = opt.sla_violated
-        ? `DEGRADED (${opt.dropped_gbps}G drop)`
-        : `100% (0.0 Gbps drop)`;
-      el("kpi-2-val").style.color = opt.sla_violated ? "var(--bad)" : "var(--ok)";
-      el("kpi-2-sub").textContent = `Static OSPF Drop: ${base.dropped_gbps} Gbps`;
-
-      el("kpi-3-label").textContent = "End-to-End Orbital RTT";
-      el("kpi-3-val").textContent = `${opt.end_to_end_rtt_ms} ms`;
-      el("kpi-3-sub").textContent = `Static OSPF RTT: ${base.end_to_end_rtt_ms} ms`;
-
-      el("optimizer-vs-static").innerHTML =
-        `<strong>DYNAMIC LINK-STATE REROUTER (${topo.compute_time_ms} ms):</strong> Delivered <strong>${topo.demand_gbps} Gbps</strong> at <strong>${opt.end_to_end_rtt_ms} ms RTT</strong> (${opt.dropped_gbps} Gbps dropped) &middot; Static OSPF baseline dropped <strong>${base.dropped_gbps} Gbps</strong> (${base.end_to_end_rtt_ms} ms RTT).`;
+      el("hud-comparison").innerHTML =
+        `<span class="cyan">[LEO LINK-STATE ROUTER · ${topo.compute_time_ms} ms]</span> Delivered <strong>${topo.demand_gbps} Gbps</strong> at <strong>${opt.end_to_end_rtt_ms} ms RTT</strong> (<strong class="good">${opt.dropped_gbps} Gbps loss</strong>) &middot; Static OSPF blackholed <span class="bad">${base.dropped_gbps} Gbps</span> (${base.end_to_end_rtt_ms} ms RTT).`;
 
       const sfs = opt.subflows || [];
-      el("corridor-split-badge").textContent = `${sfs.length} Orbital Subflow(s)`;
-      el("corridors-list").innerHTML = sfs
+      el("subflow-badge").textContent = `${sfs.length} Laser Subflow(s)`;
+      el("subflow-badge").className = "cyan small";
+      el("subflow-list").innerHTML = sfs
         .map(
           (sf, i) => `
-          <div class="corridor-row" style="border-left-color:var(--cobalt);">
-            <div style="display:flex;justify-content:space-between;font-weight:500;color:var(--ink);">
-              <span>Plane Subflow #${i + 1}</span>
-              <span style="color:var(--ok);">${sf.allocated_gbps} Gbps &middot; ${sf.rtt_ms} ms</span>
+          <div class="sf-card leo-sf">
+            <div style="display:flex;justify-content:space-between;">
+              <strong>Subflow #${i + 1}</strong>
+              <strong class="cyan">${sf.allocated_gbps} Gbps &middot; ${sf.rtt_ms} ms</strong>
             </div>
-            <div style="color:var(--body);">${escapeHtml(sf.route_label)}</div>
+            <div class="dim">${esc(sf.route_label)}</div>
           </div>
         `
         )
         .join("");
     }
 
-    // Render Workflow Decision Tree + Amazon Bedrock Diagnosis
+    // Fault Tree + Bedrock Flight/Network Triage
     const wf = topo.workflow_diagnosis;
     const bd = topo.bedrock_advisory;
-    let diagHtml = "";
+    let html = "";
     if (wf) {
-      diagHtml += `
-        <div>
-          <span class="mono-chip bad">${escapeHtml(wf.severity)} &middot; ${escapeHtml(wf.root_cause_code)}</span>
-          <span class="mono-chip ok">${wf.checks_executed}/3 checks (${wf.eval_time_ms} ms)</span>
+      html += `
+        <div style="display:flex;justify-content:space-between;font:600 11px var(--mono);margin-bottom:5px;">
+          <span class="bad">${esc(wf.severity)} // ${esc(wf.root_cause_code)}</span>
+          <span class="good">${wf.checks_executed}/3 checks (${wf.eval_time_ms}ms)</span>
         </div>
-        <div style="font:400 11px/1.55 var(--mono);color:var(--body);margin:4px 0 8px;">
-          ${(wf.trace || [])
-            .map(
-              (s) =>
-                `<div>[${s.step_index}] <code>${escapeHtml(s.expression)}</code> &rarr; observed=<strong>${escapeHtml(s.observed_value)}</strong> (${s.passed ? "TRUE" : "FALSE"})</div>`
-            )
-            .join("")}
-          <div style="color:var(--ok);margin-top:4px;">Action: <code>${escapeHtml(wf.recommended_action)}</code></div>
-        </div>
+        ${(wf.trace || [])
+          .map(
+            (s) =>
+              `<div class="tree-step">[${s.step_index}] <code>${esc(s.expression)}</code> &rarr; <strong class="cyan">${esc(s.observed_value)}</strong> (${s.passed ? "TRUE" : "FALSE"})</div>`
+          )
+          .join("")}
+        <div class="small good" style="font-family:var(--mono);margin-top:4px;">Runbook: ${esc(wf.recommended_action)}</div>
       `;
     } else {
-      diagHtml += `<div style="font:400 11px var(--mono);color:var(--soft);">All nodes nominal. Inject a blizzard outage or Ka-band rain fade / optical flap (or click the Bedrock button) for live troubleshooting synthesis.</div>`;
+      html += `<div class="dim small" style="font-family:var(--mono);">All links nominal. Flip any Sabotage switch above (or click Bedrock Triage) to run &le;3-check isolation + Amazon Bedrock synthesis.</div>`;
     }
 
     if (bd && bd.text) {
-      diagHtml += `
-        <div style="margin-top:6px;">
-          <span class="mono-chip ok">${escapeHtml(bd.engine || "aws-bedrock")}</span>
-          ${bd.latency_ms ? `<span class="mono-chip">${bd.latency_ms} ms</span>` : ""}
-        </div>
-        <div class="prose-callout">${escapeHtml(bd.text)}</div>
+      html += `
+        <div class="bedrock-box"><div class="cyan small" style="font-family:var(--mono);margin-bottom:4px;">${esc(bd.engine || "aws-bedrock")} ${bd.latency_ms ? `· ${bd.latency_ms} ms` : ""}</div>${esc(bd.text)}</div>
       `;
     }
-    el("bedrock-diagnosis-panel").innerHTML = diagHtml;
+    el("triage-console").innerHTML = html;
 
-    if (topo.ledger) {
-      renderLedgerSnapshot(topo.ledger);
-    }
+    if (topo.ledger) renderLedger(topo.ledger);
   }
 
-  function renderLedgerSnapshot(ledger, conflictNotice) {
+  function renderLedger(ledger, tamperRes) {
     const tb = ledger.trial_balance || {};
     const recon = ledger.reconciliation || {};
     const storm = ledger.last_retry_storm;
 
-    el("kpi-5-val").textContent = tb.is_balanced
-      ? `100% (${tb.total_debits_usd})`
-      : "IMBALANCED";
-    el("kpi-5-sub").textContent = `${recon.duplicate_retries_blocked || 0} SQS retries deduplicated`;
+    el("g-balance").textContent = tb.is_balanced ? `${tb.total_debits_usd} OK` : "DRIFT";
 
-    const banner = el("ledger-proof-banner");
-    if (conflictNotice) {
-      banner.style.borderLeftColor = "var(--signal)";
-      banner.innerHTML =
-        `<strong>SHA-256 PAYLOAD INTEGRITY VERIFIED:</strong> Reused key <code>IDEM-SCOT-SEA1-ORD5-001</code> with mutated quantity rejected via <code>${escapeHtml(conflictNotice.exception_type)}</code> &mdash; Trial Balance remains <strong>${tb.total_debits_usd} == ${tb.total_credits_usd}</strong> (${tb.imbalance_cents}c drift).`;
+    const bar = el("conservation-bar");
+    if (tamperRes) {
+      bar.innerHTML =
+        `&#128737; <strong class="amber">SHA-256 PAYLOAD TAMPER REJECTED:</strong> Reused key <code>IDEM-SCOT-SEA1-ORD5-001</code> with mutated quantity raised <code>${esc(tamperRes.exception_type)}</code> &mdash; Trial Balance intact: <strong>${esc(tb.total_debits_usd)} == ${esc(tb.total_credits_usd)}</strong> (0c drift).`;
     } else if (storm) {
-      banner.style.borderLeftColor = "var(--ok)";
-      banner.innerHTML =
-        `<strong>5x SQS RETRY STORM PROOF (${storm.sqs_deliveries_received} deliveries / ${storm.unique_events_settled} unique):</strong> Blocked <strong>${storm.duplicate_retries_blocked}</strong> duplicate retries &rarr; <strong>0 duplicate charges</strong> in RouteLedger (vs. <strong>${storm.naive_processor_duplicate_charges} double-charges / ${escapeHtml(storm.naive_overbilled_usd)} overbilled</strong> in naive float processor). Trial Balance: <strong>${tb.total_debits_usd} DEBITS == ${tb.total_credits_usd} CREDITS</strong> (0c drift).`;
+      bar.innerHTML =
+        `&#9889; <strong>60x SQS RETRY STORM (${storm.sqs_deliveries_received} msgs / ${storm.unique_events_settled} unique):</strong> Deduplicated <strong>${storm.duplicate_retries_blocked}</strong> retries &rarr; <strong class="good">0 duplicate charges</strong> in RouteLedger vs. <strong class="bad">${storm.naive_processor_duplicate_charges} double-charges (${esc(storm.naive_overbilled_usd)} overbilled)</strong> in naive float baseline &middot; <strong>${esc(tb.total_debits_usd)} DR == ${esc(tb.total_credits_usd)} CR</strong>.`;
     } else {
-      banner.style.borderLeftColor = "var(--ok)";
-      banner.innerHTML =
-        `<strong>DOUBLE-ENTRY CONSERVATION VERIFIED:</strong> <code>SUM(DEBITS) = ${escapeHtml(tb.total_debits_usd)}</code> == <code>SUM(CREDITS) = ${escapeHtml(tb.total_credits_usd)}</code> &middot; Imbalance: <strong>0 cents</strong> &middot; Out-of-Order Watermarks Handled: <strong>${recon.out_of_order_events_handled || 0}</strong>.`;
+      bar.innerHTML =
+        `&#10003; <strong>TRIAL BALANCE CONSERVED:</strong> <code>SUM(DEBITS) = ${esc(tb.total_debits_usd)}</code> == <code>SUM(CREDITS) = ${esc(tb.total_credits_usd)}</code> &middot; Drift: <strong>0 cents</strong> &middot; OOO Watermarks: <strong>${recon.out_of_order_events_handled || 0}</strong>.`;
     }
 
-    el("settlement-events-tbody").innerHTML = (ledger.recent_events || [])
+    el("receipts-tbody").innerHTML = (ledger.recent_events || [])
       .map(
         (r) => `
         <tr>
-          <td><code>${escapeHtml(r.idempotency_key)}</code></td>
-          <td>${escapeHtml(r.account_id)}</td>
-          <td><code>${escapeHtml(r.region)}</code></td>
-          <td class="r"><strong>${escapeHtml(r.total_usd)}</strong></td>
-          <td style="font:400 10.5px var(--mono);">
-            ${r.is_out_of_order ? '<span style="color:var(--signal);font-weight:500;">[OOO]</span> ' : ""}
-            sha256:${escapeHtml(r.payload_sha256)}
-          </td>
+          <td><code>${esc(r.idempotency_key)}</code></td>
+          <td>${esc(r.account_id)}</td>
+          <td class="dim">${esc(r.region)}</td>
+          <td class="r"><strong class="good">${esc(r.total_usd)}</strong></td>
+          <td class="dim">${r.is_out_of_order ? '<span class="amber">[OOO]</span> ' : ""}sha256:${esc(r.payload_sha256)}</td>
         </tr>
       `
       )
       .join("");
 
-    el("journal-entries-tbody").innerHTML = (ledger.journal_entries || [])
+    el("journal-tbody").innerHTML = (ledger.journal_entries || [])
       .map(
         (j) => `
         <tr>
-          <td style="font-family:var(--mono);">#${j.entry_id}</td>
-          <td><code>${escapeHtml(j.idempotency_key)}</code></td>
-          <td><code>${escapeHtml(j.ledger_account)}</code></td>
-          <td class="dir-${escapeHtml(j.direction)}">${escapeHtml(j.direction)}</td>
-          <td class="r">${escapeHtml(j.amount_usd)}</td>
+          <td class="dim">#${j.entry_id}</td>
+          <td><code>${esc(j.idempotency_key)}</code></td>
+          <td>${esc(j.ledger_account)}</td>
+          <td class="${j.direction === "DEBIT" ? "dr" : "cr"}">${esc(j.direction)}</td>
+          <td class="r">${esc(j.amount_usd)}</td>
         </tr>
       `
       )
       .join("");
   }
 
-  async function runOptimize(opts) {
-    const options = opts || {};
-    const payload = {
-      mode: STATE.mode,
-      fault_mode: STATE.faultMode,
-      demand_units: STATE.scotDemand,
-      demand_gbps: STATE.leoDemandGbps,
-      invoke_bedrock: Boolean(options.invokeBedrock),
-      auto_settle: Boolean(options.autoSettle),
-    };
-    const res = await apiFetch("/api/topology/optimize", {
+  async function optimize(opts) {
+    const o = opts || {};
+    const res = await api("/api/topology/optimize", {
       method: "POST",
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        mode: STATE.mode,
+        fault_mode: STATE.faultMode,
+        demand_units: STATE.scotDemand,
+        demand_gbps: STATE.leoDemandGbps,
+        invoke_bedrock: Boolean(o.invokeBedrock),
+        auto_settle: Boolean(o.autoSettle),
+      }),
     });
-    renderTopologyTelemetry(res);
+    renderMission(res);
   }
 
-  function switchMode(newMode) {
-    STATE.mode = newMode;
+  function setMode(m) {
+    STATE.mode = m;
     STATE.faultMode = "nominal";
-    el("mode-btn-scot").classList.toggle("active", newMode === "scot");
-    el("mode-btn-leo").classList.toggle("active", newMode === "leo");
-    el("toolbar-scot").classList.toggle("hidden", newMode !== "scot");
-    el("toolbar-leo").classList.toggle("hidden", newMode !== "leo");
-    syncSliderForMode();
-    runOptimize({ invokeBedrock: false });
+    el("btn-mode-scot").className = m === "scot" ? "m-btn active-scot" : "m-btn";
+    el("btn-mode-leo").className = m === "leo" ? "m-btn active-leo" : "m-btn";
+    el("actions-scot").classList.toggle("hidden", m !== "scot");
+    el("actions-leo").classList.toggle("hidden", m !== "leo");
+    syncSlider();
+    optimize({ invokeBedrock: false });
   }
 
-  async function bootstrap() {
-    updateScrollChrome();
-    syncSliderForMode();
-
-    const [health, stateSnap] = await Promise.all([
-      apiFetch("/api/health"),
-      apiFetch("/api/state?mode=scot"),
+  async function boot() {
+    syncSlider();
+    const [health, snap] = await Promise.all([
+      api("/api/health"),
+      api("/api/state?mode=scot"),
     ]);
-    el("health-status-label").textContent =
-      `Live: ${health.delivery} · ${health.bedrock_model} (${health.aws_region})`;
+    el("health-label").textContent =
+      `CloudFront + Private S3 OAC · ${health.bedrock_model} (${health.aws_region})`;
 
-    renderTopologyTelemetry(stateSnap.topology);
-    renderLedgerSnapshot(stateSnap.ledger);
+    renderMission(snap.topology);
+    renderLedger(snap.ledger);
 
-    el("mode-btn-scot").addEventListener("click", () => switchMode("scot"));
-    el("mode-btn-leo").addEventListener("click", () => switchMode("leo"));
+    el("btn-mode-scot").addEventListener("click", () => setMode("scot"));
+    el("btn-mode-leo").addEventListener("click", () => setMode("leo"));
 
     el("demand-slider").addEventListener("input", (ev) => {
-      const val = Number(ev.target.value);
+      const v = Number(ev.target.value);
       if (STATE.mode === "scot") {
-        STATE.scotDemand = val;
-        el("slider-readout").textContent = `${val.toLocaleString()} units/hr`;
+        STATE.scotDemand = v;
+        el("vol-readout").textContent = `${v.toLocaleString()} u/hr`;
       } else {
-        STATE.leoDemandGbps = val;
-        el("slider-readout").textContent = `${val.toFixed(1)} Gbps`;
+        STATE.leoDemandGbps = v;
+        el("vol-readout").textContent = `${v.toFixed(1)} Gbps`;
       }
       clearTimeout(STATE.sliderTimer);
-      STATE.sliderTimer = setTimeout(() => runOptimize({ invokeBedrock: false }), 90);
+      STATE.sliderTimer = setTimeout(() => optimize({ invokeBedrock: false }), 85);
     });
 
-    // SCOT Fault Buttons
+    // SCOT Sabotage
     el("btn-scot-blizzard").addEventListener("click", () => {
       STATE.faultMode = "ord5_blizzard";
-      runOptimize({ invokeBedrock: false, autoSettle: true });
+      optimize({ invokeBedrock: false, autoSettle: true });
     });
     el("btn-scot-den4").addEventListener("click", () => {
       STATE.faultMode = "den4_conveyor_jam";
-      runOptimize({ invokeBedrock: false, autoSettle: true });
+      optimize({ invokeBedrock: false, autoSettle: true });
     });
-    el("btn-scot-nominal").addEventListener("click", () => {
+    el("btn-scot-clear").addEventListener("click", () => {
       STATE.faultMode = "nominal";
-      runOptimize({ invokeBedrock: false });
+      optimize({ invokeBedrock: false });
     });
     el("btn-scot-bedrock").addEventListener("click", async () => {
-      const btn = el("btn-scot-bedrock");
-      const orig = btn.innerHTML;
-      btn.textContent = "Synthesizing Bedrock Dispatch...";
-      btn.disabled = true;
+      const b = el("btn-scot-bedrock");
+      const orig = b.innerHTML;
+      b.textContent = "Querying Bedrock...";
+      b.disabled = true;
       try {
-        await runOptimize({ invokeBedrock: true });
+        await optimize({ invokeBedrock: true });
       } finally {
-        btn.innerHTML = orig;
-        btn.disabled = false;
+        b.innerHTML = orig;
+        b.disabled = false;
       }
     });
 
-    // Leo Fault Buttons
-    el("btn-leo-rainflap").addEventListener("click", async () => {
+    // Leo Sabotage
+    el("btn-leo-rain").addEventListener("click", async () => {
       STATE.faultMode = "rain_fade_and_isl_flap";
-      const btn = el("btn-leo-rainflap");
-      const orig = btn.innerHTML;
-      btn.textContent = "Rerouting Mesh & Querying Bedrock Nova...";
-      btn.disabled = true;
+      const b = el("btn-leo-rain");
+      const orig = b.innerHTML;
+      b.textContent = "Rerouting ISL & Calling Bedrock...";
+      b.disabled = true;
       try {
-        await runOptimize({ invokeBedrock: true, autoSettle: true });
+        await optimize({ invokeBedrock: true, autoSettle: true });
       } finally {
-        btn.innerHTML = orig;
-        btn.disabled = false;
+        b.innerHTML = orig;
+        b.disabled = false;
       }
     });
     el("btn-leo-scint").addEventListener("click", () => {
       STATE.faultMode = "handoff_isl_congestion";
-      runOptimize({ invokeBedrock: true });
+      optimize({ invokeBedrock: true });
     });
-    el("btn-leo-nominal").addEventListener("click", () => {
+    el("btn-leo-clear").addEventListener("click", () => {
       STATE.faultMode = "nominal";
-      runOptimize({ invokeBedrock: false });
+      optimize({ invokeBedrock: false });
     });
     el("btn-leo-bedrock").addEventListener("click", async () => {
-      const btn = el("btn-leo-bedrock");
-      const orig = btn.innerHTML;
-      btn.textContent = "Querying Bedrock Nova...";
-      btn.disabled = true;
+      const b = el("btn-leo-bedrock");
+      const orig = b.innerHTML;
+      b.textContent = "Querying Bedrock...";
+      b.disabled = true;
       try {
-        await runOptimize({ invokeBedrock: true });
+        await optimize({ invokeBedrock: true });
       } finally {
-        btn.innerHTML = orig;
-        btn.disabled = false;
+        b.innerHTML = orig;
+        b.disabled = false;
       }
     });
 
-    // Ledger Actions
-    el("btn-settle-active-route").addEventListener("click", async () => {
-      const res = await apiFetch("/api/ledger/settle-route", {
+    // Ledger
+    el("btn-commit-route").addEventListener("click", async () => {
+      const r = await api("/api/ledger/settle-route", {
         method: "POST",
         body: JSON.stringify({
           mode: STATE.mode,
@@ -594,51 +489,45 @@
           fault_mode: STATE.faultMode,
         }),
       });
-      renderLedgerSnapshot(res.ledger);
+      renderLedger(r.ledger);
     });
 
-    el("btn-retry-storm").addEventListener("click", async () => {
-      const btn = el("btn-retry-storm");
-      const orig = btn.innerHTML;
-      btn.textContent = "Replaying 60 SQS Messages (5x Duplicate Storm)...";
-      btn.disabled = true;
+    el("btn-storm").addEventListener("click", async () => {
+      const b = el("btn-storm");
+      const orig = b.innerHTML;
+      b.textContent = "Replaying 60x SQS Storm...";
+      b.disabled = true;
       try {
-        const res = await apiFetch("/api/ledger/retry-storm", {
-          method: "POST",
-          body: "{}",
-        });
-        renderLedgerSnapshot(res.ledger);
+        const r = await api("/api/ledger/retry-storm", { method: "POST", body: "{}" });
+        renderLedger(r.ledger);
       } finally {
-        btn.innerHTML = orig;
-        btn.disabled = false;
+        b.innerHTML = orig;
+        b.disabled = false;
       }
     });
 
-    el("btn-tamper-payload").addEventListener("click", async () => {
-      const conflict = await apiFetch("/api/ledger/tamper-test", {
-        method: "POST",
-        body: "{}",
-      });
-      const snap = await apiFetch("/api/state?mode=" + STATE.mode);
-      renderLedgerSnapshot(snap.ledger, conflict);
+    el("btn-tamper").addEventListener("click", async () => {
+      const t = await api("/api/ledger/tamper-test", { method: "POST", body: "{}" });
+      const snap = await api("/api/state?mode=" + STATE.mode);
+      renderLedger(snap.ledger, t);
     });
 
-    el("btn-reset-all").addEventListener("click", async () => {
-      const r = await apiFetch("/api/reset", { method: "POST", body: "{}" });
+    el("btn-reset").addEventListener("click", async () => {
+      const r = await api("/api/reset", { method: "POST", body: "{}" });
       STATE.mode = "scot";
       STATE.faultMode = "nominal";
       STATE.scotDemand = 3200;
-      syncSliderForMode();
-      el("mode-btn-scot").classList.add("active");
-      el("mode-btn-leo").classList.remove("active");
-      el("toolbar-scot").classList.remove("hidden");
-      el("toolbar-leo").classList.add("hidden");
-      renderTopologyTelemetry(r.topology);
-      renderLedgerSnapshot(r.ledger);
+      el("btn-mode-scot").className = "m-btn active-scot";
+      el("btn-mode-leo").className = "m-btn";
+      el("actions-scot").classList.remove("hidden");
+      el("actions-leo").classList.add("hidden");
+      syncSlider();
+      renderMission(r.topology);
+      renderLedger(r.ledger);
     });
   }
 
-  bootstrap().catch((err) => {
-    el("health-status-label").textContent = "API Error: " + err.message;
+  boot().catch((err) => {
+    el("health-label").textContent = "Offline: " + err.message;
   });
 })();
