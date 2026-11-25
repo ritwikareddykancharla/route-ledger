@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RouteLedger: SCOT Middle-Mile Min-Cost Flow Optimizer, Amazon Leo Orbital Laser ISL & Ground Gateway Mesh Rerouter, and Idempotent Double-Entry ACID Settlement Ledger.">
+  <meta name="theme-color" content="#f2f5fa">
+  <title>RouteLedger — SCOT Fulfillment &amp; Leo Mesh Optimizer + ACID Ledger | Ritwika Kancharla</title>
+  <script>
+    (function () {
+      var h = window.location.hash || "";
+      var t = h.indexOf("theme=dark") !== -1 ? "dark" : (h.indexOf("theme=light") !== -1 ? "light" : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Schibsted+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body id="top">
+<header class="site"><div class="bar">
+  <a class="brand" href="https://ritwikareddykancharla.github.io"><span class="mark">RK</span><span class="name">Ritwika Kancharla</span></a>
+  <nav aria-label="Site">
+    <a href="#live-system" class="on">Live system</a>
+    <a href="#problem">Problem</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#results">Benchmarks</a>
+    <a href="https://github.com/ritwikareddykancharla/route-ledger">GitHub</a>
+  </nav>
+  <button class="theme" type="button" aria-label="Switch between light and dark theme">
+    <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+    <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+  </button>
+  <a class="btn contact" href="https://github.com/ritwikareddykancharla/route-ledger">Source &rarr;</a>
+</div></header>
+
+<main><article class="demo" style="--accent:#12737a"><div class="wrap">
+  <a class="crumb" href="https://ritwikareddykancharla.github.io/#projects">&larr; All projects</a>
+
+  <header class="post-head-full">
+    <p class="eyebrow">RouteLedger &middot; SCOT Middle-Mile Optimizer, Leo Mesh &amp; ACID Settlement</p>
+    <h1 class="post-title">Capacity-Constrained Fulfillment &amp; Orbital Mesh Rerouting with Idempotent Double-Entry Settlement</h1>
+    <p class="meta">
+      <span>Ritwika Kancharla</span>
+      <span class="live-tag" id="health-status-label">Live on AWS CloudFront + Private S3 OAC + Amazon Bedrock (us.amazon.nova-lite-v1:0)</span>
+      <span><a href="/api/health">/api/health</a></span>
+      <span><a href="https://github.com/ritwikareddykancharla/route-ledger">ritwikareddykancharla/route-ledger</a></span>
+    </p>
+    <div class="stats">
+      <div>
+        <b>0.12 ms</b>
+        <span>p50 constrained Dijkstra + 2-way residual flow-splitting reroute compute latency</span>
+      </div>
+      <div>
+        <b>-95.33%</b>
+        <span>SLA violations vs. static shortest-path routing (-74.78% p99 latency across weather &amp; ISL faults)</span>
+      </div>
+      <div>
+        <b>0 dupes</b>
+        <span>100% duplicate retry elimination &amp; 0-cent rounding drift across at-least-once settlement streams</span>
+      </div>
+      <div>
+        <b>&le; 3 checks</b>
+        <span>100.0% NOC &amp; floor root-cause isolation accuracy (2.41 mean checks vs. 36.95 log lines)</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="post-grid">
+    <aside class="side" aria-label="Contents"><div class="side-in">
+      <p class="side-k"><span>Contents</span><span class="side-pct" aria-hidden="true">0%</span></p>
+      <div class="side-bar" aria-hidden="true"><i></i></div>
+      <ol class="side-list">
+        <i class="side-ind" aria-hidden="true"></i>
+        <li><a href="#live-system"><span class="sn">01</span><span>Live interactive system</span></a></li>
+        <li><a href="#problem"><span class="sn">02</span><span>Problem &amp; AWS alignment</span></a></li>
+        <li><a href="#architecture"><span class="sn">03</span><span>System architecture</span></a></li>
+        <li><a href="#results"><span class="sn">04</span><span>Measured benchmarks</span></a></li>
+      </ol>
+      <a class="side-top" href="#top">Back to top</a>
+    </div></aside>
+
+    <div class="post-body">
+      <div class="tldr">
+        <p class="tk">Abstract</p>
+        <p><strong>RouteLedger</strong> couples a sub-millisecond capacity-constrained min-cost flow &amp; link-state router with a transactional SQLite (<code>BEGIN IMMEDIATE</code>) double-entry settlement ledger and bounded (<code>&le; 3</code>-check) telemetry diagnostics. Toggle live between <strong>SCOT Middle-Mile Fulfillment (<code>SEA1 &rarr; SLC2 &rarr; DEN4 &rarr; ORD5 &rarr; CVG3 &rarr; EWR7</code>)</strong> and the <strong>Amazon Leo Orbital Laser ISL &amp; Ground Gateway Mesh (<code>Gateway-Redmond &harr; LEO-Orb-14 &harr; LEO-Orb-22 &harr; Gateway-Frankfurt</code>)</strong>, inject blizzards or Ka-band rain fade, synthesize grounded diagnostics via <strong>Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>)</strong>, and stress-test idempotency under a 5x SQS duplicate retry storm.</p>
+      </div>
+
+      <!-- 01 LIVE INTERACTIVE SYSTEM -->
+      <h2 id="live-system"><span class="num">01</span>Live interactive system</h2>
+      <p>Toggle between the two live topologies, drag the volume slider to trigger multi-corridor capacity splitting, inject sortation or orbital link faults, and audit immutable double-entry carrier/bandwidth postings below.</p>
+
+      <figure class="fig wide">
+        <div class="plate">
+          <!-- Mode Toggle -->
+          <div class="rl-mode-bar" role="tablist">
+            <button type="button" class="rl-mode-btn active" id="mode-btn-scot">
+              <b>Mode 01 &middot; SCOT Middle-Mile Fulfillment Network</b>
+              <span>SEA1 &rarr; SLC2 &rarr; DEN4 &rarr; ORD5 &rarr; CVG3 &rarr; EWR7 &middot; CPT SLA &amp; $/Unit Min-Cost Flow</span>
+            </button>
+            <button type="button" class="rl-mode-btn" id="mode-btn-leo">
+              <b>Mode 02 &middot; Amazon Leo Orbital Laser ISL &amp; Ground Mesh</b>
+              <span>Gateway-Redmond &harr; LEO-Orb-14 &harr; LEO-Orb-22 &harr; Gateway-Frankfurt &middot; Bedrock Diagnostics</span>
+            </button>
+          </div>
+
+          <!-- Live 5-Metric Strip -->
+          <div class="rl-kpi-row">
+            <div class="rl-kpi">
+              <span class="rl-kpi-k" id="kpi-1-label">Active Demand</span>
+              <span class="rl-kpi-v" id="kpi-1-val">3,200 units/hr</span>
+              <span class="rl-kpi-s" id="kpi-1-sub">SEA1 &rarr; EWR7</span>
+            </div>
+            <div class="rl-kpi">
+              <span class="rl-kpi-k" id="kpi-2-label">CPT SLA / Delivery</span>
+              <span class="rl-kpi-v" id="kpi-2-val" style="color:var(--ok);">100.0% (0 Breaches)</span>
+              <span class="rl-kpi-s" id="kpi-2-sub">vs. Static Plan</span>
+            </div>
+            <div class="rl-kpi">
+              <span class="rl-kpi-k" id="kpi-3-label">Unit Cost / RTT</span>
+              <span class="rl-kpi-v" id="kpi-3-val">$1.42 / unit</span>
+              <span class="rl-kpi-s" id="kpi-3-sub">21.8h (&le;24.0h CPT)</span>
+            </div>
+            <div class="rl-kpi">
+              <span class="rl-kpi-k">Solver Compute</span>
+              <span class="rl-kpi-v" id="kpi-4-val" style="color:var(--ok);">0.18 ms</span>
+              <span class="rl-kpi-s">Constrained Flow</span>
+            </div>
+            <div class="rl-kpi">
+              <span class="rl-kpi-k">Ledger Trial Balance</span>
+              <span class="rl-kpi-v" id="kpi-5-val" style="color:var(--ok);">100% Balanced</span>
+              <span class="rl-kpi-s" id="kpi-5-sub">0 Duplicate Charges</span>
+            </div>
+          </div>
+
+          <!-- Demand Slider + 1-Click Fault Buttons -->
+          <div class="rl-toolbar">
+            <div class="slider-box">
+              <div class="slider-head">
+                <span id="slider-title">Parcel Demand Volume:</span>
+                <strong id="slider-readout">3,200 units/hr</strong>
+              </div>
+              <input type="range" id="demand-slider" min="1200" max="7400" step="200" value="3200">
+            </div>
+
+            <div id="toolbar-scot" style="display:flex;flex-wrap:wrap;gap:8px;">
+              <button type="button" class="btn signal-btn" id="btn-scot-blizzard">Inject Blizzard / Outage on ORD5</button>
+              <button type="button" class="btn" id="btn-scot-den4">Inject Conveyor Thermal Bind (DEN4)</button>
+              <button type="button" class="btn" id="btn-scot-nominal">Restore All Hubs Nominal</button>
+              <button type="button" class="btn accent-btn" id="btn-scot-bedrock">Bedrock ATROPS Brief &rarr;</button>
+            </div>
+
+            <div id="toolbar-leo" class="hidden" style="display:flex;flex-wrap:wrap;gap:8px;">
+              <button type="button" class="btn signal-btn" id="btn-leo-rainflap">Inject Ka-Band Rain Fade &amp; Optical Flap</button>
+              <button type="button" class="btn" id="btn-leo-scint">Inject Solar Scintillation (Orb-22&harr;31)</button>
+              <button type="button" class="btn" id="btn-leo-nominal">Restore Constellation Nominal</button>
+              <button type="button" class="btn accent-btn" id="btn-leo-bedrock">Bedrock Flight Diagnosis &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Interactive SVG Topology Stage -->
+          <div class="topo-stage" id="svg-canvas-wrap">
+            <svg id="topology-svg" viewBox="0 0 920 400" role="img" aria-label="Interactive SCOT Fulfillment and Amazon Leo Orbital Topology Map"></svg>
+          </div>
+
+          <!-- Optimizer vs Static Baseline Comparison -->
+          <div class="cmp-strip" id="optimizer-vs-static">Loading live route comparison...</div>
+
+          <!-- Corridors + Bedrock Telemetry Diagnosis -->
+          <div class="two-col">
+            <div class="subplate">
+              <div class="subplate-head">
+                <span id="corridor-panel-title">Active Rerouted Corridors &amp; Arc Utilization</span>
+                <span id="corridor-split-badge">1 Corridor</span>
+              </div>
+              <div id="corridors-list"></div>
+              <button type="button" class="btn primary" style="width:100%;justify-content:center;margin-top:6px;" id="btn-settle-active-route">
+                + Settle Active Freight / Bandwidth Allocation to Ledger
+              </button>
+            </div>
+
+            <div class="subplate">
+              <div class="subplate-head">
+                <span>Amazon Bedrock (nova-lite-v1:0) &amp; &le;3-Check Fault Trace</span>
+                <span>100% Root-Cause</span>
+              </div>
+              <div id="bedrock-diagnosis-panel"></div>
+            </div>
+          </div>
+
+          <!-- ==================== IDEMPOTENT DOUBLE-ENTRY LEDGER PANEL ==================== -->
+          <div class="ledger-divider">
+            <div>
+              <div style="font:500 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt);">SQLite BEGIN IMMEDIATE &middot; SHA-256 Payload Hash &middot; Exact Decimal Minor-Unit Cents</div>
+              <div style="font:800 1.35rem/1.15 var(--display);letter-spacing:-.03em;margin-top:3px;">Idempotent Double-Entry Carrier &amp; Settlement Ledger</div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <button type="button" class="btn primary" id="btn-retry-storm">Simulate 5x Duplicate SQS Retry Storm (60 Deliveries) &rarr;</button>
+              <button type="button" class="btn" id="btn-tamper-payload">Test Mutated Payload SHA-256 Conflict</button>
+              <button type="button" class="btn" id="btn-reset-all">Reset Ledger</button>
+            </div>
+          </div>
+
+          <div class="cmp-strip" id="ledger-proof-banner">Verifying double-entry trial balance...</div>
+
+          <div class="two-col">
+            <div>
+              <div style="font:500 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:6px;">Settled Carrier &amp; Gateway Receipts (US-WA &middot; DE &middot; JP &middot; BR Tax)</div>
+              <div class="ledger-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Idempotency Key</th>
+                      <th>Account</th>
+                      <th>Reg</th>
+                      <th class="r">Total</th>
+                      <th>SHA-256 / Flags</th>
+                    </tr>
+                  </thead>
+                  <tbody id="settlement-events-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <div style="font:500 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:6px;">Immutable Double-Entry Postings (SUM(Debits) == SUM(Credits))</div>
+              <div class="ledger-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Idempotency Key</th>
+                      <th>Ledger Account</th>
+                      <th>Side</th>
+                      <th class="r">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="journal-entries-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Figure 1.</b> Interactive SCOT Middle-Mile &amp; Amazon Leo Orbital Mesh Topology + ACID Double-Entry Settlement Ledger served via CloudFront + Private S3 OAC + Lambda (<code>us-west-2</code>) + Amazon Bedrock (<code>us.amazon.nova-lite-v1:0</code>).</figcaption>
+      </figure>
+
+      <!-- 02 PROBLEM & AWS ALIGNMENT -->
+      <h2 id="problem"><span class="num">02</span>Problem &amp; AWS team alignment</h2>
+      <p>Middle-mile fulfillment networks and LEO satellite meshes share three coupled failure modes: static shortest-path plans keep dispatching freight or packets onto blizzard-closed hubs and rain-faded Ka-band links (<code>&lt; 8.0 dB</code> SNR), at-least-once SQS metering retries overbill carrier/ISP accounts under binary floating-point math, and sequential daemon log scanning misdiagnoses cascading sympathetic alarms.</p>
+      <ul>
+        <li><strong>SCOT Shipment Optimization (ATROPS) &amp; Supply Chain Automation:</strong> Successive augmenting min-cost paths reroute <code>SEA1 &rarr; ORD5 &rarr; EWR7</code> volume across <code>SLC2 &rarr; CVG3</code> Prime Air and <code>DFW6</code> linehaul bypasses in <code>&lt; 1 ms</code> while preserving Critical Pull Time (CPT) SLAs.</li>
+        <li><strong>Amazon Leo Networking &amp; Flight Software AI:</strong> Dynamic link-state pruning avoids attenuated Ka-band feeders and flapped optical laser ISLs, pairing deterministic <code>&le; 3</code>-check predicate trees with grounded <code>us.amazon.nova-lite-v1:0</code> flight diagnostics.</li>
+        <li><strong>Financial &amp; Inventory Conservation:</strong> Canonical SHA-256 <code>idempotency_key</code> deduplication inside SQLite <code>BEGIN IMMEDIATE</code> transactions enforces <code>SUM(debits) == SUM(credits)</code> with zero cent drift across multi-region tax schedules.</li>
+      </ul>
+
+      <!-- 03 SYSTEM ARCHITECTURE -->
+      <h2 id="architecture"><span class="num">03</span>System architecture</h2>
+      <figure class="fig wide">
+        <div class="plate">
+          <svg class="loop" viewBox="0 0 920 310" role="img" aria-label="RouteLedger CloudFront, Private S3 OAC, SCOT and Leo Router, ACID Ledger, and Amazon Bedrock Architecture">
+            <defs>
+              <marker id="rl-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="lp-ah"/></marker>
+              <marker id="rl-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="lp-ahd"/></marker>
+            </defs>
+            <g class="lp-m">
+              <rect x="18" y="105" width="175" height="96"/>
+              <text class="lp-n" x="105" y="130" text-anchor="middle">EDGE CDN</text>
+              <text class="lp-t" x="105" y="152" text-anchor="middle">CloudFront TLS</text>
+              <text class="lp-s" x="105" y="172" text-anchor="middle">* -&gt; Private S3 OAC</text>
+              <text class="lp-s" x="105" y="188" text-anchor="middle">/api/* -&gt; Lambda</text>
+            </g>
+            <g class="lp-h">
+              <rect x="235" y="34" width="220" height="96"/>
+              <text class="lp-n" x="345" y="58" text-anchor="middle">TOPOLOGY ENGINE</text>
+              <text class="lp-t" x="345" y="80" text-anchor="middle">SCOT &amp; Leo Router</text>
+              <text class="lp-s" x="345" y="100" text-anchor="middle">0.12ms Min-Cost Flow</text>
+              <text class="lp-s" x="345" y="116" text-anchor="middle">2-Way Residual Split</text>
+            </g>
+            <g class="lp-m">
+              <rect x="235" y="174" width="220" height="96"/>
+              <text class="lp-n" x="345" y="198" text-anchor="middle">SETTLEMENT ENGINE</text>
+              <text class="lp-t" x="345" y="220" text-anchor="middle">Double-Entry SQLite</text>
+              <text class="lp-s" x="345" y="240" text-anchor="middle">SHA-256 Idempotency</text>
+              <text class="lp-s" x="345" y="256" text-anchor="middle">0 Dupes · 0c Drift</text>
+            </g>
+            <g class="lp-m">
+              <rect x="498" y="34" width="182" height="96"/>
+              <text class="lp-n" x="589" y="58" text-anchor="middle">NOC WORKFLOW</text>
+              <text class="lp-t" x="589" y="80" text-anchor="middle">&le;3-Check Trees</text>
+              <text class="lp-s" x="589" y="100" text-anchor="middle">100% Root-Cause</text>
+              <text class="lp-s" x="589" y="116" text-anchor="middle">2.41 Mean Steps</text>
+            </g>
+            <g class="lp-x">
+              <rect x="722" y="95" width="180" height="114"/>
+              <text class="lp-n" x="812" y="122" text-anchor="middle">AMAZON BEDROCK</text>
+              <text class="lp-t" x="812" y="146" text-anchor="middle">nova-lite-v1:0</text>
+              <text class="lp-s" x="812" y="168" text-anchor="middle">Leo RF/ISL Triage</text>
+              <text class="lp-s" x="812" y="186" text-anchor="middle">ATROPS Dispatch</text>
+            </g>
+            <g class="lp-a">
+              <path d="M193 135L233 84" marker-end="url(#rl-a)"/>
+              <path d="M193 170L233 220" marker-end="url(#rl-a)"/>
+              <path d="M455 82H496" marker-end="url(#rl-a)"/>
+              <path d="M680 82L720 132" marker-end="url(#rl-a)"/>
+            </g>
+            <g class="lp-d">
+              <path d="M345 130V172" marker-end="url(#rl-d)"/>
+            </g>
+            <text class="lp-l" x="356" y="156">rerouted freight / Gbps settlement</text>
+          </svg>
+        </div>
+        <figcaption><b>Figure 2.</b> CloudFront distribution serving static assets from a private S3 bucket via Origin Access Control (OAC) and routing <code>/api/*</code> to Python 3.12 Lambda + Amazon Bedrock in <code>us-west-2</code>.</figcaption>
+      </figure>
+
+      <!-- 04 MEASURED BENCHMARKS -->
+      <h2 id="results"><span class="num">04</span>Measured benchmarks</h2>
+      <p>Reproducible on Python 3.10+ stdlib via <code>python3 benchmarks/run_benchmarks.py</code> (<code>random.Random(42)</code>) and verified by 28 automated tests.</p>
+      <div class="tablewrap wide">
+        <table>
+          <thead>
+            <tr>
+              <th>Subsystem &amp; Metric</th>
+              <th>Workload</th>
+              <th class="r">RouteLedger</th>
+              <th class="r">Baseline</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>End-to-End p99 Latency</strong></td>
+              <td>300 POP-to-POP demands across 28 nodes &amp; 6 weather/ISL faults</td>
+              <td class="r">132.80 ms (-74.8%)</td>
+              <td class="r">526.47 ms static</td>
+            </tr>
+            <tr>
+              <td><strong>SLA Violation Rate</strong></td>
+              <td>Rain fade (&lt;8 dB SNR), optical transceiver outage &amp; fiber cut</td>
+              <td class="r">1.67% (-95.3%)</td>
+              <td class="r">35.67% (107/300)</td>
+            </tr>
+            <tr class="best">
+              <td><strong>Double-Entry Retry Deduplication</strong></td>
+              <td>2,000 events (15% SQS retries, 18% OOO, US-WA/DE/JP/BR tax)</td>
+              <td class="r">0 dupes · 0c drift</td>
+              <td class="r">245 dupes ($17.8k)</td>
+            </tr>
+            <tr>
+              <td><strong>SQLite ACID Throughput</strong></td>
+              <td>Transactional settlement + full metering log reconciliation</td>
+              <td class="r">32,704.9 ev/s</td>
+              <td class="r">60c float drift</td>
+            </tr>
+            <tr>
+              <td><strong>NOC &amp; Floor Root-Cause Isolation</strong></td>
+              <td>150 cascading gateway, handoff, conveyor &amp; bin-drift incidents</td>
+              <td class="r">100.0% (2.41 steps)</td>
+              <td class="r">64.0% (36.95 lines)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div></article></main>
+
+<footer class="site-foot"><div class="wrap">
+  <span>Ritwika Kancharla &middot; RouteLedger (CloudFront + Private S3 OAC + Bedrock Nova)</span>
+  <span><a href="https://ritwikareddykancharla.github.io">Portfolio</a> &nbsp; <a href="https://github.com/ritwikareddykancharla/route-ledger">GitHub</a></span>
+</div></footer>
+
+<a class="totop" href="#top" aria-label="Back to top">
+  <svg viewBox="0 0 48 48" aria-hidden="true"><circle class="ring-bg" cx="24" cy="24" r="21"/><circle class="ring" cx="24" cy="24" r="21"/><path d="M24 31V18M18 23.5l6-6 6 6"/></svg>
+</a>
+
+<script src="/app.js"></script>
+</body>
+</html>

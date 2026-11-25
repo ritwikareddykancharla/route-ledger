@@ -1,132 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640" width="100%" height="auto" style="background:#ffffff; font-family: Virgil, Caveat, 'Segoe Print', 'Bradley Hand', 'Chalkboard SE', 'Comic Sans MS', cursive, sans-serif;">
-<defs>
-  <style>@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap");</style>
-  <pattern id="excali-grid" width="24" height="24" patternUnits="userSpaceOnUse">
-    <circle cx="2" cy="2" r="1" fill="#e5e7eb" />
-  </pattern>
-</defs>
-<rect width="1180" height="640" fill="#ffffff" />
-<rect width="1180" height="640" fill="url(#excali-grid)" />
-<text x="36" y="42" font-size="24" font-weight="700" fill="#1e1e1e">RouteLedger — Capacity-Aware Mesh Router, Settlement Ledger &amp; NOC Engine</text>
-<text x="36" y="66" font-family="'JetBrains Mono', monospace" font-size="12.3" fill="#495057">Excalidraw Architecture • 28-Node Constrained Dijkstra (-74.8% p99) + ACID Double-Entry Ledger (0 Drift) + &lt;=3-Check NOC Trees</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 480" width="1120" height="480" font-family="'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, sans-serif">
+  <defs>
+    <marker id="rl-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#0e1a2b"/>
+    </marker>
+    <marker id="rl-sig" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#ff6433"/>
+    </marker>
+  </defs>
+  <rect width="1120" height="480" fill="#f2f5fa"/>
+  <rect x="16" y="16" width="1088" height="448" fill="#ffffff" stroke="#0e1a2b" stroke-width="1.5"/>
 
-<rect x="30" y="90" width="350" height="515" rx="10" ry="10" fill="#f8f9fa" stroke="none" />
-<rect x="30" y="90" width="350" height="515" rx="10" ry="10" fill="none" stroke="#495057" stroke-width="1.8" stroke-dasharray="8 6" />
-<text x="46" y="116" font-size="14.5" font-weight="700" fill="#495057">1. Capacity-Aware LEO &amp; Mesh Router</text>
+  <rect x="40" y="38" width="205" height="22" fill="#12737a"/>
+  <text x="142" y="53" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="600" fill="#ffffff" letter-spacing="1.2">ROUTELEDGER ARCHITECTURE</text>
+  <text x="40" y="86" font-size="21" font-weight="800" fill="#0e1a2b">AWS CloudFront + SCOT &amp; Leo Mesh Optimizer + ACID Double-Entry Ledger</text>
+  <text x="40" y="106" font-family="monospace" font-size="11.5" fill="#6b7a92">Private S3 OAC SigV4 · Lambda /api/* (us-west-2) · SQLite BEGIN IMMEDIATE · Amazon Bedrock (us.amazon.nova-lite-v1:0)</text>
 
-<rect x="420" y="90" width="340" height="515" rx="10" ry="10" fill="#fff9db" stroke="none" />
-<rect x="420" y="90" width="340" height="515" rx="10" ry="10" fill="none" stroke="#e67700" stroke-width="1.8" stroke-dasharray="8 6" />
-<text x="436" y="116" font-size="14.5" font-weight="700" fill="#e67700">2. Double-Entry Settlement Ledger</text>
+  <!-- CloudFront -->
+  <rect x="40" y="148" width="205" height="250" fill="#ffffff" stroke="#35527e" stroke-width="2"/>
+  <text x="142" y="174" text-anchor="middle" font-family="monospace" font-size="10" fill="#35527e">GLOBAL EDGE CDN</text>
+  <text x="142" y="196" text-anchor="middle" font-size="16" font-weight="800" fill="#0e1a2b">Amazon CloudFront</text>
+  <rect x="56" y="216" width="173" height="72" fill="#f2f5fa" stroke="#0e1a2b" stroke-width="1"/>
+  <text x="142" y="238" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1a2b">Behavior 1: Default (*)</text>
+  <text x="142" y="256" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#0c8a4d">Private S3 via OAC SigV4</text>
+  <text x="142" y="272" text-anchor="middle" font-family="monospace" font-size="10" fill="#6b7a92">BlockPublicAccess = TRUE</text>
 
-<rect x="800" y="90" width="350" height="515" rx="10" ry="10" fill="#f3f0ff" stroke="none" />
-<rect x="800" y="90" width="350" height="515" rx="10" ry="10" fill="none" stroke="#5f3dc4" stroke-width="1.8" stroke-dasharray="8 6" />
-<text x="816" y="116" font-size="14.5" font-weight="700" fill="#5f3dc4">3. NOC &amp; Floor Workflow Engine</text>
-<rect x="55" y="142" width="300" height="104" rx="10" ry="10" fill="#ffc9c9" stroke="none" />
-<path d="M 65.31 140.96 Q 204.51 141.39 345.52 142.39 Q 355 142 355.86 151.09 Q 354.83 192.97 354.38 236.01 Q 355 246 343.96 245.34 Q 205.33 246.1 64.38 246.2 Q 55 246 55.68 234.91 Q 55.67 194.44 54.65 151.24 Q 55 142 66.01 141.64 Z" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-<path d="M 64.1 141.11 Q 205.76 142.23 345.68 142.51 Q 355 142 355.08 153.04 Q 354.73 194.11 355.72 236.26 Q 355 246 345.8 246.17 Q 205.45 245.0 64.4 245.54 Q 55 246 54.08 235.41 Q 54.12 193.51 55.3 151.7 Q 55 142 64.71 141.36 Z" fill="none" stroke="#1e1e1e" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
-<text x="205.0" y="167.0" text-anchor="middle" font-family="Virgil, Caveat, 'Segoe Print', 'Comic Sans MS', cursive, sans-serif" font-size="15" font-weight="700" fill="#1e1e1e">POP Demands &amp; Link State</text>
-<text x="205.0" y="188.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• 300 flows across 28-node mesh</text>
-<text x="205.0" y="207.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Optical ISL, Ka feeder &amp; fiber</text>
-<text x="205.0" y="226.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• 6 rain-fade &amp; outage events</text>
-<rect x="55" y="286" width="300" height="106" rx="10" ry="10" fill="#a5d8ff" stroke="none" />
-<path d="M 64.49 286.96 Q 205.33 286.24 344.28 286.5 Q 355 286 354.26 295.73 Q 356.08 339.31 355.13 382.41 Q 355 392 345.75 392.61 Q 204.4 390.97 64.59 391.49 Q 55 392 54.36 382.97 Q 55.83 338.59 55.34 295.77 Q 55 286 65.91 285.91 Z" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-<path d="M 64.48 285.44 Q 205.14 285.48 345.19 286.88 Q 355 286 354.78 295.38 Q 356.09 339.02 354.1 381.0 Q 355 392 344.14 392.28 Q 205.64 391.83 64.04 391.74 Q 55 392 56.09 382.06 Q 56.04 339.79 53.93 296.49 Q 55 286 65.4 286.08 Z" fill="none" stroke="#1e1e1e" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
-<text x="205.0" y="311.0" text-anchor="middle" font-family="Virgil, Caveat, 'Segoe Print', 'Comic Sans MS', cursive, sans-serif" font-size="15" font-weight="700" fill="#1e1e1e">Constrained Dijkstra Router</text>
-<text x="205.0" y="332.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Prunes outage &amp; &lt;8 dB SNR links</text>
-<text x="205.0" y="351.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Convex M/M/1 congestion score</text>
-<text x="205.0" y="370.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Hop cap + end-to-end SLA bound</text>
-<rect x="55" y="432" width="300" height="106" rx="10" ry="10" fill="#b2f2bb" stroke="none" />
-<path d="M 64.49 432.31 Q 204.15 431.86 344.9 433.0 Q 355 432 355.83 441.48 Q 355.0 484.29 355.91 528.82 Q 355 538 344.56 538.31 Q 205.24 537.24 65.58 538.09 Q 55 538 55.61 528.07 Q 53.9 484.61 53.94 442.94 Q 55 432 65.83 432.73 Z" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-<path d="M 64.58 431.03 Q 205.83 432.98 344.09 431.97 Q 355 432 354.05 442.57 Q 355.58 484.18 354.95 528.11 Q 355 538 344.48 538.82 Q 204.83 537.37 65.09 538.51 Q 55 538 54.34 527.59 Q 56.09 485.33 54.86 442.04 Q 55 432 64.17 431.39 Z" fill="none" stroke="#1e1e1e" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
-<text x="205.0" y="457.0" text-anchor="middle" font-family="Virgil, Caveat, 'Segoe Print', 'Comic Sans MS', cursive, sans-serif" font-size="15" font-weight="700" fill="#1e1e1e">2-Way Residual Flow Split</text>
-<text x="205.0" y="478.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Splits trunk bursts on planes</text>
-<text x="205.0" y="497.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• -74.8% p99 • -95.3% SLA drops</text>
-<text x="205.0" y="516.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• 0.12ms p50 reroute compute</text>
-<rect x="445" y="142" width="290" height="104" rx="10" ry="10" fill="#ffec99" stroke="none" />
-<path d="M 454.64 142.19 Q 589.41 141.38 724.06 142.29 Q 735 142 734.4 152.89 Q 735.79 193.06 734.42 236.37 Q 735 246 724.37 245.19 Q 590.96 246.16 454.94 246.63 Q 445 246 445.68 235.32 Q 444.11 193.85 444.83 151.93 Q 445 142 455.5 142.38 Z" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-<path d="M 456.07 141.12 Q 589.79 141.65 725.8 141.45 Q 735 142 734.32 151.89 Q 734.83 193.51 734.45 236.93 Q 735 246 724.87 246.79 Q 590.11 245.01 456.1 246.74 Q 445 246 446.03 236.94 Q 445.77 193.27 444.97 151.37 Q 445 142 454.78 141.03 Z" fill="none" stroke="#1e1e1e" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
-<text x="590.0" y="167.0" text-anchor="middle" font-family="Virgil, Caveat, 'Segoe Print', 'Comic Sans MS', cursive, sans-serif" font-size="15" font-weight="700" fill="#1e1e1e">SHA-256 Idempotency Gate</text>
-<text x="590.0" y="188.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• 2,000 usage &amp; kit SKU events</text>
-<text x="590.0" y="207.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Deduplicates 15% retry storm</text>
-<text x="590.0" y="226.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Blocks mutated-payload reuse</text>
-<rect x="445" y="286" width="290" height="106" rx="10" ry="10" fill="#ffd8a8" stroke="none" />
-<path d="M 454.73 287.07 Q 589.48 286.62 724.9 285.83 Q 735 286 736.01 297.09 Q 735.12 339.48 734.24 381.55 Q 735 392 726.03 392.17 Q 590.09 392.55 454.03 392.19 Q 445 392 445.01 382.78 Q 444.25 340.01 444.08 295.31 Q 445 286 455.21 286.39 Z" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-<path d="M 454.42 285.16 Q 590.86 285.44 725.21 286.26 Q 735 286 734.82 296.18 Q 735.05 339.96 734.35 382.48 Q 735 392 724.43 391.77 Q 590.38 391.56 454.6 392.55 Q 445 392 444.06 381.91 Q 446.1 340.09 444.06 295.37 Q 445 286 454.48 286.95 Z" fill="none" stroke="#1e1e1e" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
-<text x="590.0" y="311.0" text-anchor="middle" font-family="Virgil, Caveat, 'Segoe Print', 'Comic Sans MS', cursive, sans-serif" font-size="15" font-weight="700" fill="#1e1e1e">ACID SQLite Tax &amp; Stock</text>
-<text x="590.0" y="332.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• US-WA / DE / JP / BR tax bps</text>
-<text x="590.0" y="351.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Integer cents (0 float drift)</text>
-<text x="590.0" y="370.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Credit cap &amp; SKU reservation</text>
-<rect x="445" y="432" width="290" height="106" rx="10" ry="10" fill="#b2f2bb" stroke="none" />
-<path d="M 455.84 432.83 Q 589.71 431.25 725.73 432.45 Q 735 432 735.25 443.07 Q 735.34 483.92 735.7 527.56 Q 735 538 725.36 538.97 Q 589.2 537.15 454.14 538.12 Q 445 538 444.5 528.23 Q 445.48 484.35 445.3 441.48 Q 445 432 454.97 432.89 Z" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-<path d="M 455.76 431.1 Q 589.83 431.51 723.91 432.6 Q 735 432 735.3 441.48 Q 735.53 485.11 734.84 526.92 Q 735 538 724.07 538.84 Q 590.89 538.1 455.74 538.18 Q 445 538 444.23 527.18 Q 444.58 485.88 445.65 442.79 Q 445 432 455.88 431.36 Z" fill="none" stroke="#1e1e1e" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
-<text x="590.0" y="457.0" text-anchor="middle" font-family="Virgil, Caveat, 'Segoe Print', 'Comic Sans MS', cursive, sans-serif" font-size="15" font-weight="700" fill="#1e1e1e">Double-Entry &amp; Recon Audit</text>
-<text x="590.0" y="478.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• SUM(debits) == SUM(credits)</text>
-<text x="590.0" y="497.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Out-of-order watermark track</text>
-<text x="590.0" y="516.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• 32.7k ev/s • 0 double-charges</text>
-<rect x="825" y="142" width="300" height="104" rx="10" ry="10" fill="#ffc9c9" stroke="none" />
-<path d="M 834.45 141.13 Q 975.62 142.85 1114.79 142.27 Q 1125 142 1124.24 152.95 Q 1125.8 195.05 1125.68 236.84 Q 1125 246 1113.95 246.52 Q 974.63 246.95 835.66 246.8 Q 825 246 825.68 235.49 Q 825.63 193.14 825.82 152.79 Q 825 142 834.39 142.7 Z" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-<path d="M 834.91 141.57 Q 975.65 141.4 1113.95 141.32 Q 1125 142 1124.62 152.8 Q 1126.03 193.51 1125.31 235.78 Q 1125 246 1116.06 246.08 Q 975.97 245.15 836.03 245.29 Q 825 246 826.02 235.48 Q 824.14 193.86 825.5 151.59 Q 825 142 835.23 142.03 Z" fill="none" stroke="#1e1e1e" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
-<text x="975.0" y="167.0" text-anchor="middle" font-family="Virgil, Caveat, 'Segoe Print', 'Comic Sans MS', cursive, sans-serif" font-size="15" font-weight="700" fill="#1e1e1e">NOC &amp; Floor Alarm Snapshots</text>
-<text x="975.0" y="188.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Gateway SNR &amp; handoff loss</text>
-<text x="975.0" y="207.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Billing watermark &amp; tax skew</text>
-<text x="975.0" y="226.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Conveyor jam &amp; IMS bin drift</text>
-<rect x="825" y="286" width="300" height="106" rx="10" ry="10" fill="#a5d8ff" stroke="none" />
-<path d="M 834.75 286.17 Q 974.46 286.46 1113.9 286.94 Q 1125 286 1125.08 296.48 Q 1125.53 339.38 1124.7 381.05 Q 1125 392 1115.36 391.63 Q 974.59 392.77 835.48 391.56 Q 825 392 824.58 381.8 Q 824.79 338.55 824.18 295.82 Q 825 286 835.97 286.39 Z" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-<path d="M 835.89 286.25 Q 974.56 286.11 1113.9 285.53 Q 1125 286 1124.85 296.18 Q 1125.34 338.92 1124.87 381.37 Q 1125 392 1114.94 392.88 Q 975.65 391.27 834.09 392.03 Q 825 392 825.29 381.64 Q 825.7 339.55 825.38 295.39 Q 825 286 834.34 284.95 Z" fill="none" stroke="#1e1e1e" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
-<text x="975.0" y="311.0" text-anchor="middle" font-family="Virgil, Caveat, 'Segoe Print', 'Comic Sans MS', cursive, sans-serif" font-size="15" font-weight="700" fill="#1e1e1e">Bounded Decision-Tree Engine</text>
-<text x="975.0" y="332.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• &lt;= 3 deterministic checks max</text>
-<text x="975.0" y="351.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• 100% root-cause acc (vs 64%)</text>
-<text x="975.0" y="370.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• -93.5% steps vs raw log scan</text>
-<rect x="825" y="432" width="300" height="106" rx="10" ry="10" fill="#d0bfff" stroke="none" />
-<path d="M 834.44 431.95 Q 975.77 431.06 1114.81 432.29 Q 1125 432 1124.33 442.43 Q 1124.99 484.44 1125.34 526.91 Q 1125 538 1115.55 538.59 Q 974.13 537.84 834.29 539.01 Q 825 538 825.04 527.01 Q 824.45 485.77 824.9 442.66 Q 825 432 835.37 433.07 Z" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-<path d="M 835.21 432.99 Q 975.86 432.25 1115.48 432.01 Q 1125 432 1125.73 442.11 Q 1125.87 485.54 1124.94 527.47 Q 1125 538 1114.44 538.3 Q 975.58 538.05 835.28 537.5 Q 825 538 824.07 527.53 Q 824.5 484.6 825.09 441.2 Q 825 432 834.41 432.43 Z" fill="none" stroke="#1e1e1e" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
-<text x="975.0" y="457.0" text-anchor="middle" font-family="Virgil, Caveat, 'Segoe Print', 'Comic Sans MS', cursive, sans-serif" font-size="15" font-weight="700" fill="#1e1e1e">Safe Runbook &amp; AWS Lambda</text>
-<text x="975.0" y="478.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• SEV-1 human approval gates</text>
-<text x="975.0" y="497.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• CLI + us-west-2 Lambda zip</text>
-<text x="975.0" y="516.0" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11.6" font-weight="500" fill="#343a40">• Deterministic JSON telemetry</text>
-<path d="M 205 246 Q 207.5 266.0 205 286" fill="none" stroke="#1e1e1e" stroke-width="2.1" stroke-linecap="round" />
-<path d="M 205.25 245.48 Q 207.3 266.1 205 286" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" opacity="0.6" />
-<path d="M 201.4 276.4 L 205 286 L 210.8 277.6" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-<rect x="173.1" y="252.5" width="66.4" height="18" rx="4" fill="#ffffff" opacity="0.94" />
-<text x="206.2" y="265.5" text-anchor="middle" font-family="Virgil, Caveat, 'Comic Sans MS', cursive, sans-serif" font-size="12.5" font-weight="600" fill="#1e1e1e">Live SNR</text>
-<path d="M 205 392 Q 202.5 412.0 205 432" fill="none" stroke="#1e1e1e" stroke-width="2.1" stroke-linecap="round" />
-<path d="M 204.9 391.65 Q 202.4 412.7 205 432" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" opacity="0.6" />
-<path d="M 199.2 423.6 L 205 432 L 208.6 422.4" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-<rect x="156.9" y="398.5" width="93.6" height="18" rx="4" fill="#ffffff" opacity="0.94" />
-<text x="203.8" y="411.5" text-anchor="middle" font-family="Virgil, Caveat, 'Comic Sans MS', cursive, sans-serif" font-size="12.5" font-weight="600" fill="#1e1e1e">Residual Cap</text>
-<path d="M 355 485 Q 400.0 331.5 445 194" fill="none" stroke="#1e1e1e" stroke-width="2.1" stroke-linecap="round" />
-<path d="M 355.1 485.23 Q 400.6 332.0 445 194" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" opacity="0.6" />
-<path d="M 446.7 204.1 L 445 194 L 437.7 201.1" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-<rect x="353.2" y="325.5" width="93.6" height="18" rx="4" fill="#ffffff" opacity="0.94" />
-<text x="400.0" y="338.5" text-anchor="middle" font-family="Virgil, Caveat, 'Comic Sans MS', cursive, sans-serif" font-size="12.5" font-weight="600" fill="#1e1e1e">Usage Stream</text>
-<path d="M 590 246 Q 592.2 266.0 590 286" fill="none" stroke="#1e1e1e" stroke-width="2.1" stroke-linecap="round" />
-<path d="M 589.86 245.41 Q 591.9 266.5 590 286" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" opacity="0.6" />
-<path d="M 586.3 276.5 L 590 286 L 595.7 277.5" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-<rect x="558.1" y="252.5" width="66.0" height="18" rx="4" fill="#ffffff" opacity="0.94" />
-<text x="591.1" y="265.5" text-anchor="middle" font-family="Virgil, Caveat, 'Comic Sans MS', cursive, sans-serif" font-size="12.5" font-weight="600" fill="#1e1e1e">Deduped</text>
-<path d="M 590 392 Q 587.8 412.0 590 432" fill="none" stroke="#1e1e1e" stroke-width="2.1" stroke-linecap="round" />
-<path d="M 590.42 392.54 Q 587.7 412.4 590 432" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" opacity="0.6" />
-<path d="M 584.3 423.5 L 590 432 L 593.7 422.5" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-<rect x="552.3" y="398.5" width="73.2" height="18" rx="4" fill="#ffffff" opacity="0.94" />
-<text x="588.9" y="411.5" text-anchor="middle" font-family="Virgil, Caveat, 'Comic Sans MS', cursive, sans-serif" font-size="12.5" font-weight="600" fill="#1e1e1e">ACID Post</text>
-<path d="M 735 194 Q 780.0 192.0 825 194" fill="none" stroke="#1e1e1e" stroke-width="2.1" stroke-linecap="round" stroke-dasharray="7 5" />
-<path d="M 735.06 194.12 Q 779.5 191.5 825 194" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" opacity="0.6" stroke-dasharray="7 5" />
-<path d="M 815.8 198.3 L 825 194 L 816.2 188.9" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-<rect x="747.0" y="169.0" width="66.0" height="18" rx="4" fill="#ffffff" opacity="0.94" />
-<text x="780.0" y="182.0" text-anchor="middle" font-family="Virgil, Caveat, 'Comic Sans MS', cursive, sans-serif" font-size="12.5" font-weight="600" fill="#1e1e1e">Alarms</text>
-<path d="M 735 485 Q 780.0 483.0 825 485" fill="none" stroke="#1e1e1e" stroke-width="2.1" stroke-linecap="round" />
-<path d="M 734.92 484.43 Q 779.7 483.3 825 485" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" opacity="0.6" />
-<path d="M 815.8 489.3 L 825 485 L 816.2 479.9" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-<rect x="740.0" y="460.0" width="80.0" height="18" rx="4" fill="#ffffff" opacity="0.94" />
-<text x="780.0" y="473.0" text-anchor="middle" font-family="Virgil, Caveat, 'Comic Sans MS', cursive, sans-serif" font-size="12.5" font-weight="600" fill="#1e1e1e">Recon Diff</text>
-<path d="M 975 246 Q 977.4 266.0 975 286" fill="none" stroke="#1e1e1e" stroke-width="2.1" stroke-linecap="round" />
-<path d="M 974.89 245.6 Q 977.3 265.3 975 286" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" opacity="0.6" />
-<path d="M 971.4 276.5 L 975 286 L 980.8 277.6" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-<rect x="939.6" y="252.5" width="73.2" height="18" rx="4" fill="#ffffff" opacity="0.94" />
-<text x="976.2" y="265.5" text-anchor="middle" font-family="Virgil, Caveat, 'Comic Sans MS', cursive, sans-serif" font-size="12.5" font-weight="600" fill="#1e1e1e">Eval Tree</text>
-<path d="M 975 392 Q 972.6 412.0 975 432" fill="none" stroke="#1e1e1e" stroke-width="2.1" stroke-linecap="round" />
-<path d="M 975.15 391.43 Q 972.4 412.1 975 432" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" opacity="0.6" />
-<path d="M 969.2 423.6 L 975 432 L 978.6 422.5" fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-<rect x="930.4" y="398.5" width="86.8" height="18" rx="4" fill="#ffffff" opacity="0.94" />
-<text x="973.8" y="411.5" text-anchor="middle" font-family="Virgil, Caveat, 'Comic Sans MS', cursive, sans-serif" font-size="12.5" font-weight="600" fill="#1e1e1e">Emit Action</text>
+  <rect x="56" y="302" width="173" height="78" fill="#f2f5fa" stroke="#0e1a2b" stroke-width="1"/>
+  <text x="142" y="324" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1a2b">Behavior 2: /api/*</text>
+  <text x="142" y="342" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#12737a">routeledger-api-origin</text>
+  <text x="142" y="358" text-anchor="middle" font-family="monospace" font-size="10" fill="#6b7a92">CachingDisabled · No-Store</text>
+
+  <!-- Mode 1 & Mode 2 Router -->
+  <rect x="295" y="148" width="245" height="114" fill="#0e1a2b" stroke="#0e1a2b" stroke-width="1.5"/>
+  <text x="417" y="172" text-anchor="middle" font-family="monospace" font-size="10" fill="#8fb0e6">SCOT &amp; LEO MESH SOLVER</text>
+  <text x="417" y="194" text-anchor="middle" font-size="15.5" font-weight="800" fill="#ffffff">Min-Cost &amp; SNR Router</text>
+  <text x="417" y="216" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#d6e0f5">SEA1-&gt;ORD5-&gt;CVG3-&gt;EWR7 (&lt;1ms)</text>
+  <text x="417" y="236" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#4fd19a">-95.3% SLA Breaches · 2-Way Split</text>
+
+  <!-- Double-Entry Ledger -->
+  <rect x="295" y="284" width="245" height="114" fill="#ffffff" stroke="#35527e" stroke-width="2"/>
+  <text x="417" y="308" text-anchor="middle" font-family="monospace" font-size="10" fill="#35527e">ACID SETTLEMENT ENGINE</text>
+  <text x="417" y="330" text-anchor="middle" font-size="15.5" font-weight="800" fill="#0e1a2b">Double-Entry SQLite</text>
+  <text x="417" y="352" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#33425a">SHA-256 5x SQS Retry Dedup</text>
+  <text x="417" y="370" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#0c8a4d">0 Dupes · SUM(Dr)==SUM(Cr)</text>
+
+  <!-- NOC Workflow -->
+  <rect x="590" y="148" width="215" height="114" fill="#ffffff" stroke="#35527e" stroke-width="2"/>
+  <text x="697" y="172" text-anchor="middle" font-family="monospace" font-size="10" fill="#35527e">NOC &amp; FLOOR TRIAGE</text>
+  <text x="697" y="194" text-anchor="middle" font-size="15.5" font-weight="800" fill="#0e1a2b">&le;3-Check Decision Trees</text>
+  <text x="697" y="216" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#33425a">100.0% Root-Cause Accuracy</text>
+  <text x="697" y="236" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#0c8a4d">2.41 Mean Steps (-93.5%)</text>
+
+  <!-- Multi-Region Tax & Recon -->
+  <rect x="590" y="284" width="215" height="114" fill="#ffffff" stroke="#0e1a2b" stroke-width="1.5"/>
+  <text x="697" y="308" text-anchor="middle" font-family="monospace" font-size="10" fill="#12737a">EXACT DECIMAL RECON</text>
+  <text x="697" y="330" text-anchor="middle" font-size="15.5" font-weight="800" fill="#0e1a2b">Tax &amp; OOO Watermarks</text>
+  <text x="697" y="352" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#33425a">US-WA · DE · JP · BR Rules</text>
+  <text x="697" y="370" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#0c8a4d">32,704.9 ev/sec · 0c Drift</text>
+
+  <!-- Bedrock -->
+  <rect x="855" y="185" width="225" height="168" fill="#12737a" stroke="#0e1a2b" stroke-width="1.5"/>
+  <text x="967" y="214" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ccfbf1">AMAZON BEDROCK (US-WEST-2)</text>
+  <text x="967" y="240" text-anchor="middle" font-size="17" font-weight="800" fill="#ffffff">nova-lite-v1:0</text>
+  <text x="967" y="266" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ffffff">• Leo RF/ISL Link Triage</text>
+  <text x="967" y="288" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ffffff">• SCOT ATROPS Dispatch</text>
+  <text x="967" y="308" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#ffffff">• Grounded Telemetry Brief</text>
+
+  <!-- Arrows -->
+  <path d="M245 215L293 205" stroke="#0e1a2b" stroke-width="1.8" fill="none" marker-end="url(#rl-ink)"/>
+  <path d="M245 340L293 340" stroke="#0e1a2b" stroke-width="1.8" fill="none" marker-end="url(#rl-ink)"/>
+  <path d="M540 205H588" stroke="#0e1a2b" stroke-width="1.8" fill="none" marker-end="url(#rl-ink)"/>
+  <path d="M540 340H588" stroke="#0e1a2b" stroke-width="1.8" fill="none" marker-end="url(#rl-ink)"/>
+  <path d="M805 205L853 250" stroke="#ff6433" stroke-width="1.8" stroke-dasharray="5 5" fill="none" marker-end="url(#rl-sig)"/>
 </svg>
